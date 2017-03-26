@@ -1,4 +1,4 @@
-package facebook;
+package testFB;
 
 import java.net.Socket;
 
