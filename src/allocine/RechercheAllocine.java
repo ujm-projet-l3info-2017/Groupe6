@@ -17,7 +17,7 @@ public class RechercheAllocine
 {
     private static final String PARTNER_KEY = "100043982026";
     private static final String SECRET_KEY = "29d185d98c984a359e6e6f26a0474269";
-    List<Movie> liste_films;
+    Search recherche;
     
     public RechercheAllocine(String film)
     {
@@ -28,13 +28,34 @@ public class RechercheAllocine
 		try 
 		{
 			AllocineApi a = new AllocineApi(PARTNER_KEY, SECRET_KEY, wrapper);
-			Search s = a.searchMovies("titanic");
-			liste_films=s.getMovies();
+			recherche = a.searchMovies(film);
+			
 		} 
 		catch (AllocineException e) 
 		{
 			e.printStackTrace();
 		}
+    }
+    
+    public List<Movie> liste_films()
+    {
+    	return recherche.getMovies();
+    }
+    
+    public static String titre(Movie film)
+    {
+		if (film.getTitle()==null)
+			return film.getOriginalTitle();
+		else return film.getTitle();
+    }
+    
+    public static String realisateur(Movie film)
+    {
+    	return film.getCastingShort().getDirectors().get(0);
+    }
 
+    public static int dateSortie(Movie film)
+    {
+    	return film.getProductionYear();
     }
 }
