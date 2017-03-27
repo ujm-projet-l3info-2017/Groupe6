@@ -7,6 +7,7 @@ import org.yamj.api.common.http.HttpClientWrapper;
 
 import com.moviejukebox.allocine.AllocineApi;
 import com.moviejukebox.allocine.AllocineException;
+import com.moviejukebox.allocine.model.Artwork;
 import com.moviejukebox.allocine.model.Movie;
 import com.moviejukebox.allocine.model.MovieInfos;
 import com.moviejukebox.allocine.model.Search;
@@ -58,4 +59,20 @@ public class RechercheAllocine
     {
     	return film.getProductionYear();
     }
+    
+    public static String affiche(Movie film)
+    {
+    	Artwork x = film.getPoster();
+    	String s;
+		try 
+		{
+			s=x.getHref();
+		}
+		catch (Exception e)
+		{
+			s ="Il n'y a pas d'affiche pour ce film";
+		}
+		return s;
+    }
+    
 }
