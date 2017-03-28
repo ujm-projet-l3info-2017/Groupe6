@@ -1,5 +1,6 @@
 package facebook;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import facebook4j.InboxResponseList;
 import facebook4j.Message;
 import facebook4j.PagableList;
 import facebook4j.RawAPIResponse;
+import facebook4j.Reading;
 import facebook4j.FacebookResponse.Metadata;
 import facebook4j.auth.AccessToken;
 import facebook4j.internal.org.json.JSONException;
@@ -20,6 +22,7 @@ import facebook4j.internal.org.json.JSONObject;
 public class PageRazbot
 {
 	private Facebook facebook;
+	private ArrayList<ConversationRazbot> conversations;
 	private String appID;
 	private String secretCode;
 	private String pageToken;
@@ -38,6 +41,9 @@ public class PageRazbot
 		facebook.setOAuthAppId(appID, secretCode);
 		AccessToken token = new AccessToken(pageToken);
 		facebook.setOAuthAccessToken(token);
+//		facebook.setOAuthPermissions("pages_messaging,pages_messaging_subscriptions");
+		
+		recupererConversations();
 	}
 
 	public Facebook getFacebook()
@@ -54,119 +60,189 @@ public class PageRazbot
 	{
 		return (nombreMessagesNonLu() > 0);
 	}
-
-	public Conversation derniereConversationNonLu()
+	
+	public void recupererConversations()
 	{
+		//On initialise la liste de conversation
+		conversations = new ArrayList<ConversationRazbot>();
+		
+		//On récupère la liste de facebook
+		InboxResponseList<Conversation> conversationsFacebook;
 		try
 		{
-			InboxResponseList<Conversation> conversations;
-			conversations = facebook.getConversations();
-			
-			for (Conversation conversation : conversations)
+			conversationsFacebook = facebook.getConversations();
+		
+			//On parcourt la liste
+			for (Conversation conversation : conversationsFacebook)
 			{
 				String id = conversation.getId();
 				
-				JSONObject conversationJSON = facebook.callGetAPI(id+"?fields=participants,message_count,unread_count,messages{id,message,to}").asJSONObject();
+				//On récupère la conversation en particulier
+				JSONObject json = facebook.callGetAPI(id+"?fields=participants,message_count,unread_count,messages{id,message,to}").asJSONObject();
 				
-				if(conversationJSON.getInt("unread_count") > 0)
-					return creerConversation(conversationJSON);
+				//On la stock dans la liste de la classe
+				conversations.add(new ConversationRazbot(json));
 			}
-		}	
-		catch (IllegalStateException e)
-		{
-			e.printStackTrace();
 		}
 		catch (FacebookException e)
 		{
 			e.printStackTrace();
 		}
-		catch (JSONException e)
-		{
-			e.printStackTrace();
-		}
-		return null;
 	}
 
-	private Conversation creerConversation(JSONObject conversationJSON)
-	{
-		//Non testé & Non terminé
-		Conversation conversation = new Conversation()
-		{
-			JSONObject conversation;
-			@Override
-			public Metadata getMetadata()
-			{
-				return null;
-			}
-			
-			@SuppressWarnings("deprecation")
-			@Override
-			public Date getUpdatedTime()
-			{
-				String date;
-				try
-				{
-					date = conversation.getString("updated_time");
-					int annee = Integer.getInteger(date.substring(0, 3));
-					int mois = Integer.getInteger(date.substring(4, 5));
-					int jour = Integer.getInteger(date.substring(6, 7));
-					int heure = Integer.getInteger(date.substring(8, 9));
-					int minute = Integer.getInteger(date.substring(11, 12));
-					int seconde = Integer.getInteger(date.substring(14, 15));
-
-					return new Date(annee,mois,jour,heure,minute,seconde);
-				}
-				catch (JSONException e)
-				{
-					e.printStackTrace();
-				}
-				return null;
-			}
-			
-			@Override
-			public Integer getUnreadCount()
-			{
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public List<IdNameEntity> getSenders()
-			{
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public PagableList<Message> getMessages()
-			{
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Integer getMessageCount()
-			{
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getId()
-			{
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getConversation()
-			{
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-		return conversation;
-	}
+//	public JSONObject derniereConversationNonLuJSON()
+//	{
+//		try
+//		{
+//			InboxResponseList<Conversation> conversations;
+//			conversations = facebook.getConversations();
+//			
+//			for (Conversation conversation : conversations)
+//			{
+//				String id = conversation.getId();
+//				
+//				JSONObject conversationJSON = facebook.callGetAPI(id+"?fields=participants,message_count,unread_count,messages{id,message,to}").asJSONObject();
+//				
+//				if(conversationJSON.getInt("unread_count") > 0)
+//					return conversationJSON;
+//			}
+//		}	
+//		catch (IllegalStateException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		catch (FacebookException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		catch (JSONException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+//
+//	public Conversation derniereConversationNonLu()
+//	{
+//		try
+//		{
+//			InboxResponseList<Conversation> conversations;
+//			conversations = facebook.getConversations();
+//			
+//			for (Conversation conversation : conversations)
+//			{
+//				String id = conversation.getId();
+//				
+//				JSONObject conversationJSON = facebook.callGetAPI(id+"?fields=updated_time,participants,message_count,unread_count,messages{id,message,to}").asJSONObject();
+//				
+//				if(conversationJSON.getInt("unread_count") > 0)
+//					return creerConversation(conversationJSON);
+//			}
+//		}	
+//		catch (IllegalStateException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		catch (FacebookException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		catch (JSONException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+//
+//	private Conversation creerConversation(JSONObject conversationJSON)
+//	{
+//		//Non testé & Non terminé
+//		Conversation conversation = new Conversation()
+//		{
+//			JSONObject conversation = conversationJSON;
+//			@Override
+//			public Metadata getMetadata()
+//			{
+//				return null;
+//			}
+//			
+//			@SuppressWarnings("deprecation")
+//			@Override
+//			public Date getUpdatedTime()
+//			{
+//				String date;
+//				Date dateD = null;
+//				try
+//				{
+//					date = conversation.getString("updated_time");
+//					int annee = Integer.parseInt(date.substring(0, 4));
+//					int mois = Integer.parseInt(date.substring(5, 7));
+//					int jour = Integer.parseInt(date.substring(8, 10));
+//					int heure = Integer.parseInt(date.substring(11, 13));
+//					int minute = Integer.parseInt(date.substring(14, 16));
+//					int seconde = Integer.parseInt(date.substring(17, 19));
+//					
+//					dateD = new Date(annee,mois,jour,heure,minute,seconde);
+//				}
+//				catch (JSONException e)
+//				{
+//					e.printStackTrace();
+//				}
+//				return dateD;
+//			}
+//			
+//			@Override
+//			public Integer getUnreadCount()
+//			{
+//				return nombreMessagesNonLu();
+//			}
+//			
+//			@Override
+//			public List<IdNameEntity> getSenders()
+//			{
+//				return null;
+//			}
+//			
+//			@Override
+//			/**
+//			 * Provient de l'API Facebook4j, modifié car non fonctionnel
+//			 */
+//			public PagableList<Message> getMessages()
+//			{
+//				
+//				return null;
+//			}
+//			
+//			@Override
+//			public Integer getMessageCount()
+//			{
+//				return null;
+//			}
+//			
+//			@Override
+//			public String getId()
+//			{
+//				String id = "";
+//				try
+//				{
+//					id = conversation.getString("id");
+//				}
+//				catch (JSONException e)
+//				{
+//					e.printStackTrace();
+//				}
+//				return id;
+//			}
+//
+//			@Override
+//			public String getConversation()
+//			{
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//		};
+//		return conversation;
+//	}
 
 	public int nombreMessagesNonLu()
 	{
@@ -196,23 +272,23 @@ public class PageRazbot
 			e.printStackTrace();
 		}
 	}
-
-	public InboxResponseList<Conversation> recupererConversations()
-	{
-		InboxResponseList<Conversation> conversations = null;
-		try
-		{
-			conversations = facebook.getConversations();
-		} catch (IllegalStateException e)
-		{
-			e.printStackTrace();
-		} catch (FacebookException e)
-		{
-			e.printStackTrace();
-		}
-		return conversations;
-	}
-}
+//
+//	public InboxResponseList<Conversation> recupererConversations()
+//	{
+//		InboxResponseList<Conversation> conversations = null;
+//		try
+//		{
+//			conversations = facebook.getConversations();
+//		} catch (IllegalStateException e)
+//		{
+//			e.printStackTrace();
+//		} catch (FacebookException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		return conversations;
+//	}
+//}
 
 // //Tests
 // try
@@ -252,4 +328,4 @@ public class PageRazbot
 // catch (FacebookException e)
 // {
 // e.printStackTrace();
-// }
+ }
