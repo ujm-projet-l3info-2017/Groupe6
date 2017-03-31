@@ -24,25 +24,10 @@ public class MessageRazbot
 	{
 		return dateMessage;
 	}
-
-	public void setMessage(String message)
-	{
-		this.message = message;
-	}
-
-	public void setDateMessage(Date dateMessage)
-	{
-		this.dateMessage = dateMessage;
-	}
 	
 	public String getAuteur()
 	{
 		return auteur;
-	}
-
-	public void setAuteur(String auteur)
-	{
-		this.auteur = auteur;
 	}
 	
 	@Override
