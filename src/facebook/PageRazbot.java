@@ -44,6 +44,8 @@ public class PageRazbot
 //		facebook.setOAuthPermissions("pages_messaging,pages_messaging_subscriptions");
 		
 		recupererConversations();
+		
+		System.out.println(conversations.toString());
 	}
 
 	public Facebook getFacebook()
@@ -51,14 +53,15 @@ public class PageRazbot
 		return facebook;
 	}
 
-	/**
-	 * Détermine si il y a un nouveau message (toute conversation confondu)
-	 * 
-	 * @return Vrai si il y a un nouveau message
-	 */
-	public boolean existeMessagesNonLu()
+	public void envoyerMessage(String conversation, String message)
 	{
-		return (nombreMessagesNonLu() > 0);
+		try
+		{
+			facebook.answerConversation(conversation, message);
+		} catch (FacebookException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void recupererConversations()
@@ -78,7 +81,7 @@ public class PageRazbot
 				String id = conversation.getId();
 				
 				//On récupère la conversation en particulier
-				JSONObject json = facebook.callGetAPI(id+"?fields=participants,message_count,unread_count,messages{id,message,to}").asJSONObject();
+				JSONObject json = facebook.callGetAPI(id+"?fields=updated_time,participants,message_count,unread_count,messages{created_time,message,from}").asJSONObject();
 				
 				//On la stock dans la liste de la classe
 				conversations.add(new ConversationRazbot(json));
@@ -88,6 +91,13 @@ public class PageRazbot
 		{
 			e.printStackTrace();
 		}
+	}
+
+	
+	@Override
+	public String toString()
+	{
+		return "PageRazbot:\n" + conversations;
 	}
 
 //	public JSONObject derniereConversationNonLuJSON()
@@ -243,35 +253,21 @@ public class PageRazbot
 //		};
 //		return conversation;
 //	}
-
-	public int nombreMessagesNonLu()
-	{
-		int messagesNonLu = 0;
-
-		try
-		{
-			messagesNonLu = facebook.callGetAPI("me?fields=unread_message_count").asJSONObject()
-					.getInt("unread_message_count");
-		} catch (JSONException e)
-		{
-			e.printStackTrace();
-		} catch (FacebookException e)
-		{
-			e.printStackTrace();
-		}
-		return messagesNonLu;
-	}
-
-	public void envoyerMessage(String conversation, String message)
-	{
-		try
-		{
-			facebook.answerConversation(conversation, message);
-		} catch (FacebookException e)
-		{
-			e.printStackTrace();
-		}
-	}
+//
+//	public int nombreMessagesNonLu()
+//	{
+//		//Emmerdant, on a les valeur de non lu uniquement pour 1 conversation..
+//	}
+//	
+//	/**
+//	 * Détermine si il y a un nouveau message (toute conversation confondu)
+//	 * 
+//	 * @return Vrai si il y a un nouveau message
+//	 */
+//	public boolean existeMessagesNonLu()
+//	{
+//		return (nombreMessagesNonLu() > 0);
+//	}
 //
 //	public InboxResponseList<Conversation> recupererConversations()
 //	{
@@ -289,43 +285,5 @@ public class PageRazbot
 //		return conversations;
 //	}
 //}
-
-// //Tests
-// try
-// {
-// InboxResponseList<Conversation> conversations;
-// conversations = facebook.getConversations();
-//
-// for (Conversation conversation : conversations)
-// {
-// System.out.println("Conversation(0): "+conversation);
-// System.out.println("Message Count(intégré):
-// "+conversation.getMessageCount());
-//
-// RawAPIResponse getMessageCount =
-// facebook.callGetAPI("t_mid.1456287448561:f59d1b19d211d78343?fields=message_count");
-//
-// try
-// {
-// System.out.println("Message Count(manuel):
-// "+getMessageCount.asJSONObject().getInt("message_count"));
-// }
-// catch (JSONException e)
-// {
-// e.printStackTrace();
-// }
-//
-// }
-//
-//
-// //facebook.answerConversation("t_mid.1456287448561:f59d1b19d211d78343",
-// "Test");
-// }
-// catch (IllegalStateException e)
-// {
-// e.printStackTrace();
-// }
-// catch (FacebookException e)
-// {
-// e.printStackTrace();
- }
+	
+}
