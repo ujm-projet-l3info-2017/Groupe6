@@ -48,7 +48,7 @@ public class MessageRazbot
 	@Override
 	public String toString()
 	{
-		return "Message:"
+		return "\nMessage:"
 			 + "\n\tAuteur: "+auteur
 			 + "\n\tDate: "+dateMessage
 			 + "\n\tTexte:\""+message+"\" \n\n";
