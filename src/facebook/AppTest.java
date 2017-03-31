@@ -1,15 +1,12 @@
 package facebook;
 
-import facebook4j.Conversation;
-import facebook4j.internal.org.json.JSONException;
-
 public class AppTest
 {
 	public static void main(String args[])
 	{
 		PageRazbot razbot = new PageRazbot();
 		
-		razbot.recupererConversations();
+		razbot.toString();
 		
 //		System.out.println("Existe des messages non lu? "+razbot.existeMessagesNonLu());
 //		
