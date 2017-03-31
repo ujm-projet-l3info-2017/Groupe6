@@ -6,11 +6,13 @@ public class MessageRazbot
 {
 	private String message;
 	private Date dateMessage;
+	private String auteur;
 	
-	public MessageRazbot(String message, String date)
+	public MessageRazbot(String message, String date, String auteur)
 	{
 		this.message = message;
-		dateMessage = Utilitaires.parserDateFacebook(date);
+		dateMessage = Utilitaires.parserDateFacebook(date);	//Transforme la date de format Facebook à un type Date
+		this.auteur = auteur;
 	}
 	
 	public String getMessage()
@@ -31,5 +33,24 @@ public class MessageRazbot
 	public void setDateMessage(Date dateMessage)
 	{
 		this.dateMessage = dateMessage;
+	}
+	
+	public String getAuteur()
+	{
+		return auteur;
+	}
+
+	public void setAuteur(String auteur)
+	{
+		this.auteur = auteur;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Message:"
+			 + "\n\tAuteur: "+auteur
+			 + "\n\tDate: "+dateMessage
+			 + "\n\tTexte:\""+message+"\" \n\n";
 	}
 }
