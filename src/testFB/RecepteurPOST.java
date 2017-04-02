@@ -1,6 +1,8 @@
 package testFB;
 
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +43,15 @@ public class RecepteurPOST extends HttpServlet
 	{
 		
 		request.getServerPort();
-		System.out.println("Reçu POST: "+request.toString());
+		System.out.println("Reçu POST: ");
+		
+		InputStream in = request.getInputStream();
+		int i;
+		while((i = in.read())!=-1)
+		{
+			System.out.print((char)i);
+		}
+		
 		doGet(request, response);
 	}
 
