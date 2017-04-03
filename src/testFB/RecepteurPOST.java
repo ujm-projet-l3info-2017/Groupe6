@@ -2,6 +2,7 @@ package testFB;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,8 +33,9 @@ public class RecepteurPOST extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		response.getWriter().append("Servlet de réception POST HTTPS<br/><br/><br/>Circulez, il y a rien à voir ici<br/><img src=\"https://i.skyrock.net/2092/64272092/pics/2586735683_small_1.jpg\">");
-	}
+
+		response.getWriter().append("HTTP 200 OK");		
+	} 
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -41,17 +43,16 @@ public class RecepteurPOST extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		
-		request.getServerPort();
-		System.out.println("Reçu POST: ");
+		response.getWriter().append("Reçu POST: ");
 		
 		InputStream in = request.getInputStream();
+		
 		int i;
 		while((i = in.read())!=-1)
 		{
-			System.out.print((char)i);
+			response.getWriter().append((char)i);
 		}
-		
+		response.getWriter().append("<br />");
 		doGet(request, response);
 	}
 
