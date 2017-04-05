@@ -3,6 +3,7 @@ package testFB;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,8 +34,19 @@ public class RecepteurPOST extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		response.getWriter().append("HTTP 200 OK");		
-		response.getWriter().append((CharSequence) request.getServletContext().getAttribute("logpost"));
+//		if(request.getParameter("hub.verify_token")=="a")
+//			response.getWriter().append((CharSequence) request.getParameter("hub.challenge"));		
+//		
+//		String a = request.getParameterNames();
+//		
+//		while(a.hasMoreElements())
+//		{
+//			response.getWriter().append((CharSequence) a);
+//			a=a.nextElement();
+//		}
+//		
+		
+		//response.getWriter().append((CharSequence) request.getServletContext().getAttribute("logpost"));
 	} 
 
 	/**
