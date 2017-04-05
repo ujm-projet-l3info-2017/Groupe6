@@ -33,8 +33,8 @@ public class RecepteurPOST extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-
 		response.getWriter().append("HTTP 200 OK");		
+		response.getWriter().append((CharSequence) request.getServletContext().getAttribute("logpost"));
 	} 
 
 	/**
@@ -42,17 +42,17 @@ public class RecepteurPOST extends HttpServlet
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		response.getWriter().append("Reçu POST: ");
-		
+	{		
 		InputStream in = request.getInputStream();
 		
 		int i;
+		String loge="";
 		while((i = in.read())!=-1)
 		{
-			response.getWriter().append((char)i);
+			loge+=(((char)i+""));
 		}
-		response.getWriter().append("<br />");
+		request.getServletContext().setAttribute("logpost", loge);
+		log("RECU "+loge);
 		doGet(request, response);
 	}
 
