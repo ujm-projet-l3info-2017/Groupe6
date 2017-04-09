@@ -2,15 +2,11 @@ package testFB;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.net.ssl.*;
 
 /**
  * Servlet implementation class RecepteurPOST
@@ -36,7 +32,7 @@ public class RecepteurPOST extends HttpServlet
 	{
 //		if(request.getParameter("hub.verify_token")=="a")
 //			response.getWriter().append((CharSequence) request.getParameter("hub.challenge"));		
-//		
+		
 //		String a = request.getParameterNames();
 //		
 //		while(a.hasMoreElements())
@@ -44,9 +40,9 @@ public class RecepteurPOST extends HttpServlet
 //			response.getWriter().append((CharSequence) a);
 //			a=a.nextElement();
 //		}
-//		
 		
-		//response.getWriter().append((CharSequence) request.getServletContext().getAttribute("logpost"));
+		
+		response.getWriter().append((CharSequence) request.getServletContext().getAttribute("logpost"));
 	} 
 
 	/**
@@ -55,6 +51,36 @@ public class RecepteurPOST extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{		
+//		StringBuffer jb = new StringBuffer();
+//		String line = null;
+//		try
+//		{
+//			BufferedReader reader = request.getReader();
+//			while ((line = reader.readLine()) != null)
+//				jb.append(line);
+//		}
+//		catch (Exception e)
+//		{
+//			System.out.println("Erreur lecture JSON");
+//		}
+//
+//		try
+//		{
+//			JSONObject jsonObject = HTTP.toJSONObject(jb.toString());
+//			System.out.println(jsonObject);
+//		}
+//		catch (JSONException e)
+//		{
+//			// crash and burn
+//			throw new IOException("Error parsing JSON request string OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+//		}
+		
+		
+		
+		
+		
+		
+		
 		InputStream in = request.getInputStream();
 		
 		int i;
