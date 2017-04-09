@@ -1,6 +1,7 @@
 package facebook;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import facebook4j.Conversation;
 import facebook4j.Facebook;
@@ -35,8 +36,6 @@ public class PageRazbot
 //		facebook.setOAuthPermissions("pages_messaging,pages_messaging_subscriptions");
 		
 		recupererConversations();
-		
-		System.out.println(conversations.toString());
 	}
 
 	public Facebook getFacebook()
@@ -72,7 +71,7 @@ public class PageRazbot
 				String id = conversation.getId();
 				
 				//On récupère la conversation en particulier
-				JSONObject json = facebook.callGetAPI(id+"?fields=updated_time,participants,message_count,unread_count,messages{created_time,message,from}").asJSONObject();
+				JSONObject json = facebook.callGetAPI(id+"?fields=updated_time,participants,senders,message_count,unread_count,messages{created_time,message,from}").asJSONObject();
 				
 				//On la stock dans la liste de la classe
 				conversations.add(new ConversationRazbot(json));
@@ -84,6 +83,50 @@ public class PageRazbot
 		}
 	}
 
+	public ArrayList<ConversationRazbot> attenteNouveauMessage()
+	{
+		ArrayList<ConversationRazbot> conv;
+		long interval = Token.getInverval();
+		
+		while(true)
+		{
+			//On vérifie & Récupère la liste
+			if(!(conv = getConversationsNouveauxMessages()).isEmpty())
+				return conv;
+			
+			System.out.println(new Date()+": Aucun nouveau message");
+			
+			//Sinon on fait une boucle de plus
+			try
+			{
+				Thread.sleep(interval); //Importé depuis le fichier de config
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Renvoi les conversations avec des nouveaux messages
+	 * @return La liste des conversations
+	 */
+	public ArrayList<ConversationRazbot> getConversationsNouveauxMessages()
+	{
+		recupererConversations();
+		
+		ArrayList<ConversationRazbot> conversationNonLu = new ArrayList<ConversationRazbot>();
+		
+		for (ConversationRazbot conv : conversations)
+		{
+			if(conv.getNonLu()>0)
+			{
+				conversationNonLu.add(conv);
+			}
+		}
+		return conversationNonLu;
+	}
 	
 	@Override
 	public String toString()
@@ -155,95 +198,6 @@ public class PageRazbot
 //		return null;
 //	}
 //
-//	private Conversation creerConversation(JSONObject conversationJSON)
-//	{
-//		//Non testé & Non terminé
-//		Conversation conversation = new Conversation()
-//		{
-//			JSONObject conversation = conversationJSON;
-//			@Override
-//			public Metadata getMetadata()
-//			{
-//				return null;
-//			}
-//			
-//			@SuppressWarnings("deprecation")
-//			@Override
-//			public Date getUpdatedTime()
-//			{
-//				String date;
-//				Date dateD = null;
-//				try
-//				{
-//					date = conversation.getString("updated_time");
-//					int annee = Integer.parseInt(date.substring(0, 4));
-//					int mois = Integer.parseInt(date.substring(5, 7));
-//					int jour = Integer.parseInt(date.substring(8, 10));
-//					int heure = Integer.parseInt(date.substring(11, 13));
-//					int minute = Integer.parseInt(date.substring(14, 16));
-//					int seconde = Integer.parseInt(date.substring(17, 19));
-//					
-//					dateD = new Date(annee,mois,jour,heure,minute,seconde);
-//				}
-//				catch (JSONException e)
-//				{
-//					e.printStackTrace();
-//				}
-//				return dateD;
-//			}
-//			
-//			@Override
-//			public Integer getUnreadCount()
-//			{
-//				return nombreMessagesNonLu();
-//			}
-//			
-//			@Override
-//			public List<IdNameEntity> getSenders()
-//			{
-//				return null;
-//			}
-//			
-//			@Override
-//			/**
-//			 * Provient de l'API Facebook4j, modifié car non fonctionnel
-//			 */
-//			public PagableList<Message> getMessages()
-//			{
-//				
-//				return null;
-//			}
-//			
-//			@Override
-//			public Integer getMessageCount()
-//			{
-//				return null;
-//			}
-//			
-//			@Override
-//			public String getId()
-//			{
-//				String id = "";
-//				try
-//				{
-//					id = conversation.getString("id");
-//				}
-//				catch (JSONException e)
-//				{
-//					e.printStackTrace();
-//				}
-//				return id;
-//			}
-//
-//			@Override
-//			public String getConversation()
-//			{
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//		};
-//		return conversation;
-//	}
 //
 //	public int nombreMessagesNonLu()
 //	{

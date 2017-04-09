@@ -31,8 +31,18 @@ public class ConversationRazbot
 			
 			//Paramètres
 			conversationId = json.getString("id");
-			userName = json.getJSONObject("messages").getJSONArray("data").getJSONObject(1).getJSONObject("from").getString("name");
-			userId = json.getJSONObject("messages").getJSONArray("data").getJSONObject(1).getJSONObject("from").getString("id");
+
+			if(json.getJSONObject("senders").getJSONArray("data").getJSONObject(0).optString("id") == "156013618115881")
+			{
+				userName = json.getJSONObject("senders").getJSONArray("data").getJSONObject(1).getString("name");
+				userId = json.getJSONObject("senders").getJSONArray("data").getJSONObject(1).getString("id");
+			}
+			else
+			{
+				userName = json.getJSONObject("senders").getJSONArray("data").getJSONObject(0).getString("name");
+				userId = json.getJSONObject("senders").getJSONArray("data").getJSONObject(0).getString("id");
+			}
+			
 			updatedTime = Utilitaires.parserDateFacebook(json.getString("updated_time"));
 			nombreMessages = json.getInt("message_count");
 			nonLu = json.getInt("unread_count");
