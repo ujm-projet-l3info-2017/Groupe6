@@ -2,13 +2,18 @@ package facebook;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import facebook4j.Conversation;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.InboxResponseList;
+import facebook4j.RawAPIResponse;
+import facebook4j.Reading;
 import facebook4j.auth.AccessToken;
+import facebook4j.internal.http.HttpParameter;
 import facebook4j.internal.org.json.JSONObject;
 
 public class PageRazbot
@@ -33,8 +38,9 @@ public class PageRazbot
 		facebook.setOAuthAppId(appID, secretCode);
 		AccessToken token = new AccessToken(pageToken);
 		facebook.setOAuthAccessToken(token);
-//		facebook.setOAuthPermissions("pages_messaging,pages_messaging_subscriptions");
+		facebook.setOAuthPermissions("pages_messaging,pages_messaging_subscriptions,");
 		
+		//modeOnline();
 		recupererConversations();
 	}
 
@@ -48,7 +54,8 @@ public class PageRazbot
 		try
 		{
 			facebook.answerConversation(conversation, message);
-		} catch (FacebookException e)
+		}
+		catch (FacebookException e)
 		{
 			e.printStackTrace();
 		}
@@ -72,6 +79,9 @@ public class PageRazbot
 				
 				//On récupère la conversation en particulier
 				JSONObject json = facebook.callGetAPI(id+"?fields=updated_time,participants,senders,message_count,unread_count,messages{created_time,message,from}").asJSONObject();
+				
+				//On marque la conversation comme lu
+				facebook.getCheckin(conversation.getId());
 				
 				//On la stock dans la liste de la classe
 				conversations.add(new ConversationRazbot(json));
