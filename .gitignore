@@ -2,6 +2,8 @@
 # PASSWORD FILE
 settings.ini
 
+.settings/*
+
 ### Java ###
 # Compiled class file
 *.class
