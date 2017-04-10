@@ -16,6 +16,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+target/*
 
 # Eclipse Core
 .project
