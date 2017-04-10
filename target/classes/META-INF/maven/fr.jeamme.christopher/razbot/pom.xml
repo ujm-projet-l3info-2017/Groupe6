@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>facebook</groupId>
+  <groupId>fr.jeamme.christopher</groupId>
   <artifactId>razbot</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>RazBot</name>
+  <name>fr.jeamme.christopher.razbot</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -33,16 +33,5 @@
 	    <artifactId>util-java</artifactId>
 	    <version>6.2.5</version>
 	</dependency>
-	<dependency>
-		<groupId>com.moviejukebox</groupId>
-		<artifactId>allocine-api</artifactId>
-		<version>1.3</version>
-	</dependency>
-	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>slf4j-simple</artifactId>
-  		<version>1.7.21</version>
-  	</dependency>
   </dependencies>
-  <description>Le bot cinéphile !</description>
 </project>
