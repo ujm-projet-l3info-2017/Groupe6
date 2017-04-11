@@ -1,16 +1,12 @@
 package allocine;
 
 import java.util.List;
-import org.apache.http.impl.client.HttpClients;
-import org.yamj.api.common.http.AndroidBrowserUserAgentSelector;
-import org.yamj.api.common.http.HttpClientWrapper;
+import java.util.Map;
 
-import com.moviejukebox.allocine.AllocineApi;
-import com.moviejukebox.allocine.AllocineException;
-import com.moviejukebox.allocine.model.Artwork;
 import com.moviejukebox.allocine.model.Movie;
-import com.moviejukebox.allocine.model.MovieInfos;
-import com.moviejukebox.allocine.model.Search;
+import com.omertron.imdbapi.ImdbApi;
+import com.omertron.imdbapi.ImdbException;
+import com.omertron.imdbapi.search.SearchObject;
 
 public class Main 
 {
@@ -18,6 +14,11 @@ public class Main
     public static void main(String[] args) 
 	{
 	    RechercheAllocine recherche= new RechercheAllocine("Titanic");
+
+	    System.out.println();
+	    System.out.println();
+	    System.out.println();
+	    
 		for (int i=0; i<recherche.liste_films().size();i++)
 		{
 			Movie f = recherche.liste_films().get(i);
@@ -26,8 +27,22 @@ public class Main
 			System.out.println(RechercheAllocine.realisateur(f));
 			System.out.println(RechercheAllocine.dateSortie(f));
 			System.out.println(RechercheAllocine.affiche(f));
+			try 
+			{
+				for (int j=0; j<RechercheAllocine.acteurs_principaux(f).size(); j++)
+				{
+					System.out.println(RechercheAllocine.acteurs_principaux(f).get(j));
+				}
+			}
+			catch (Exception e)
+			{
+				System.out.println("Pas d'acteurs connus");
+			}
+
 			System.out.println();
+			
 		}
+
 		
 	}
     

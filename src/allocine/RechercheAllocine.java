@@ -8,6 +8,7 @@ import org.yamj.api.common.http.HttpClientWrapper;
 import com.moviejukebox.allocine.AllocineApi;
 import com.moviejukebox.allocine.AllocineException;
 import com.moviejukebox.allocine.model.Artwork;
+import com.moviejukebox.allocine.model.CodeName;
 import com.moviejukebox.allocine.model.Movie;
 import com.moviejukebox.allocine.model.MovieInfos;
 import com.moviejukebox.allocine.model.Search;
@@ -30,7 +31,6 @@ public class RechercheAllocine
 		{
 			AllocineApi a = new AllocineApi(PARTNER_KEY, SECRET_KEY, wrapper);
 			recherche = a.searchMovies(film);
-			
 		} 
 		catch (AllocineException e) 
 		{
@@ -74,5 +74,19 @@ public class RechercheAllocine
 		}
 		return s;
     }
+    
+    public static List<String> acteurs_principaux(Movie film)
+    {
+    	try 
+    	{
+    		return film.getCastingShort().getActors();
+    	}
+    	catch (Exception e)
+    	{
+    		System.out.println("Pas d'acteurs pour ce film");
+    	}
+		return null;
+    }
+
     
 }
