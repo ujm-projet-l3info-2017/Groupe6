@@ -21,6 +21,7 @@ public class Salutations implements Vocabulaire{
 	 */
 	public Salutations(){
 		expressions.add("Bonjour");
+		expressions.add("Bonsoir");
 		expressions.add("Salut");
 		expressions.add("Hey");
 		expressions.add("Content de te parler");
@@ -30,12 +31,7 @@ public class Salutations implements Vocabulaire{
 	 * @see facebook.Vocabulaire#getLength()
 	 */
 	public int getLength(){
-		int i=0;
-		while(expressions.get(i)!=null)
-		{
-			i++;
-		}
-		return i;
+		return expressions.size();
 	}
 
 	/* (non-Javadoc)

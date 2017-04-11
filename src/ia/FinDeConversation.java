@@ -21,6 +21,7 @@ public class FinDeConversation implements Vocabulaire{
 	public FinDeConversation(){
 		expressions.add("Au revoir");
 		expressions.add("Bye");
+		expressions.add("A bientot");
 		expressions.add("A la prochaine");
 		expressions.add("J'espere te revoir");
 	}
@@ -29,12 +30,7 @@ public class FinDeConversation implements Vocabulaire{
 	 * @see facebook.Vocabulaire#getLength()
 	 */
 	public int getLength(){
-		int i=0;
-		while(expressions.get(i)!=null)
-		{
-			i++;
-		}
-		return i;
+		return expressions.size();
 	}
 
 	/* (non-Javadoc)
