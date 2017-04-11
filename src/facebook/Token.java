@@ -92,8 +92,8 @@ public final class Token
 	{
 		if(recupererValeur("TESTINTERVAL")=="vide")
 		{
-			System.out.println("Attention: Aucune valeur d'intervalle de temps n'a été spécifié pour le rafraichissement des messages");
-			System.out.println("La valeur par défaut a été appliquée: 15sec");
+//			System.out.println("Attention: Aucune valeur d'intervalle de temps n'a été spécifié pour le rafraichissement des messages");
+//			System.out.println("La valeur par défaut a été appliquée: 15sec");
 			return 15000; //15 sec par défaut
 		}
 		return Long.valueOf(recupererValeur("TESTINTERVAL"));	//Récupéré du fichier

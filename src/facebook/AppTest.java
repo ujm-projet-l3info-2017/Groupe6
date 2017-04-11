@@ -19,7 +19,7 @@ public class AppTest
 			for (ConversationRazbot conv : conversationsATraiter)
 			{
 				System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-				//razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
+				razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
 			}
 		}
 	}
