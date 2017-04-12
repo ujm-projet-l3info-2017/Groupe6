@@ -6,13 +6,15 @@ public class MessageRazbot
 {
 	private String message;
 	private Date dateMessage;
-	private String auteur;
+	private String auteur; 
+	private String auteurID;
 	
-	public MessageRazbot(String message, String date, String auteur)
+	public MessageRazbot(String message, String date, String auteur, String auteurID)
 	{
 		this.message = message;
 		dateMessage = Utilitaires.parserDateFacebook(date);	//Transforme la date de format Facebook à un type Date
 		this.auteur = auteur;
+		this.auteurID = auteurID;
 	}
 	
 	public String getMessage()
@@ -37,5 +39,10 @@ public class MessageRazbot
 			 + "\n\tAuteur: "+auteur
 			 + "\n\tDate: "+dateMessage
 			 + "\n\tTexte:\""+message+"\" \n\n";
+	}
+
+	public String getAuteurID()
+	{
+		return auteurID;
 	}
 }

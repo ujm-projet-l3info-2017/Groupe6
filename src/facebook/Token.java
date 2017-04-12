@@ -10,7 +10,7 @@ import java.util.Properties;
  * @author chris
  *
  */
-public final class Token
+public final class Token 
 {
 	/**
 	 * 	Fonction pour charger les propriétés du fichier settings.ini

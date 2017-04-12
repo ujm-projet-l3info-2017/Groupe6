@@ -7,7 +7,7 @@ public class AppTest
 {
 	public static void main(String args[])
 	{
-		PageRazbot razbot = new PageRazbot();
+		PageRazbot razbot = new PageRazbot(); 
 		
 //		try{System.in.read();}catch (IOException e){e.printStackTrace();} //GETCHAR
 		
