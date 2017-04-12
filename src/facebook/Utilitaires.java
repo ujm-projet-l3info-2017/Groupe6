@@ -5,7 +5,7 @@ import java.util.Date;
 public class Utilitaires
 {
 	@SuppressWarnings("deprecation")
-	public static Date parserDateFacebook(String date)
+	public static Date parserDateFacebook(String date) 
 	{
 		Date dateD;
 		int annee = Integer.parseInt(date.substring(0, 4));

@@ -45,7 +45,6 @@ public class ConversationRazbot
 			
 			updatedTime = Utilitaires.parserDateFacebook(json.getString("updated_time"));
 			nombreMessages = json.getInt("message_count");
-			nonLu = json.getInt("unread_count");
 			messages = new ArrayList<>();
 			
 			//Remplissage des messages
@@ -55,14 +54,34 @@ public class ConversationRazbot
 				String message = messageData.getJSONObject(index).getString("message");
 				String date = messageData.getJSONObject(index).getString("created_time");
 				String auteur = messageData.getJSONObject(index).getJSONObject("from").getString("name");
+				String auteurID = messageData.getJSONObject(index).getJSONObject("from").getString("id");
 				
-				messages.add(new MessageRazbot(message, date, auteur));
+				messages.add(new MessageRazbot(message, date, auteur, auteurID));
 			}
+			
+			nonLu = compterNonLu();
 		}
 		catch (JSONException e)
 		{
 			e.printStackTrace();
 		}
+	}
+
+	private int compterNonLu()
+	{
+		int compteur = 0;
+		
+		for(int i=0; i<messages.size(); i++)	
+		{
+			if(!messages.get(i).getAuteurID().equals("156013618115881"))	//Tant qu'on trouve pas un message de la page
+			{
+				compteur++;
+			}
+			else
+				break;
+		}
+		
+		return compteur;
 	}
 
 	public String getConversationId()

@@ -2,18 +2,13 @@ package facebook;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import facebook4j.Conversation;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.InboxResponseList;
-import facebook4j.RawAPIResponse;
-import facebook4j.Reading;
 import facebook4j.auth.AccessToken;
-import facebook4j.internal.http.HttpParameter;
 import facebook4j.internal.org.json.JSONObject;
 
 public class PageRazbot
@@ -55,9 +50,9 @@ public class PageRazbot
 		{
 			facebook.answerConversation(conversation, message);
 		}
-		catch (FacebookException e)
+		catch (FacebookException e) 
 		{
-			e.printStackTrace();
+			e.printStackTrace();  
 		}
 	}
 	
@@ -144,101 +139,5 @@ public class PageRazbot
 		return "PageRazbot:\n" + conversations;
 	}
 
-//	public JSONObject derniereConversationNonLuJSON()
-//	{
-//		try
-//		{
-//			InboxResponseList<Conversation> conversations;
-//			conversations = facebook.getConversations();
-//			
-//			for (Conversation conversation : conversations)
-//			{
-//				String id = conversation.getId();
-//				
-//				JSONObject conversationJSON = facebook.callGetAPI(id+"?fields=participants,message_count,unread_count,messages{id,message,to}").asJSONObject();
-//				
-//				if(conversationJSON.getInt("unread_count") > 0)
-//					return conversationJSON;
-//			}
-//		}	
-//		catch (IllegalStateException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		catch (FacebookException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		catch (JSONException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	public Conversation derniereConversationNonLu()
-//	{
-//		try
-//		{
-//			InboxResponseList<Conversation> conversations;
-//			conversations = facebook.getConversations();
-//			
-//			for (Conversation conversation : conversations)
-//			{
-//				String id = conversation.getId();
-//				
-//				JSONObject conversationJSON = facebook.callGetAPI(id+"?fields=updated_time,participants,message_count,unread_count,messages{id,message,to}").asJSONObject();
-//				
-//				if(conversationJSON.getInt("unread_count") > 0)
-//					return creerConversation(conversationJSON);
-//			}
-//		}	
-//		catch (IllegalStateException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		catch (FacebookException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		catch (JSONException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//
-//	public int nombreMessagesNonLu()
-//	{
-//		//Emmerdant, on a les valeur de non lu uniquement pour 1 conversation..
-//	}
-//	
-//	/**
-//	 * Détermine si il y a un nouveau message (toute conversation confondu)
-//	 * 
-//	 * @return Vrai si il y a un nouveau message
-//	 */
-//	public boolean existeMessagesNonLu()
-//	{
-//		return (nombreMessagesNonLu() > 0);
-//	}
-//
-//	public InboxResponseList<Conversation> recupererConversations()
-//	{
-//		InboxResponseList<Conversation> conversations = null;
-//		try
-//		{
-//			conversations = facebook.getConversations();
-//		} catch (IllegalStateException e)
-//		{
-//			e.printStackTrace();
-//		} catch (FacebookException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		return conversations;
-//	}
-//}
 	
 }
