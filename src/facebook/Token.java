@@ -87,6 +87,15 @@ public final class Token
 	{
 		return recupererValeur("SECRETCODE");
 	}
+	
+	/**
+	 * 	Fonction pour définir quelle méthode de reception de message on utilise du fichier settings.in
+	 * @return Vrai si le webhook est activé, faux sinon
+	 */
+	public static boolean isWebhookEnable()
+	{
+		return recupererValeur("WEBHOOKENABLE")=="true"?true:false;
+	}
 
 	public static long getInverval()
 	{

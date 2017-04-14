@@ -33,9 +33,8 @@ public class PageRazbot
 		facebook.setOAuthAppId(appID, secretCode);
 		AccessToken token = new AccessToken(pageToken);
 		facebook.setOAuthAccessToken(token);
-		facebook.setOAuthPermissions("pages_messaging,pages_messaging_subscriptions,");
+		facebook.setOAuthPermissions("pages_messaging,pages_messaging_subscriptions");
 		
-		//modeOnline();
 		recupererConversations();
 	}
 
@@ -88,7 +87,11 @@ public class PageRazbot
 		}
 	}
 
-	public ArrayList<ConversationRazbot> attenteNouveauMessage()
+	/**
+	 * Attente des messages par utilisation d'appels à l'API Graph tout les x secondes (définis dans settings.ini)
+	 * @return
+	 */
+	public ArrayList<ConversationRazbot> attenteNouveauMessageAlternatif()
 	{
 		ArrayList<ConversationRazbot> conv;
 		long interval = Token.getInverval();
@@ -110,6 +113,22 @@ public class PageRazbot
 			{
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public ArrayList<ConversationRazbot> attenteNouveauMessage()
+	{
+		ArrayList<ConversationRazbot> conv;
+		
+		while(true)
+		{
+			//On vérifie & Récupère la liste
+			if(!(conv = getConversationsNouveauxMessages()).isEmpty())
+				return conv;
+			
+			System.out.println(new Date()+": Aucun nouveau message");
+			
+			
 		}
 	}
 	
