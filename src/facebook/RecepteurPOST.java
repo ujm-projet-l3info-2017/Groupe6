@@ -1,7 +1,9 @@
-package testFB;
+package facebook;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 public class RecepteurPOST extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-
+	//String resultatRequete;
+	
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public RecepteurPOST()
 	{
 		super();
+		//resultatRequete="";
 	}
 
 	/**
@@ -30,20 +35,21 @@ public class RecepteurPOST extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-//		if(request.getParameter("hub.verify_token")=="a")
-//			response.getWriter().append((CharSequence) request.getParameter("hub.challenge"));		
-		
-//		String a = request.getParameterNames();
-//		
-//		while(a.hasMoreElements())
-//		{
-//			response.getWriter().append((CharSequence) a);
-//			a=a.nextElement();
-//		}
-		
-		
-		response.getWriter().append((CharSequence) request.getServletContext().getAttribute("logpost"));
-	} 
+		if(request.getParameter("hub.mode").compareTo("subscribe")==0) //Validation du webhook
+		{
+			if(request.getParameter("hub.verify_token")!=null && request.getParameter("hub.challenge")!=null)
+			{
+				String testToken = request.getParameter("hub.verify_token");
+				
+				if(testToken.compareTo("tokenmagiquedelavage")==0)
+					response.getWriter().append((CharSequence) request.getParameter("hub.challenge"));		
+			}
+			else
+			{
+				response.getWriter().append("Paramètre manquant pour la validation du webhook");
+			}
+		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -51,6 +57,19 @@ public class RecepteurPOST extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{		
+		InputStream in = request.getInputStream();
+		
+		int i;
+		String loge="";
+		while((i = in.read())!=-1)
+		{
+			loge+=(((char)i+""));
+		}
+		System.out.println("RECU POST: "+loge+"\n");
+		
+		
+		response.getWriter().append("HTTP 200 OK");
+		
 //		StringBuffer jb = new StringBuffer();
 //		String line = null;
 //		try
@@ -76,22 +95,16 @@ public class RecepteurPOST extends HttpServlet
 //		}
 		
 		
+//		//Exploration des paramètres reçus
+//		Enumeration<String> a = request.getParameterNames();
+//		while(a.hasMoreElements())
+//		{
+//			String next = a.nextElement();
+//			resultatRequete.concat(next);
+//		}
+//		response.getWriter().append((CharSequence) resultatRequete);
 		
-		
-		
-		
-		
-		InputStream in = request.getInputStream();
-		
-		int i;
-		String loge="";
-		while((i = in.read())!=-1)
-		{
-			loge+=(((char)i+""));
-		}
-		request.getServletContext().setAttribute("logpost", loge);
-		log("RECU "+loge);
-		doGet(request, response);
+		//doGet(request, response);
 	}
 
 }
