@@ -1,4 +1,4 @@
-package facebook;
+package Servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import chatbot.ChatBotThread;
 
 /**
  * Servlet implementation class RecepteurPOST
@@ -65,8 +67,10 @@ public class RecepteurPOST extends HttpServlet
 		{
 			loge+=(((char)i+""));
 		}
-		System.out.println("RECU POST: "+loge+"\n");
+		System.out.println("Reçu requête POST: "+loge+"\n");
 		
+//		ChatBotThread chatbot; //Va falloir essayer de récupérer le chatbot qui était sur la servlet Admin
+//		chatbot.notify();
 		
 		response.getWriter().append("HTTP 200 OK");
 		
