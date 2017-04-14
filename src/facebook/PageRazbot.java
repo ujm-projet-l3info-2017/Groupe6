@@ -116,22 +116,6 @@ public class PageRazbot
 		}
 	}
 	
-	public ArrayList<ConversationRazbot> attenteNouveauMessage()
-	{
-		ArrayList<ConversationRazbot> conv;
-		
-		while(true)
-		{
-			//On vérifie & Récupère la liste
-			if(!(conv = getConversationsNouveauxMessages()).isEmpty())
-				return conv;
-			
-			System.out.println(new Date()+": Aucun nouveau message");
-			
-			
-		}
-	}
-	
 	/**
 	 * Renvoi les conversations avec des nouveaux messages
 	 * @return La liste des conversations
