@@ -14,7 +14,7 @@ public class AppTest
 		while(true)
 		{
 			//Attente nouveaux messages
-			ArrayList<ConversationRazbot> conversationsATraiter = razbot.attenteNouveauMessage();
+			ArrayList<ConversationRazbot> conversationsATraiter = razbot.attenteNouveauMessageAlternatif();
 			
 			for (ConversationRazbot conv : conversationsATraiter)
 			{
