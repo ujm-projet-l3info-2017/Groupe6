@@ -21,17 +21,17 @@ public class Main
 	    
 		for (int i=0; i<recherche.liste_films().size();i++)
 		{
-			Movie f = recherche.liste_films().get(i);
+			Film f = new Film(recherche.liste_films().get(i));
 			
-			System.out.println(RechercheAllocine.titre(f));
-			System.out.println(RechercheAllocine.realisateur(f));
-			System.out.println(RechercheAllocine.dateSortie(f));
-			System.out.println(RechercheAllocine.affiche(f));
+			System.out.println(f.titre());
+			System.out.println(f.realisateur());
+			System.out.println(f.dateSortie());
+			System.out.println(f.affiche());
 			try 
 			{
-				for (int j=0; j<RechercheAllocine.acteurs_principaux(f).size(); j++)
+				for (int j=0; j<f.acteurs_principaux().size(); j++)
 				{
-					System.out.println(RechercheAllocine.acteurs_principaux(f).get(j));
+					System.out.println(f.acteurs_principaux().get(j));
 				}
 			}
 			catch (Exception e)
