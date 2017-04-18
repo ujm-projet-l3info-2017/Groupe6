@@ -5,30 +5,41 @@ import java.util.Date;
 
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
+import facebook.Token;
 
 public class ChatBotThread extends Thread
 {
-	PageRazbot razbot;
+	public PageRazbot razbot;
+
 	boolean continuer = true;
 	
 	public ChatBotThread()
 	{
 		super();
+
+		razbot = new PageRazbot();
 	}
 	
 	public synchronized void run()
 	{
-		razbot = new PageRazbot(); 
 		
 //		try{System.in.read();}catch (IOException e){e.printStackTrace();} //GETCHAR
 		
-		while(continuer)
+		System.out.println("Démarrage du programme");
+		while(continuer && !Thread.currentThread().isInterrupted())
 		{
-			// Méthode récupération par interval de temps
+			if(Token.isWebhookEnable())
+			{
+				System.out.println("Mode WEBHOOK");
+				// Méthode par webhook
+				gestionMessagesWebhook();
+			}
+			else
+			{
+				System.out.println("Mode Interval");
+				// Méthode récupération par interval de temps
 				gestionMessagesInterval();
-			
-			// Méthode par webhook
-				//gestionMessagesWebhook();
+			}
 		}
 		System.out.println("Le programme a bien été arrêté");
 	}
@@ -40,7 +51,7 @@ public class ChatBotThread extends Thread
 		for (ConversationRazbot conv : conversationsATraiter)
 		{
 			System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-			//razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
+			razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
 		}
 	}
 
@@ -50,9 +61,6 @@ public class ChatBotThread extends Thread
 		{
 			synchronized (razbot)
 			{
-				System.out.println("Programme en attente de webhook");
-				wait();
-				System.out.println("Webhook de nouveau message reçu");
 				razbot.recupererConversations();
 				
 				ArrayList<ConversationRazbot> conversationsATraiter = razbot.getConversationsNouveauxMessages();
@@ -62,6 +70,10 @@ public class ChatBotThread extends Thread
 					System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
 					razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
 				}
+				
+				System.out.println("Programme en attente de webhook");
+				wait();
+				System.out.println("Webhook de nouveau message reçu");
 			}
 		}
 		catch (InterruptedException e)
@@ -72,6 +84,7 @@ public class ChatBotThread extends Thread
 
 	public void arret()
 	{
+		System.out.println("Demande d'arrêt du programme envoyé");
 		continuer = false;
 	}
 }
