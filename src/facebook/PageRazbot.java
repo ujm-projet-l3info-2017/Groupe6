@@ -142,5 +142,17 @@ public class PageRazbot
 		return "PageRazbot:\n" + conversations;
 	}
 
+	public JSONObject requeteGET(String url)
+	{
+		try
+		{
+			return (JSONObject) facebook.callGetAPI(url);
+		}
+		catch (FacebookException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }
