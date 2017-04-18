@@ -40,15 +40,15 @@ public final class Token
 	private static String recupererValeur(String propriete)
 	{
 		String valeur = "";
-		try
+		try //C:\\Users\\chris\\Desktop\\RazBot\\razbot\\settings.ini
 		{
 			//On charge le fichier et on recupère la valeur de la propriété TOKEN
-			valeur = chargement("settings.ini").getProperty(propriete, "vide");
+			valeur = chargement(trouverLocalisationSettings()).getProperty(propriete, "vide"); ///usr/share/tomcat7/conf/settings.ini
 		    return valeur;
 		}
 		catch (FileNotFoundException e)
 		{
-			//e.printStackTrace();
+			e.printStackTrace();
 			System.err.println("Fichier settings.ini non trouvé");
 			System.exit(-1);
 		}
@@ -59,6 +59,14 @@ public final class Token
 			System.exit(-1);
 		}
 		return "";	//Jamais atteint
+	}
+
+	private static String trouverLocalisationSettings()
+	{
+		if(System.getProperty("os.name").toLowerCase().indexOf("nux")>=0)	//Linux
+			return "/usr/share/tomcat7/conf/settings.ini";
+		else
+			return "C:\\Users\\chris\\Desktop\\RazBot\\razbot\\settings.ini";
 	}
 
 	/**
@@ -94,12 +102,12 @@ public final class Token
 	 */
 	public static boolean isWebhookEnable()
 	{
-		return recupererValeur("WEBHOOKENABLE")=="true"?true:false;
+		return recupererValeur("WEBHOOKENABLE").compareTo("true")==0?true:false;
 	}
 
 	public static long getInverval()
 	{
-		if(recupererValeur("TESTINTERVAL")=="vide")
+		if(recupererValeur("TESTINTERVAL")==null)
 		{
 //			System.out.println("Attention: Aucune valeur d'intervalle de temps n'a été spécifié pour le rafraichissement des messages");
 //			System.out.println("La valeur par défaut a été appliquée: 15sec");
