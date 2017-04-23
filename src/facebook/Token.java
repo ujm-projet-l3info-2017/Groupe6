@@ -66,7 +66,7 @@ public final class Token
 		if(System.getProperty("os.name").toLowerCase().indexOf("nux")>=0)	//Linux
 			return "/usr/share/tomcat7/conf/settings.ini";
 		else
-			return "C:\\Users\\chris\\Desktop\\RazBot\\razbot\\settings.ini";
+			return "C:\\Users\\chris\\Desktop\\RazBot\\razbot\\settings.ini"; //Il faut modifier le chemin ver mon settings.ini
 	}
 
 	/**
