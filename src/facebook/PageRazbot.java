@@ -89,7 +89,7 @@ public class PageRazbot
 
 	/**
 	 * Attente des messages par utilisation d'appels à l'API Graph tout les x secondes (définis dans settings.ini)
-	 * @return
+	 * @return ArrayList
 	 */
 	public ArrayList<ConversationRazbot> attenteNouveauMessageAlternatif()
 	{
