@@ -31,7 +31,7 @@ section
 <title>Page d'administration</title>
 </head>
 <body>
-	<section>
+	<div class="section">
 		<h1>Page d'administration</h1>
 	
 		<form action="${pageContext.request.contextPath}/Admin" method="post">
@@ -39,6 +39,6 @@ section
 			<label> Stop<input type="radio" name="selection" id="selection" value="stop" /></label>
 			<input type="submit" value="Envoyer"/> 
 		</form>
-	</section>
+	</div>
 </body>
 </html>
