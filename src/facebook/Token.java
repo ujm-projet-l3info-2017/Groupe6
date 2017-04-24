@@ -30,7 +30,7 @@ public final class Token
           {
 	         input.close();
 	      }
-	}
+	} 
 	
 	/**
 	 * Utilise chargement, puis recherche une propriété et renvoi sa valeur
@@ -39,15 +39,15 @@ public final class Token
 	 */
 	private static String recupererValeur(String propriete)
 	{
-		String valeur = "";
-		try //C:\\Users\\chris\\Desktop\\RazBot\\razbot\\settings.ini
+		String valeur = ""; System.out.println();
+		try // C:\\Users\\chris\\Desktop\\RazBot\\RaZBoT2\\settings.ini
 		{
 			//On charge le fichier et on recupère la valeur de la propriété TOKEN
-			valeur = chargement(trouverLocalisationSettings()).getProperty(propriete, "vide"); ///usr/share/tomcat7/conf/settings.ini
+			valeur = chargement(trouverLocalisationSettings()).getProperty(propriete, "vide"); // /usr/share/tomcat7/conf/settings.ini
 
 		    return valeur;
 		}
-		catch (FileNotFoundException e)
+		catch (FileNotFoundException e)  
 		{
 			e.printStackTrace();
 			System.err.println("Fichier settings.ini non trouvé");
@@ -67,9 +67,9 @@ public final class Token
 		if(System.getProperty("os.name").toLowerCase().indexOf("nux")>=0)	//Linux
 			return "/usr/share/tomcat7/conf/settings.ini";
 		else
-			return "C:\\Users\\chris\\Desktop\\RazBot\\razbot\\settings.ini"; //Il faut modifier le chemin ver mon settings.ini
+			return "C:\\Users\\chris\\Desktop\\RazBot\\RaZBoT2\\settings.ini"; //Il faut modifier le chemin vers mon settings.ini
 	}
-
+ 
 	/**
 	 * 	Fonction pour récupérer le token de la page facebook du fichier settings.ini
 	 * @return Le token de la page
