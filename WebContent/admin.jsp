@@ -25,6 +25,7 @@ section
 	color: #BBC8BB;
 	display: block;
 	margin: auto;
+
 }
 </style>
 <title>Page d'administration</title>

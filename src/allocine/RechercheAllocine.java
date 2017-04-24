@@ -7,12 +7,9 @@ import org.yamj.api.common.http.HttpClientWrapper;
 
 import com.moviejukebox.allocine.AllocineApi;
 import com.moviejukebox.allocine.AllocineException;
-import com.moviejukebox.allocine.model.Artwork;
-import com.moviejukebox.allocine.model.CodeName;
 import com.moviejukebox.allocine.model.Movie;
-import com.moviejukebox.allocine.model.MovieInfos;
 import com.moviejukebox.allocine.model.Search;
-
+import com.moviejukebox.allocine.model.TvSeries;
 
 
 public class RechercheAllocine 
@@ -43,50 +40,11 @@ public class RechercheAllocine
     	return recherche.getMovies();
     }
     
-    public static String titre(Movie film)
+    public List<TvSeries> liste_series()
     {
-		if (film.getTitle()==null)
-			return film.getOriginalTitle();
-		else return film.getTitle();
+    	return recherche.getTvSeries();
     }
     
-    public static String realisateur(Movie film)
-    {
-    	return film.getCastingShort().getDirectors().get(0);
-    }
-
-    public static int dateSortie(Movie film)
-    {
-    	return film.getProductionYear();
-    }
-    
-    public static String affiche(Movie film)
-    {
-    	Artwork x = film.getPoster();
-    	String s;
-		try 
-		{
-			s=x.getHref();
-		}
-		catch (Exception e)
-		{
-			s ="Il n'y a pas d'affiche pour ce film";
-		}
-		return s;
-    }
-    
-    public static List<String> acteurs_principaux(Movie film)
-    {
-    	try 
-    	{
-    		return film.getCastingShort().getActors();
-    	}
-    	catch (Exception e)
-    	{
-    		System.out.println("Pas d'acteurs pour ce film");
-    	}
-		return null;
-    }
 
     
 }
