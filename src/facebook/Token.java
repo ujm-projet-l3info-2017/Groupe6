@@ -117,12 +117,12 @@ public final class Token
 		return Long.valueOf(recupererValeur("TESTINTERVAL"));	//Récupéré du fichier
 	}
 	
-	private static String trouverLocalisationSettings()
+	/*private static String trouverLocalisationSettings()
 	{
 		if(System.getProperty("os.name").toLowerCase().indexOf("nux")>=0)	//Linux
 			return "/usr/share/tomcat7/conf/settings.ini";
 		else
 			return "C:\\Users\\Ordi\\Desktop\\RazBot\\razbot\\settings.ini";
 		
-	}
+	}*/
 }
