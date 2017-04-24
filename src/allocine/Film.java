@@ -5,6 +5,12 @@ import java.util.List;
 import com.moviejukebox.allocine.model.Artwork;
 import com.moviejukebox.allocine.model.Movie;
 
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.FacebookFactory;
+import facebook4j.internal.org.json.JSONException;
+import facebook4j.internal.org.json.JSONObject;
+
 
 public class Film 
 {
@@ -47,7 +53,7 @@ public class Film
 		return s;
     }
     
-    public List<String> acteurs_principaux()
+    public List<String> acteursPrincipaux()
     {
     	try 
     	{
@@ -61,5 +67,15 @@ public class Film
     }
 
 
+    public String motsClefs()
+    {
+    	return film.getKeywords();
+    }
+    
+    public int code()
+    {
+    	return film.getCode();
+    }
 	
+
 }

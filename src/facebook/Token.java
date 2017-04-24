@@ -43,7 +43,7 @@ public final class Token
 		try
 		{
 			//On charge le fichier et on recupère la valeur de la propriété TOKEN
-			valeur = chargement("settings.ini").getProperty(propriete, "vide");
+			valeur = chargement(trouverLocalisationSettings()).getProperty(propriete, "vide");
 		    return valeur;
 		}
 		catch (FileNotFoundException e)
@@ -106,5 +106,14 @@ public final class Token
 			return 15000; //15 sec par défaut
 		}
 		return Long.valueOf(recupererValeur("TESTINTERVAL"));	//Récupéré du fichier
+	}
+	
+	private static String trouverLocalisationSettings()
+	{
+		if(System.getProperty("os.name").toLowerCase().indexOf("nux")>=0)	//Linux
+			return "/usr/share/tomcat7/conf/settings.ini";
+		else
+			return "C:\\Users\\Ordi\\Desktop\\RazBot\\razbot\\settings.ini";
+		
 	}
 }
