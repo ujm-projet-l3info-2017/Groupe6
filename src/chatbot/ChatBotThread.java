@@ -3,6 +3,7 @@ package chatbot;
 import java.util.ArrayList;
 import java.util.Date;
 
+import allocine.RechercheAllocine;
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
 import facebook.Token;
@@ -51,8 +52,15 @@ public class ChatBotThread extends Thread
 		for (ConversationRazbot conv : conversationsATraiter)
 		{
 			System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-			razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
+			//razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
+			razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage()));
 		}
+	}
+
+	private String testApiAllocine(String message)
+	{
+		String infos[] = message.split(",");
+		return RechercheAllocine.informationFilm(infos[0],infos[1]);
 	}
 
 	private synchronized void gestionMessagesWebhook()

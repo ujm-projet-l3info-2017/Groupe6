@@ -7,6 +7,7 @@ import com.moviejukebox.allocine.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @JsonRootName("movie")
 @JsonIgnoreProperties(value = {"trailerEmbed"})
@@ -48,7 +49,14 @@ public class MyMovie extends AbstractBaseMapping {
     private List<BoxOffice> boxOffice;
     @JsonProperty("formatList")
     private FormatList formatList;
+    @JsonProperty("genres")
+    private Set<String> genres;
 
+    public Set<String> getGenres()
+    {
+    	return genres;
+    }
+    
     public int getProductionYear() {
         return productionYear;
     }

@@ -1,13 +1,5 @@
 package allocine;
 
-import java.util.List;
-import java.util.Map;
-
-import com.moviejukebox.allocine.model.Movie;
-import com.omertron.imdbapi.ImdbApi;
-import com.omertron.imdbapi.ImdbException;
-import com.omertron.imdbapi.search.SearchObject;
-
 import facebook.PageRazbot;
 import facebook4j.FacebookException;
 import facebook4j.internal.org.json.JSONException;
