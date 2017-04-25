@@ -5,6 +5,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.yamj.api.common.http.AndroidBrowserUserAgentSelector;
 import org.yamj.api.common.http.HttpClientWrapper;
 
+import com.moviejukebox.allocine.AllocineApi;
 import com.moviejukebox.allocine.AllocineException;
 import com.moviejukebox.allocine.model.Movie;
 import com.moviejukebox.allocine.model.Search;
@@ -23,7 +24,7 @@ public class RechercheAllocine
 
 		try 
 		{
-			AllocineApiTest a = new AllocineApiTest(PARTNER_KEY, SECRET_KEY, wrapper);
+			AllocineApi a = new AllocineApi(PARTNER_KEY, SECRET_KEY, wrapper);
 			recherche = a.searchMovies(film);
 		} 
 		catch (AllocineException e) 

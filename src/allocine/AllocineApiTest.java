@@ -2,7 +2,6 @@ package allocine;
 
 import static org.yamj.api.common.exception.ApiExceptionType.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moviejukebox.allocine.AllocineException;
 import com.moviejukebox.allocine.model.*;
 import java.io.IOException;
@@ -16,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.protocol.HTTP;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.LoggerFactory;
 import org.yamj.api.common.http.*;
 
