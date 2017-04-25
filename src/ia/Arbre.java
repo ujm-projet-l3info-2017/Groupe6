@@ -8,6 +8,5 @@ public class Arbre {
 	
 	public void lancementArbre(){
 		
-		
 	}
 }
