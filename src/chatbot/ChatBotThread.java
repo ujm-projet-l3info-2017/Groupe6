@@ -62,7 +62,8 @@ public class ChatBotThread extends Thread
 		String infos[] = message.split(",");
 		String resultat;
 		
-		if(infos.length < 2)
+		System.out.println(infos.length);
+		if(infos.length < 1)
 		{
 			resultat = "Introuvable";
 		}
@@ -71,7 +72,7 @@ public class ChatBotThread extends Thread
 			resultat = RechercheAllocine.informationFilm(infos[0],infos[1]);
 		}
 		
-		return resultat;
+		return RechercheAllocine.informationFilm(infos[0],infos[1]);
 	}
 
 	private synchronized void gestionMessagesWebhook()
@@ -87,7 +88,7 @@ public class ChatBotThread extends Thread
 				for (ConversationRazbot conv : conversationsATraiter)
 				{
 					System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-					razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
+					razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage()));
 				}
 				
 				System.out.println("Programme en attente de webhook");
