@@ -72,7 +72,7 @@ public class ChatBotThread extends Thread
 			resultat = RechercheAllocine.informationFilm(infos[0],infos[1]);
 		}
 		
-		return RechercheAllocine.informationFilm(infos[0],infos[1]);
+		return resultat;
 	}
 
 	private synchronized void gestionMessagesWebhook()

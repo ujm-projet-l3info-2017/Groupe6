@@ -52,7 +52,7 @@ public class RechercheAllocine
     		case "note":
     			return String.valueOf(f.note_public());
     	}
-    	return "Erreur, Synthaxe= <Film>,<Element>  Avec Element: realisateur / dateSortie / affiche / acteurPrincipal / note";
+    	return "Usage : titre, realisateur, dateSortie, affiche, acteurPrincipal, note";
     	
     }
     
