@@ -59,8 +59,19 @@ public class ChatBotThread extends Thread
 
 	private String testApiAllocine(String message)
 	{
-		String infos[] = message.split(",");
-		return RechercheAllocine.informationFilm(infos[0],infos[1]);
+	    String infos[] = message.split(",");
+	    String resultat;
+
+	    if(infos.length < 2)
+	    {
+	        resultat = "Introuvable";
+	    }
+	    else
+	    {
+	        resultat = RechercheAllocine.informationFilm(infos[0],infos[1]);
+	    }
+
+	    return resultat;
 	}
 
 	private synchronized void gestionMessagesWebhook()

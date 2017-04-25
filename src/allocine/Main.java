@@ -25,10 +25,6 @@ public class Main
 
 			System.out.println();
 		}
-		
-		PageRazbot p = new PageRazbot();
-		
-		JSONObject a = p.requeteGET("http://api.allocine.fr/rest/v3/search?partner=100043982026&filter=movie%2Ctheater%2Cperson%2Cnews%2Ctvseries&count=5&page=1&q=avatar&format=json");
 
 	}
     
