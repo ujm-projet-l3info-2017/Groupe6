@@ -36,24 +36,32 @@ public class Admin extends HttpServlet
 	{
 		if(request.getParameter("hub.verify_token")!=null)
 		{
-			verificationWebhook(request,response);
+			verificationWebhook(request,response); 
 		}
 		else
 		{
-			RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
-			dispatcher.forward(request, response);
+			if(request.getParameter("code").compareTo("lecode") == 0)
+			{
+				RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+				dispatcher.forward(request, response);
+			}
+			else
+			{
+				RequestDispatcher dispatcher = request.getRequestDispatcher("connexion_admin.jsp");
+				dispatcher.forward(request, response);
+			}
 		}
 	}
 
 	private void verificationWebhook(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		if(request.getParameter("hub.mode").compareTo("subscribe")==0) //Validation du webhook
+		if (request.getParameter("hub.mode").compareTo("subscribe") == 0) // Validation du webhook
 		{
 			if(request.getParameter("hub.verify_token")!=null && request.getParameter("hub.challenge")!=null)
 			{
 				String testToken = request.getParameter("hub.verify_token");
 				
-				if(testToken.compareTo("tokenmagiquedelavage")==0)
+				if(testToken.compareTo("tokenmagiquedelavage") == 0)
 					response.getWriter().append((CharSequence) request.getParameter("hub.challenge"));		
 			}
 			else
@@ -76,12 +84,12 @@ public class Admin extends HttpServlet
 			{
 				lancementServeur();
 			}
-			else
+			else 
 			{
 				if (request.getParameter("selection").compareTo("stop") == 0)
 				{
-					fermetureServeur();
-					synchronized(chatbot)
+					fermetureServeur(); 
+					synchronized(chatbot)         
 					{
 						if(chatbot.getState()==Thread.State.WAITING)
 							chatbot.notify();
