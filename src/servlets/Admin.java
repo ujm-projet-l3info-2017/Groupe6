@@ -40,10 +40,13 @@ public class Admin extends HttpServlet
 		}
 		else
 		{
-			if(request.getParameter("code").compareTo("lecode") == 0)
+			if(request.getParameter("code")!=null)	
 			{
-				RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
-				dispatcher.forward(request, response);
+				if(request.getParameter("code").compareTo("lecode") == 0)
+				{
+					RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+					dispatcher.forward(request, response);
+				}
 			}
 			else
 			{
