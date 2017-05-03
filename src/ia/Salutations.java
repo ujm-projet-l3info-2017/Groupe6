@@ -21,7 +21,7 @@ public class Salutations implements Vocabulaire{
 	 */
 	public Salutations(){
 		expressions.add("Bonjour");
-		expressions.add("Bonsoir");
+		expressions.add("Bonsoir"); //Est ce qu'on sait l'heure
 		expressions.add("Salut");
 		expressions.add("Hey");
 		expressions.add("Content de te parler");
