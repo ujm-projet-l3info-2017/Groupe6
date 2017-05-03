@@ -43,7 +43,7 @@ public class Arbre {
 	
 	private String rechercheCritere() {
 		
-		return "Voila"+resultatFilm; //Voir avec listes de vocabulaire
+		return "Voila";//+resultatFilm; //Voir avec listes de vocabulaire
 	}
 
 	public void satisfaction(boolean satisfait){
@@ -67,6 +67,7 @@ public class Arbre {
 		b_sortie=false;
 		b_genre=false;
 		questionCritere();
+		return "truc";
 	}
 	
 	public String fin()
