@@ -5,8 +5,9 @@
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>RazBot</name>
+  <packaging>war</packaging>
   <build>
-    <sourceDirectory>src</sourceDirectory>
+       
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -16,10 +17,10 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-	  <plugin>
-      	<artifactId>maven-war-plugin</artifactId>
-		<version>3.1.0</version>       
-	  </plugin>
+      <plugin>
+	    	<artifactId>maven-war-plugin</artifactId>
+	    	<version>3.1.0</version>	    	
+		</plugin>
     </plugins>
   </build>
   <dependencies>
@@ -76,4 +77,6 @@
    </dependency>
   </dependencies>
   <description>Le bot cinéphile !</description>
+  
+  
 </project>
