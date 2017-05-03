@@ -17,7 +17,7 @@ public class Arbre {
 		String A="";
 		String S="";
 		String G="";
-		// Si Terminé, rechercheCriteres();
+		// Si Terminé, rechercheCritere();
 		if((b_realisateur==true)&&(b_acteur==true)&&(b_sortie==true)&&(b_genre==true))
 		{
 			rechercheCritere();
