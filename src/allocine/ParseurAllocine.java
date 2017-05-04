@@ -36,7 +36,8 @@ public class ParseurAllocine
 	{
 		String url = "http://www.allocine.fr/films/notes/";
 		url += ajouterGenre(genre);	
-		url += ajouterDate(date);
+		if (date)
+			url += ajouterDate(date);
 		return chercherUrl(url);
 	}
 	
