@@ -8,10 +8,11 @@
 body
 {
 	background-color: #EEF8FF;
+	font-family:Calibri;
 }
 h1
 {
-	color: #3498db;
+	color: #007dc1;
 	text-align: center;
 }
 form
@@ -19,13 +20,28 @@ form
 	color: #3498db;
 	text-align: center;
 }
-section
+.bouton
 {
-	width: 50%;
-	color: #BBC8BB;
-	display: block;
-	margin: auto;
-
+	background-color:#007dc1;
+	-moz-border-radius:7px;
+	-webkit-border-radius:7px;
+	border-radius:7px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Calibri;
+	font-size:1em;
+	padding:6px 24px;
+	text-decoration:none;
+}
+.bouton:hover
+{
+	background-color:#0061a7;
+}
+.bouton:active
+{
+	position:relative;
+	top:1px;
 }
 </style>
 <title>Connexion Administration</title>
@@ -35,8 +51,8 @@ section
 		<h1>Connexion Administration</h1>
 	
 		<form action="${pageContext.request.contextPath}/Admin" method="get">
-			<label> Code d'accès<input type="text" name="code" id="code"/></label>
-			<input type="submit" value="Envoyer"/> 
+			<label> <b>Code d'accès:</b> <input type="text" name="code" id="code"/></label>
+			<input class="bouton" type="submit" value="Envoyer"/> 
 		</form>
 	</div>
 </body>

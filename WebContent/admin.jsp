@@ -8,10 +8,11 @@
 body
 {
 	background-color: #EEF8FF;
+	font-family:Calibri;
 }
 h1
 {
-	color: #3498db;
+	color: #007dc1;
 	text-align: center;
 }
 form
@@ -19,13 +20,28 @@ form
 	color: #3498db;
 	text-align: center;
 }
-section
+button
 {
-	width: 50%;
-	color: #BBC8BB;
-	display: block;
-	margin: auto;
-
+	background-color:#007dc1;
+	-moz-border-radius:7px;
+	-webkit-border-radius:7px;
+	border-radius:7px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Calibri;
+	font-size:1em;
+	padding:6px 24px;
+	text-decoration:none;
+}
+button:hover
+{
+	background-color:#0061a7;
+}
+button:active
+{
+	position:relative;
+	top:1px;
 }
 </style>
 <title>Page d'administration</title>
@@ -34,10 +50,9 @@ section
 	<div class="section">
 		<h1>Page d'administration</h1>
 	
-		<form action="${pageContext.request.contextPath}/Admin" method="post">
-			<label> Start<input type="radio" name="selection" id="selection" value="start" /></label>
-			<label> Stop<input type="radio" name="selection" id="selection" value="stop" /></label>
-			<input type="submit" value="Envoyer"/> 
+		<form action="${pageContext.request.contextPath}/Admin?code=lecode" method="post">
+			<button type="submit" name="selection" id="selection" value="start">Démarrer l'IA </button>
+			<button type="submit" name="selection" id="selection" value="stop">Arrêter l'IA </button>
 		</form>
 	</div>
 </body>
