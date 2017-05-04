@@ -74,6 +74,11 @@
    	<artifactId>jackson-xml-databind</artifactId>
    	<version>0.6.2</version>
    </dependency>
+   <dependency>
+   	<groupId>org.jsoup</groupId>
+   	<artifactId>jsoup</artifactId>
+   	<version>1.10.2</version>
+   </dependency>
   </dependencies>
   <description>Le bot cinéphile !</description>
   
