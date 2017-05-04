@@ -13,15 +13,23 @@ import facebook4j.internal.org.json.JSONObject;
 
 public class PageRazbot
 {
+	/** L'API Facebook */
 	private Facebook facebook;
+	/** La liste des conversations*/
 	private ArrayList<ConversationRazbot> conversations;
+	/** L'id de l'app Facebook utilisée*/
 	private String appID;
+	/** Le secret code de l'app Facebook utilisée*/
 	private String secretCode;
+	/** Le token d'accès de la page Razbot*/
 	private String pageToken;
 
+	/**
+	 *  Constucteur qui récupère les ID/Tokens, initialise l'API Facebook, et récupère les conversations
+	 */
 	public PageRazbot()
 	{
-		// Récupèration les identifiants de la page facebook (settings.ini)
+		// Récupération les identifiants de la page facebook (settings.ini)
 		appID = Token.getAppId();
 		secretCode = Token.getSecretCode();
 		pageToken = Token.getToken();
@@ -38,11 +46,11 @@ public class PageRazbot
 		recupererConversations();
 	}
 
-	public Facebook getFacebook()
-	{
-		return facebook;
-	}
-
+	/**
+	 *  Méthode pour envoyer un message avec le bot
+	 * @param conversation à laquelle on envoit un message
+	 * @param message à envoyer
+	 */
 	public void envoyerMessage(String conversation, String message)
 	{
 		try
@@ -55,6 +63,9 @@ public class PageRazbot
 		}
 	}
 	
+	/**
+	 *  Récupère dans l'objet conversation les conversations à jour
+	 */
 	public void recupererConversations()
 	{
 		//On initialise la liste de conversation
@@ -136,12 +147,26 @@ public class PageRazbot
 		return conversationNonLu;
 	}
 	
+	/**
+	 *  Getter pour l'api facebook
+	 * @return l'objet Facebook (API)
+	 */
+	public Facebook getFacebook()
+	{
+		return facebook;
+	}
+	
 	@Override
 	public String toString()
 	{
 		return "PageRazbot:\n" + conversations;
 	}
 
+	/**
+	 *  Fonction pour faire des requêtes GET avec la méthode de l'API Facebook
+	 * @param url
+	 * @return
+	 */
 	public JSONObject requeteGET(String url)
 	{
 		try
