@@ -2,23 +2,31 @@ package chatbot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 
 import allocine.RechercheAllocine;
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
 import facebook.Token;
+import ia.ConversationIA;
 
 public class ChatBotThread extends Thread
 {
+	/** L'objet qui gère les conversations*/
 	public PageRazbot razbot;
-
+	/** Les IA associées à chaque conversation */
+	private Hashtable<String,ConversationIA> conversationsIA;
+	/** Sert à stopper le thread proprement */
 	boolean continuer = true;
 	
+	/**
+	 *  On initialise la table de hash et la page
+	 */
 	public ChatBotThread()
 	{
 		super();
-
 		razbot = new PageRazbot();
+		conversationsIA = new Hashtable<>();
 	}
 	
 	public synchronized void run()
@@ -45,21 +53,36 @@ public class ChatBotThread extends Thread
 		System.out.println("Le programme a bien été arrêté");
 	}
 
+	/**
+	 *  Gestion des nouveaux messages par méthode de vérification ponctuelle
+	 */
 	private synchronized void gestionMessagesInterval()
 	{
 		synchronized (razbot)
 		{
+			//On récupère la liste des conversations avec des messages à traiter
 			ArrayList<ConversationRazbot> conversationsATraiter = razbot.attenteNouveauMessageAlternatif();
-	
+			
+			//On les traite une par une
 			for (ConversationRazbot conv : conversationsATraiter)
 			{
 				System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-				//razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
-				razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage()));
+				
+				//On charge la conversation correspondante (ou on la crée)
+				ConversationIA convIA = correspondanceConversation(conv.getConversationId());
+				//On fait traiter le message
+				String reponse = convIA.traitementMessage(conv.getMessages().get(0).getMessage());
+				//On renvoit la réponse
+				razbot.envoyerMessage(conv.getConversationId(), reponse);
 			}
 		}
 	}
 
+	/**
+	 *  Méthode de démo des fonctionnalités de l'api allociné
+	 * @param Le nom d'un film, virgule, le type de ressource demandé
+	 * @return La ressource demandé
+	 */
 	private String testApiAllocine(String message)
 	{
 		String infos[] = message.split(",");
@@ -78,20 +101,34 @@ public class ChatBotThread extends Thread
 		return resultat;
 	}
 
+	/**
+	 *  Gestion des nouveaux messages par méthode du webhook (uniquement fonctionnel sur le serveur associé au nom de domaine razbot.jeamme.fr)
+	 */
 	private synchronized void gestionMessagesWebhook()
 	{
 		try
 		{
 			synchronized (razbot)
 			{
+				//On met les conversations de la page à jour
 				razbot.recupererConversations();
 				
+				//On récupère la liste des conversations avec des messages à traiter
 				ArrayList<ConversationRazbot> conversationsATraiter = razbot.getConversationsNouveauxMessages();
 			
+				//On les traite une par une
 				for (ConversationRazbot conv : conversationsATraiter)
 				{
 					System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-					razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage()));
+					
+					//On charge la conversation correspondante (ou on la crée)
+					ConversationIA convIA = correspondanceConversation(conv.getConversationId());
+					//On fait traiter le message
+					String reponse = convIA.traitementMessage(conv.getMessages().get(0).getMessage());
+					//On renvoit la réponse
+					razbot.envoyerMessage(conv.getConversationId(), reponse);
+			
+					//razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage())); //Test Allocine
 				}
 				
 				System.out.println("Programme en attente de webhook");
@@ -105,6 +142,30 @@ public class ChatBotThread extends Thread
 		}
 	}
 
+	/**
+	 *  Récupère ou crée l'objet ConversationIA associé
+	 * @param conversationId Id de la conversation
+	 * @return l'objet contenant l'IA de cette conversation
+	 */
+	private ConversationIA correspondanceConversation(String conversationId)
+	{
+		//Si la l'IA de cette conversation existe déjà
+		if(conversationsIA.containsKey(conversationId))
+		{
+			System.out.println("Utilisation d'un objet de gestion d'IA existant pour cette conversation\n");
+			return conversationsIA.get(conversationId);
+		}
+		else //Sinon on la crée
+		{
+			System.out.println("Création d'un objet de gestion d'IA pour cette conversation\n");
+			conversationsIA.put(conversationId, new ConversationIA());
+			return conversationsIA.get(conversationId);
+		}
+	}
+
+	/**
+	 *  Arrêt du thread
+	 */
 	public void arret()
 	{
 		System.out.println("Demande d'arrêt du programme reçu");

@@ -16,7 +16,7 @@ public class ConversationIA
 	 */
 	public String traitementMessage(String message)
 	{
-		return null;
+		return "Réponse";
 	}
 
 }
