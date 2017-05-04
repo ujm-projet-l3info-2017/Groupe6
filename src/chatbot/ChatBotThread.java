@@ -2,24 +2,30 @@ package chatbot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 
-import com.moviejukebox.allocine.AllocineException;
-import allocine.RechercheAllocine;
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
 import facebook.Token;
+import ia.ConversationIA;
 
 public class ChatBotThread extends Thread
 {
+	/** L'objet qui gère les conversations*/
 	public PageRazbot razbot;
-
+	/** Les IA associées à chaque conversation */
+	private Hashtable<String,ConversationIA> conversationsIA;
+	/** Sert à stopper le thread proprement */
 	boolean continuer = true;
 	
+	/**
+	 *  On initialise la table de hash et la page
+	 */
 	public ChatBotThread()
 	{
 		super();
-
 		razbot = new PageRazbot();
+		conversationsIA = new Hashtable<>();
 	}
 	
 	public synchronized void run()
@@ -34,72 +40,71 @@ public class ChatBotThread extends Thread
 			{
 				System.out.println("Mode WEBHOOK");
 				// Méthode par webhook
-				try {
-					gestionMessagesWebhook();
-				} catch (AllocineException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				gestionMessagesWebhook();
 			}
 			else
 			{
 				System.out.println("Mode Interval");
 				// Méthode récupération par interval de temps
-				try {
-					gestionMessagesInterval();
-				} catch (AllocineException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				gestionMessagesInterval();
 			}
 		}
 		System.out.println("Le programme a bien été arrêté");
 	}
 
-	private void gestionMessagesInterval() throws AllocineException
+	/**
+	 *  Gestion des nouveaux messages par méthode de vérification ponctuelle
+	 */
+	private synchronized void gestionMessagesInterval()
 	{
-		ArrayList<ConversationRazbot> conversationsATraiter = razbot.attenteNouveauMessageAlternatif();
-
-		for (ConversationRazbot conv : conversationsATraiter)
+		synchronized (razbot)
 		{
-			System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-			//razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
-			razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage()));
+			//On récupère la liste des conversations avec des messages à traiter
+			ArrayList<ConversationRazbot> conversationsATraiter = razbot.attenteNouveauMessageAlternatif();
+			
+			//On les traite une par une
+			for (ConversationRazbot conv : conversationsATraiter)
+			{
+				System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
+				
+				//On charge la conversation correspondante (ou on la crée)
+				ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
+				//On fait traiter le message
+				String reponse = convIA.traitementMessage(conv.getMessages().get(0).getMessage());
+				//On renvoit la réponse
+				razbot.envoyerMessage(conv.getConversationId(), reponse);
+			}
 		}
 	}
 
-	private String testApiAllocine(String message) throws AllocineException
-	{
-		String infos[] = message.split(",");
-		String resultat;
-		
-		System.out.println(infos.length);
-		if(infos.length < 1)
-		{
-			resultat = "Introuvable";
-		}
-		else
-		{
-			resultat = RechercheAllocine.informationFilm(infos[0],infos[1]);
-		}
-		
-		return resultat;
-	}
-
-	private synchronized void gestionMessagesWebhook() throws AllocineException
+	/**
+	 *  Gestion des nouveaux messages par méthode du webhook (uniquement fonctionnel sur le serveur associé au nom de domaine razbot.jeamme.fr)
+	 */
+	private synchronized void gestionMessagesWebhook()
 	{
 		try
 		{
 			synchronized (razbot)
 			{
+				//On met les conversations de la page à jour
 				razbot.recupererConversations();
 				
+				//On récupère la liste des conversations avec des messages à traiter
 				ArrayList<ConversationRazbot> conversationsATraiter = razbot.getConversationsNouveauxMessages();
 			
+				//On les traite une par une
 				for (ConversationRazbot conv : conversationsATraiter)
 				{
 					System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-					razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage()));
+					
+					//On charge la conversation correspondante (ou on la crée)
+					ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
+					//On fait traiter le message
+					String reponse = convIA.traitementMessage(conv.getMessages().get(0).getMessage());
+					//On renvoit la réponse
+					razbot.envoyerMessage(conv.getConversationId(), reponse);
+			
+					//razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage())); //Test Allocine
 				}
 				
 				System.out.println("Programme en attente de webhook");
@@ -113,9 +118,35 @@ public class ChatBotThread extends Thread
 		}
 	}
 
+	/**
+	 *  Récupère ou crée l'objet ConversationIA associé
+	 * @param conversationId Id de la conversation
+	 * @param username Nom de l'utilisateur avec qui on parle
+	 * @return l'objet contenant l'IA de cette conversation
+	 */
+	private ConversationIA correspondanceConversation(String conversationId, String username)
+	{
+		//Si la l'IA de cette conversation existe déjà
+		if(conversationsIA.containsKey(conversationId))
+		{
+			System.out.println("Utilisation d'un objet de gestion d'IA existant pour cette conversation\n");
+			return conversationsIA.get(conversationId);
+		}
+		else //Sinon on la crée
+		{
+			System.out.println("Création d'un objet de gestion d'IA pour cette conversation\n");
+			conversationsIA.put(conversationId, new ConversationIA(username));
+			return conversationsIA.get(conversationId);
+		}
+	}
+
+	/**
+	 *  Arrêt du thread
+	 */
 	public void arret()
 	{
-		System.out.println("Demande d'arrêt du programme envoyé");
+		System.out.println("Demande d'arrêt du programme reçu");
 		continuer = false;
 	}
 }
+
