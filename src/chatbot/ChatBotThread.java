@@ -3,6 +3,7 @@ package chatbot;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.moviejukebox.allocine.AllocineException;
 import allocine.RechercheAllocine;
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
@@ -33,19 +34,29 @@ public class ChatBotThread extends Thread
 			{
 				System.out.println("Mode WEBHOOK");
 				// Méthode par webhook
-				gestionMessagesWebhook();
+				try {
+					gestionMessagesWebhook();
+				} catch (AllocineException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			else
 			{
 				System.out.println("Mode Interval");
 				// Méthode récupération par interval de temps
-				gestionMessagesInterval();
+				try {
+					gestionMessagesInterval();
+				} catch (AllocineException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		System.out.println("Le programme a bien été arrêté");
 	}
 
-	private void gestionMessagesInterval()
+	private void gestionMessagesInterval() throws AllocineException
 	{
 		ArrayList<ConversationRazbot> conversationsATraiter = razbot.attenteNouveauMessageAlternatif();
 
@@ -57,7 +68,7 @@ public class ChatBotThread extends Thread
 		}
 	}
 
-	private String testApiAllocine(String message)
+	private String testApiAllocine(String message) throws AllocineException
 	{
 		String infos[] = message.split(",");
 		String resultat;
@@ -75,7 +86,7 @@ public class ChatBotThread extends Thread
 		return resultat;
 	}
 
-	private synchronized void gestionMessagesWebhook()
+	private synchronized void gestionMessagesWebhook() throws AllocineException
 	{
 		try
 		{

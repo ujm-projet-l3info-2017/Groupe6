@@ -1,26 +1,48 @@
 package allocine;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ParseurAllocine 
 {	
-	
-	public static void testURL(String url)
+	public static List<String> recupererFilms()
 	{
+		String url = "http://www.allocine.fr/films/notes/";
+		return chercherUrl(url);
+	}
+	
+	public static List<String> recupererFilms(String genre)
+	{
+		String url = "http://www.allocine.fr/films/notes/";
+		url += ajouterGenre(genre);	
+		return chercherUrl(url);
+	}
+	
+	public static List<String> recupererFilms(boolean date)
+	{
+		String url = "http://www.allocine.fr/films/notes/";
+		if (date)
+			url += ajouterDate(date);
+		return chercherUrl(url);
+	}
+	
+	public static List<String> recupererFilms(String genre, boolean date)
+	{
+		String url = "http://www.allocine.fr/films/notes/";
+		url += ajouterGenre(genre);	
+		url += ajouterDate(date);
+		return chercherUrl(url);
+	}
+	
+	private static List<String> chercherUrl(String url)
+	{
+		List<String> liste = new ArrayList<>();
 		try 
 		{
 			Document doc = Jsoup.connect(url).get();
@@ -29,11 +51,56 @@ public class ParseurAllocine
 			Elements films = film.select(".meta-title-link");
 			for (int i=0; i<films.size();i++)
 			{
-				System.out.println(films.get(i).text());
+				liste.add(films.get(i).text());
 			}
 		} catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
+		return liste;
 	}
+	
+	private static String ajouterDate(boolean date) 
+	{
+		return "decennie-2010/";
+	}
+
+	private static String ajouterGenre(String genre) 
+	{
+		String param = "genre-130";
+
+		if (genre.contains("action"))
+			param+="25";
+		if (genre.contains("anim"))
+			param+="26";
+		if (genre.contains("biopic"))
+			param+="27";
+		if (genre.contains("aventur"))
+			param+="01";
+		if (genre.contains("comique") || genre.contains("comédie"))
+			param+="05";
+		if (genre.contains("dram"))
+			param+="08";
+		if (genre.contains("érotique") || genre.contains("sex"))
+			param+="10";
+		if (genre.contains("histo"))
+			param+="15";
+		if (genre.contains("fantasti"))
+			param+="12";
+		if (genre.contains("polic"))
+			param+="18";
+		if (genre.contains("roman"))
+			param+="24";
+		if (genre.contains("science") || genre.contains("fiction"))
+			param+="21";
+		if (genre.contains("thriller"))
+			param+="23";
+		if (genre.contains("western"))
+			param+="19";
+			
+		return param+"/";
+	}
+
+	
+	
 }

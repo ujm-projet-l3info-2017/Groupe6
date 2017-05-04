@@ -115,6 +115,7 @@ public class AllocineApiTest {
         params.put(PARAM_FILTER, FILTER_MOVIE);
         params.put(PARAM_STRIPTAGS, LITERAL_SYNOPSIS);
         final String url = apiUrl.generateUrl(METHOD_SEARCH, params);
+
         try {
             return this.readJsonObject(new URL(url), Search.class);
         } catch (MalformedURLException ex) {

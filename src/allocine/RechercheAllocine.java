@@ -16,16 +16,17 @@ public class RechercheAllocine
     private static final String PARTNER_KEY = "100043982026";
     private static final String SECRET_KEY = "29d185d98c984a359e6e6f26a0474269";
     Search recherche;
+    AllocineApi a;
     
-    public RechercheAllocine(String film)
+    public RechercheAllocine(String requete)
     {
         HttpClientWrapper wrapper = new HttpClientWrapper(HttpClients.createDefault());
         wrapper.setUserAgentSelector(new AndroidBrowserUserAgentSelector());
 
 		try 
 		{
-			AllocineApi a = new AllocineApi(PARTNER_KEY, SECRET_KEY, wrapper);
-			recherche = a.searchMovies(film);
+			a = new AllocineApi(PARTNER_KEY, SECRET_KEY, wrapper);
+			recherche = a.searchMovies(requete);
 		} 
 		catch (AllocineException e) 
 		{
@@ -33,7 +34,7 @@ public class RechercheAllocine
 		}
     }
     
-    public static String informationFilm(String film, String element)
+    public static String informationFilm(String film, String element) throws AllocineException
     {
     	RechercheAllocine recherche= new RechercheAllocine(film);
     	Film f = new Film(recherche.liste_films().get(0));
@@ -66,6 +67,7 @@ public class RechercheAllocine
     	return recherche.getTvSeries();
     }
     
+  
 
     
 }
