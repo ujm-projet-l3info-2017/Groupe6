@@ -2,7 +2,7 @@ package chatbot;
 
 import java.io.IOException;
 
-public class AppTest
+public class LancementProgManuel
 {
 	public static void main(String args[])
 	{

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
-import allocine.RechercheAllocine;
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
 import facebook.Token;
@@ -69,36 +68,13 @@ public class ChatBotThread extends Thread
 				System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
 				
 				//On charge la conversation correspondante (ou on la crée)
-				ConversationIA convIA = correspondanceConversation(conv.getConversationId());
+				ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
 				//On fait traiter le message
 				String reponse = convIA.traitementMessage(conv.getMessages().get(0).getMessage());
 				//On renvoit la réponse
 				razbot.envoyerMessage(conv.getConversationId(), reponse);
 			}
 		}
-	}
-
-	/**
-	 *  Méthode de démo des fonctionnalités de l'api allociné
-	 * @param Le nom d'un film, virgule, le type de ressource demandé
-	 * @return La ressource demandé
-	 */
-	private String testApiAllocine(String message)
-	{
-		String infos[] = message.split(",");
-		String resultat;
-		
-		System.out.println(infos.length);
-		if(infos.length <= 1)
-		{
-			resultat = "Introuvable";
-		}
-		else
-		{
-			resultat = RechercheAllocine.informationFilm(infos[0],infos[1]);
-		}
-		
-		return resultat;
 	}
 
 	/**
@@ -122,7 +98,7 @@ public class ChatBotThread extends Thread
 					System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
 					
 					//On charge la conversation correspondante (ou on la crée)
-					ConversationIA convIA = correspondanceConversation(conv.getConversationId());
+					ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
 					//On fait traiter le message
 					String reponse = convIA.traitementMessage(conv.getMessages().get(0).getMessage());
 					//On renvoit la réponse
@@ -145,9 +121,10 @@ public class ChatBotThread extends Thread
 	/**
 	 *  Récupère ou crée l'objet ConversationIA associé
 	 * @param conversationId Id de la conversation
+	 * @param username Nom de l'utilisateur avec qui on parle
 	 * @return l'objet contenant l'IA de cette conversation
 	 */
-	private ConversationIA correspondanceConversation(String conversationId)
+	private ConversationIA correspondanceConversation(String conversationId, String username)
 	{
 		//Si la l'IA de cette conversation existe déjà
 		if(conversationsIA.containsKey(conversationId))
@@ -158,7 +135,7 @@ public class ChatBotThread extends Thread
 		else //Sinon on la crée
 		{
 			System.out.println("Création d'un objet de gestion d'IA pour cette conversation\n");
-			conversationsIA.put(conversationId, new ConversationIA());
+			conversationsIA.put(conversationId, new ConversationIA(username));
 			return conversationsIA.get(conversationId);
 		}
 	}
