@@ -1,10 +1,13 @@
 package allocine;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.moviejukebox.allocine.AllocineException;
 import com.moviejukebox.allocine.model.Artwork;
+import com.moviejukebox.allocine.model.CodeName;
 import com.moviejukebox.allocine.model.Movie;
 import com.moviejukebox.allocine.model.MovieInfos;
 
@@ -12,10 +15,13 @@ import com.moviejukebox.allocine.model.MovieInfos;
 public class Film 
 {
 	private Movie film;
+	private MovieInfos infos;
 	
-	public Film(Movie f)
+	public Film(Movie f) throws AllocineException
 	{
 		this.film = f;
+		String code = String.valueOf(film.getCode());
+		infos = new RechercheAllocine("").a.getMovieInfos(code);
 	}
 	
     public String titre()
@@ -29,6 +35,7 @@ public class Film
     {
     	return film.getCastingShort().getDirectors().get(0);
     }
+    
 
     public int dateSortie()
     {
@@ -45,7 +52,7 @@ public class Film
 		}
 		catch (Exception e)
 		{
-			s ="Il n'y a pas d'affiche pour ce film";
+			s ="Je n'ai pas trouvé l'affiche de ce film";
 		}
 		return s;
     }
@@ -96,25 +103,33 @@ public class Film
     		x = film.getStatistics().getDoubleStatistic("pressRating");
     	}
     	catch (Exception e)
-    	{
-    		
-    	}
+    	{}
     	return x;
     }
     
     
-    public String genre()
+    public List<String> genres()
     {
-    	String legenre = "genre pas trouvï¿½";
-    	MovieInfos mi = new MovieInfos();
-    	Set<String> genres = mi.getGenres();
-    	Iterator<String> iterateur = genres.iterator();
-    	if (iterateur.hasNext())
+    	List<String> liste = new ArrayList<>();
+    	Iterator<String> i = infos.getGenres().iterator();
+    	while (i.hasNext())
     	{
-    		legenre = iterateur.next();
+    		liste.add(i.next().toLowerCase());
     	}
-
-    	return legenre;	
+    	return liste;
     }
-
+    
+    
+    public String synopsis()
+    {
+    	if (infos.getSynopsis() == null)
+    		return "Je ne connais pas suffisamment ce film pour te faire un résumé.";
+    	return infos.getSynopsis();
+    }
+    
+    public int duree()
+    {
+    	return infos.getRuntime();
+    }
+    
 }
