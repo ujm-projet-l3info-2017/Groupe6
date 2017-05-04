@@ -1,18 +1,20 @@
 package ia;
 
-public class ConversationIA {
+public class ConversationIA
+{
 
 	/*
 	 * Initialisation de la conversation
 	 */
-	public ConversationIA() {
+	public ConversationIA()
+	{
 		
 	}
 	
 	/*
 	 * Envoi d'un message
 	 */
-	public String ajoutMessage()
+	public String traitementMessage(String message)
 	{
 		return null;
 	}
