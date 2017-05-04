@@ -45,15 +45,18 @@ public class ChatBotThread extends Thread
 		System.out.println("Le programme a bien été arrêté");
 	}
 
-	private void gestionMessagesInterval()
+	private synchronized void gestionMessagesInterval()
 	{
-		ArrayList<ConversationRazbot> conversationsATraiter = razbot.attenteNouveauMessageAlternatif();
-
-		for (ConversationRazbot conv : conversationsATraiter)
+		synchronized (razbot)
 		{
-			System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
-			//razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
-			razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage()));
+			ArrayList<ConversationRazbot> conversationsATraiter = razbot.attenteNouveauMessageAlternatif();
+	
+			for (ConversationRazbot conv : conversationsATraiter)
+			{
+				System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
+				//razbot.envoyerMessage(conv.getConversationId(), conv.getMessages().get(0).getMessage());
+				razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage()));
+			}
 		}
 	}
 
@@ -63,7 +66,7 @@ public class ChatBotThread extends Thread
 		String resultat;
 		
 		System.out.println(infos.length);
-		if(infos.length < 1)
+		if(infos.length <= 1)
 		{
 			resultat = "Introuvable";
 		}
@@ -104,7 +107,7 @@ public class ChatBotThread extends Thread
 
 	public void arret()
 	{
-		System.out.println("Demande d'arrêt du programme envoyé");
+		System.out.println("Demande d'arrêt du programme reçu");
 		continuer = false;
 	}
 }
