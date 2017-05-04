@@ -2,13 +2,14 @@ package ia;
 
 public class ConversationIA
 {
-
+	String nomUtilisateur;
+	
 	/*
 	 * Initialisation de la conversation
 	 */
-	public ConversationIA()
+	public ConversationIA(String nom)
 	{
-		
+		nomUtilisateur = nom;
 	}
 	
 	/*
@@ -16,7 +17,7 @@ public class ConversationIA
 	 */
 	public String traitementMessage(String message)
 	{
-		return "Réponse";
+		return "Salut "+nomUtilisateur;
 	}
 
 }
