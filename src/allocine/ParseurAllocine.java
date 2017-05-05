@@ -11,12 +11,19 @@ import org.jsoup.select.Elements;
 
 public class ParseurAllocine 
 {	
+	/**
+	 * @return List<String>
+	 */
 	public static List<String> recupererFilms()
 	{
 		String url = "http://www.allocine.fr/films/notes/";
 		return chercherUrl(url);
 	}
 	
+	/**
+	 * @param genre String
+	 * @return List<String>
+	 */
 	public static List<String> recupererFilms(String genre)
 	{
 		String url = "http://www.allocine.fr/films/notes/";
@@ -24,6 +31,10 @@ public class ParseurAllocine
 		return chercherUrl(url);
 	}
 	
+	/**
+	 * @param date boolean
+	 * @return List<String>
+	 */
 	public static List<String> recupererFilms(boolean date)
 	{
 		String url = "http://www.allocine.fr/films/notes/";
@@ -32,6 +43,11 @@ public class ParseurAllocine
 		return chercherUrl(url);
 	}
 	
+	/**
+	 * @param genre String
+	 * @param date boolean
+	 * @return List<String>
+	 */
 	public static List<String> recupererFilms(String genre, boolean date)
 	{
 		String url = "http://www.allocine.fr/films/notes/";
@@ -41,6 +57,10 @@ public class ParseurAllocine
 		return chercherUrl(url);
 	}
 	
+	/**
+	 * @param url String
+	 * @return List<String>
+	 */
 	private static List<String> chercherUrl(String url)
 	{
 		List<String> liste = new ArrayList<>();
@@ -61,11 +81,19 @@ public class ParseurAllocine
 		return liste;
 	}
 	
+	/**
+	 * @param date boolean
+	 * @return String
+	 */
 	private static String ajouterDate(boolean date) 
 	{
 		return "decennie-2010/";
 	}
 
+	/**
+	 * @param genre String
+	 * @return String
+	 */
 	private static String ajouterGenre(String genre) 
 	{
 		String param = "genre-130";

@@ -13,9 +13,12 @@ public class RechercherMot{
 	 * Liste de mot constituant le dictionnaire
 	 */
 	ArrayList<String> dico;
-	
+
 	/**
 	 * Constructeur pour effectuer la recherche
+	 * @param phraseBrut String
+	 * @param dico ArrayList<String>
+	 * @throws IOException
 	 */
 	public RechercherMot(String phraseBrut, ArrayList<String> dico) throws IOException{
 		this.dico = dico;
@@ -29,6 +32,7 @@ public class RechercherMot{
 	
 	/**
 	 * Permet de lancer les differentes phases d'une recherche
+	 * @param phrase String
 	 * @return void
 	 */
 	private ArrayList<String> analysePhrase(String phrase[]){
@@ -52,6 +56,8 @@ public class RechercherMot{
 	/**
 	 * Permet de trouver les mots presents dans le dictionnaire lorsqu'on ajoute une lettre au mot courant
 	 * @return ArrayList<String> : Les mots trouves
+	 * @param motCourant String
+	 * @param motTrouves ArrayList<String>
 	 */
 	private ArrayList<String> motPlusUneLettre(String motCourant, ArrayList<String> motTrouves){
 		String debut, fin, motTrouve;
@@ -76,6 +82,8 @@ public class RechercherMot{
 	/**
 	 * Permet de trouver les mots presents dans le dictionnaire lorsqu'on enleve une lettre au mot courant
 	 * @return ArrayList<String> : Les mots trouves
+	 * @param motCourant String
+	 * @param motTrouves ArrayList<String>
 	 */
 	private ArrayList<String> motMoinsUneLettre(String motCourant, ArrayList<String> motTrouves){
 		
@@ -96,6 +104,8 @@ public class RechercherMot{
 	/**
 	 * Permet de trouver les mots presents dans le dictionnaire lorsqu'on remplace une lettre dans le mot courant
 	 * @return ArrayList<String> : Les mots trouves
+	 * @param motCourant String
+	 * @param motTrouves ArrayList<String>
 	 */
 	private ArrayList<String> motSubUneLettre(String motCourant, ArrayList<String> motTrouves){
 		

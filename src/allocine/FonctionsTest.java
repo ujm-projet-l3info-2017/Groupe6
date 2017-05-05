@@ -4,8 +4,8 @@ public class FonctionsTest
 {
 	/**
 	 *  Méthode de démo des fonctionnalités de l'api allociné
-	 * @param Le nom d'un film, virgule, le type de ressource demandé
-	 * @return La ressource demandé
+	 * @param Le nom d'un film, virgule, le type de ressource demandé String
+	 * @return String La ressource demandé
 	 */
 	private String testApiAllocine(String message)
 	{

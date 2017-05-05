@@ -9,6 +9,13 @@ public class MessageRazbot
 	private String auteur; 
 	private String auteurID;
 	
+	/**
+	 * Constructeur MessageRazbot
+	 * @param message String
+	 * @param date String
+	 * @param auteur String
+	 * @param auteurID String
+	 */
 	public MessageRazbot(String message, String date, String auteur, String auteurID)
 	{
 		this.message = message;
@@ -17,21 +24,45 @@ public class MessageRazbot
 		this.auteurID = auteurID;
 	}
 	
+	/**
+	 * Accesseur Message
+	 * @return String
+	 */
 	public String getMessage()
 	{
 		return message;
 	}
 
+	/**
+	 * Accesseur DateMessage
+	 * @return Date
+	 */
 	public Date getDateMessage()
 	{
 		return dateMessage;
 	}
 	
+	/**
+	 * Accesseur Auteur
+	 * @return String
+	 */
 	public String getAuteur()
 	{
 		return auteur;
 	}
 	
+	/**
+	 * Accesseur AuteurID
+	 * @return String
+	 */
+	public String getAuteurID()
+	{
+		return auteurID;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString()
 	{
@@ -41,8 +72,4 @@ public class MessageRazbot
 			 + "\n\tTexte:\""+message+"\" \n\n";
 	}
 
-	public String getAuteurID()
-	{
-		return auteurID;
-	}
 }

@@ -17,12 +17,18 @@ public class ConversationRazbot
     private int nonLu;
     private int nombreMessages;
 	
+	/**
+	 * @param json JSONObject
+	 */
 	public ConversationRazbot(JSONObject json)
 	{
 		this.json = json;
 		importer();
 	}
 	
+	/**
+	 * 
+	 */
 	public void importer()
 	{
 		try
@@ -67,6 +73,9 @@ public class ConversationRazbot
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	private int compterNonLu()
 	{
 		int compteur = 0;
@@ -84,76 +93,135 @@ public class ConversationRazbot
 		return compteur;
 	}
 
+	/**
+	 * Accesseur ConversationId
+	 * @return String
+	 */
 	public String getConversationId()
 	{
 		return conversationId;
 	}
 
+	/**
+	 * Accesseur UserName
+	 * @return String
+	 */
 	public String getUserName()
 	{
 		return userName;
 	}
 
+	/**
+	 * Accesseur UserId
+	 * @return String
+	 */
 	public String getUserId()
 	{
 		return userId;
 	}
 
+	/**
+	 * Accesseur Messages
+	 * @return ArrayList<MessageRazbot>
+	 */
 	public ArrayList<MessageRazbot> getMessages()
 	{
 		return messages;
 	}
 
+	/**
+	 * Accesseur UpdatedTime
+	 * @return Date
+	 */
 	public Date getUpdatedTime()
 	{
 		return updatedTime;
 	}
 
+	/**
+	 * Accesseur NonLu
+	 * @return int
+	 */
 	public int getNonLu()
 	{
 		return nonLu;
 	}
 
+	/**
+	 * Accesseur NombreMessages
+	 * @return int
+	 */
 	public int getNombreMessages()
 	{
 		return nombreMessages;
 	}
 
+	/**
+	 * Setter ConversationId
+	 * @param conversationId String
+	 */
 	public void setConversationId(String conversationId)
 	{
 		this.conversationId = conversationId;
 	}
 
+	/**
+	 * Setter UserName
+	 * @param userName String
+	 */
 	public void setUserName(String userName)
 	{
 		this.userName = userName;
 	}
 
+	/**
+	 * Setter UserId
+	 * @param userId String
+	 */
 	public void setUserId(String userId)
 	{
 		this.userId = userId;
 	}
 
+	/**
+	 * Setter Messages
+	 * @param messages ArrayList<MessageRazbot>
+	 */
 	public void setMessages(ArrayList<MessageRazbot> messages)
 	{
 		this.messages = messages;
 	}
 
+	/**
+	 * Setter UpdatedTime
+	 * @param updatedTime Date
+	 */
 	public void setUpdatedTime(Date updatedTime)
 	{
 		this.updatedTime = updatedTime;
 	}
 
+	/**
+	 * Setter NonLu
+	 * @param nonLu int
+	 */
 	public void setNonLu(int nonLu)
 	{
 		this.nonLu = nonLu;
 	}
 
+	/**
+	 * Setter NombreMessages
+	 * @param nombreMessages int
+	 */
 	public void setNombreMessages(int nombreMessages)
 	{
 		this.nombreMessages = nombreMessages;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString()
 	{

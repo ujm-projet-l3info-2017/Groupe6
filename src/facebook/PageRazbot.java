@@ -48,8 +48,8 @@ public class PageRazbot
 
 	/**
 	 *  Méthode pour envoyer un message avec le bot
-	 * @param conversation à laquelle on envoit un message
-	 * @param message à envoyer
+	 * @param conversation à laquelle on envoit un message String
+	 * @param message à envoyer String
 	 */
 	public void envoyerMessage(String conversation, String message)
 	{
@@ -129,7 +129,7 @@ public class PageRazbot
 	
 	/**
 	 * Renvoi les conversations avec des nouveaux messages
-	 * @return La liste des conversations
+	 * @return ArrayList<ConversationRazbot> La liste des conversations
 	 */
 	public ArrayList<ConversationRazbot> getConversationsNouveauxMessages()
 	{
@@ -149,13 +149,16 @@ public class PageRazbot
 	
 	/**
 	 *  Getter pour l'api facebook
-	 * @return l'objet Facebook (API)
+	 * @return Facebook l'objet Facebook (API)
 	 */
 	public Facebook getFacebook()
 	{
 		return facebook;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString()
 	{
@@ -164,8 +167,8 @@ public class PageRazbot
 
 	/**
 	 *  Fonction pour faire des requêtes GET avec la méthode de l'API Facebook
-	 * @param url
-	 * @return
+	 * @param url String
+	 * @return JSONObject
 	 */
 	public JSONObject requeteGET(String url)
 	{

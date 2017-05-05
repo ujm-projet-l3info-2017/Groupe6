@@ -7,10 +7,18 @@ public class Arbre {
 	private boolean b_genre=false;
 	private String s_realisateur,s_acteur,s_sortie,s_genre;
 	
+	/**
+	 * Lance l'IA et salue l'utilisateur
+	 * @return String
+	 */
 	public String lancementArbre(){
 		return ((Vocabulaire) Salutations.expressions).aleatoire();
 	}
 	
+	/**
+	 * Demande à l'utilisateur quels critère de recherche l'intéressent
+	 * @return String
+	 */
 	public String questionCritere()
 	{
 		String R="";
@@ -41,11 +49,19 @@ public class Arbre {
 		return "Quel critere recherchez vous:"+R+A+S+G+" ?";
 	}
 	
+	/**
+	 * Renvoit un film en fonction des critères proposés par l'utilisateur
+	 * @return String
+	 */
 	private String rechercheCritere() {
 		
 		return ((Vocabulaire) Recommandation.expressions).aleatoire();//+resultatFilm;
 	}
 
+	/**
+	 * Demande à l'utilisateur si il est satisfait de notre proposition
+	 * @param satisfait boolean
+	 */
 	public void satisfaction(boolean satisfait){
 		if(satisfait==false)
 		{
@@ -60,6 +76,10 @@ public class Arbre {
 		}
 	}
 	
+	/**
+	 * Si aucun film ne correspond aux critères, on relance la recherche
+	 * @return String
+	 */
 	public String erreur(){
 		//Envoi message d'erreur
 		b_realisateur=false;
@@ -70,6 +90,10 @@ public class Arbre {
 		return "truc";
 	}
 	
+	/**
+	 * Salue l'utilisateur et arrête l'IA
+	 * @return String
+	 */
 	public String fin()
 	{
 		return ((Vocabulaire) FinDeConversation.expressions).aleatoire();
