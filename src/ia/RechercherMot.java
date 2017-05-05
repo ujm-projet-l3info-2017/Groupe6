@@ -1,7 +1,10 @@
 package ia;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 /**
  * Classe de la recherche d'un mot dans un dictionnaire
@@ -9,25 +12,45 @@ import java.util.ArrayList;
  *
  */
 public class RechercherMot{
+
 	/**
 	 * Liste de mot constituant le dictionnaire
 	 */
 	ArrayList<String> dico;
+	FileReader f;
 
 	/**
 	 * Constructeur pour effectuer la recherche
 	 * @param phraseBrut String
-	 * @param dico ArrayList<String>
 	 * @throws IOException
 	 */
-	public RechercherMot(String phraseBrut, ArrayList<String> dico) throws IOException{
-		this.dico = dico;
+	public RechercherMot(String phraseBrut) throws IOException{
+		chargementDico();
 		String phrase[] = phraseBrut.split(" ");
-		ArrayList<String> motTrouves = new ArrayList<>();
-		motTrouves = this.analysePhrase(phrase);
-		for(int i=0; i<motTrouves.size(); i++){
-			System.out.println(motTrouves.get(i));
+		String phraseFinale;
+		phraseFinale = this.analysePhrase(phrase);
+		System.out.println(phraseFinale);
+	}
+	
+	/**
+	 * Permet de charger le dictionnaire dans une ArrayList
+	 * @return void
+	 */
+	private void chargementDico() throws IOException{
+		try{
+			f = new FileReader("./src/ia/dico");
+			System.out.println("\nOuverture du dictionnaire réussi !");
+		}catch (IOException e){
+		   	System.out.println("Erreur lors de l'ouverture du dictionnaire");
 		}
+		
+		BufferedReader br = new BufferedReader(f);
+		String line;
+		dico = new ArrayList<>();
+		while ((line = br.readLine()) != null) {
+		   dico.add(line);
+		}
+		br.close();
 	}
 	
 	/**
@@ -35,31 +58,49 @@ public class RechercherMot{
 	 * @param phrase String
 	 * @return void
 	 */
-	private ArrayList<String> analysePhrase(String phrase[]){
-		ArrayList<String> motTrouves = new ArrayList<>();
+	private String analysePhrase(String phrase[]){
+		String p="";
 		for(int i=0; i<phrase.length; i++){
 			String motCourant = phrase[i];
 			
 			if(dico.contains(motCourant.toLowerCase())){
-				motTrouves.add(motCourant);
-				return motTrouves;
+				if(i==0){
+					p=motCourant;
+				}else{
+					p=p+" "+motCourant;
+				}
 			}else{
-				motTrouves = motPlusUneLettre(motCourant.toLowerCase(), motTrouves);
-				motTrouves = motMoinsUneLettre(motCourant.toLowerCase(), motTrouves);
-				motTrouves = motSubUneLettre(motCourant.toLowerCase(), motTrouves);
+				String m1 = motPlusUneLettre(motCourant.toLowerCase());
+				String m2 = motSubUneLettre(motCourant.toLowerCase());
+				String m3 = motMoinsUneLettre(motCourant.toLowerCase());
+				String m4;
+				if(m1 != ""){
+					m4=m1;
+				}else if(m2 != ""){
+					m4=m2;
+				}else if(m3 != ""){
+					m4=m3;
+				}else{
+					m4=motCourant;
+				}
+				
+				if(i==0){	
+					p=m4;
+				}else{
+					p=p+" "+m4;
+				}
 			}
 		}
-		return motTrouves;
+		return p;
 	}
 	
 	
 	/**
-	 * Permet de trouver les mots presents dans le dictionnaire lorsqu'on ajoute une lettre au mot courant
-	 * @return ArrayList<String> : Les mots trouves
+	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on ajoute une lettre au mot courant
+	 * @return String : Le mot trouve
 	 * @param motCourant String
-	 * @param motTrouves ArrayList<String>
 	 */
-	private ArrayList<String> motPlusUneLettre(String motCourant, ArrayList<String> motTrouves){
+	private String motPlusUneLettre(String motCourant){
 		String debut, fin, motTrouve;
 		char lettre;
 		boolean b;
@@ -71,22 +112,20 @@ public class RechercherMot{
 				motTrouve = debut+lettre+fin;
 				b = dico.contains(motTrouve);
 				if(b == true){				
-					motTrouves.add(motTrouve);
+					return motTrouve;
 				}
 			lettre++;
 			}
-		}		
-		return motTrouves;
+		}
+		return "";
 	}
 	
 	/**
-	 * Permet de trouver les mots presents dans le dictionnaire lorsqu'on enleve une lettre au mot courant
-	 * @return ArrayList<String> : Les mots trouves
+	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on enleve une lettre au mot courant
+	 * @return String : Le mot trouve
 	 * @param motCourant String
-	 * @param motTrouves ArrayList<String>
 	 */
-	private ArrayList<String> motMoinsUneLettre(String motCourant, ArrayList<String> motTrouves){
-		
+	private String motMoinsUneLettre(String motCourant){
 		String debut, fin, motTrouve;
 		boolean b;
 		for(int l=0; l< motCourant.length(); l++){	
@@ -95,20 +134,18 @@ public class RechercherMot{
 			motTrouve = debut+fin;
 			b = dico.contains(motTrouve);
 			if(b == true){
-				motTrouves.add(motTrouve);
+				return motTrouve;
 			}
 		}
-		return motTrouves;
+		return "";
 	}
 	
 	/**
-	 * Permet de trouver les mots presents dans le dictionnaire lorsqu'on remplace une lettre dans le mot courant
-	 * @return ArrayList<String> : Les mots trouves
+	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on remplace une lettre dans le mot courant
+	 * @return String : Le mot trouve
 	 * @param motCourant String
-	 * @param motTrouves ArrayList<String>
 	 */
-	private ArrayList<String> motSubUneLettre(String motCourant, ArrayList<String> motTrouves){
-		
+	private String motSubUneLettre(String motCourant){
 		String debut, fin, motTrouve;
 		char lettre;
 		boolean b;
@@ -122,12 +159,12 @@ public class RechercherMot{
 				if(motTrouve != motCourant){
 					b = dico.contains(motTrouve);
 					if(b == true){
-						motTrouves.add(motTrouve);
+						return motTrouve;
 					}
 				}
 			lettre++;
 			}
 		}	
-		return motTrouves;
+		return "";
 	}	
 }
