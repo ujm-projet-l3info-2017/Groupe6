@@ -8,7 +8,7 @@ public class Arbre {
 	private String s_realisateur,s_acteur,s_sortie,s_genre;
 	
 	public String lancementArbre(){
-		return "Bonjour"; //Voir avec les listes de vocabulaire
+		return ((Vocabulaire) Salutations.expressions).aleatoire();
 	}
 	
 	public String questionCritere()
@@ -43,7 +43,7 @@ public class Arbre {
 	
 	private String rechercheCritere() {
 		
-		return "Voila";//+resultatFilm; //Voir avec listes de vocabulaire
+		return ((Vocabulaire) Recommandation.expressions).aleatoire();//+resultatFilm;
 	}
 
 	public void satisfaction(boolean satisfait){
@@ -72,6 +72,6 @@ public class Arbre {
 	
 	public String fin()
 	{
-		return "Au revoir"; //Utiliser les liste de vocabulaire
+		return ((Vocabulaire) FinDeConversation.expressions).aleatoire();
 	}
 }
