@@ -20,45 +20,32 @@ public class RechercherMot{
 	public RechercherMot(String phraseBrut, ArrayList<String> dico) throws IOException{
 		this.dico = dico;
 		String phrase[] = phraseBrut.split(" ");
-		for(int i=0; i<phrase.length; i++){
-			System.out.print(phrase[i]+" ");
+		ArrayList<String> motTrouves = new ArrayList<>();
+		motTrouves = this.analysePhrase(phrase);
+		for(int i=0; i<motTrouves.size(); i++){
+			System.out.println(motTrouves.get(i));
 		}
-		this.analysePhrase(phrase);
-		
 	}
 	
 	/**
 	 * Permet de lancer les differentes phases d'une recherche
 	 * @return void
 	 */
-	private void analysePhrase(String phrase[]){
+	private ArrayList<String> analysePhrase(String phrase[]){
+		ArrayList<String> motTrouves = new ArrayList<>();
 		for(int i=0; i<phrase.length; i++){
 			String motCourant = phrase[i];
-			ArrayList<String> motTrouves = new ArrayList<>();
+			
 			if(dico.contains(motCourant.toLowerCase())){
-				System.out.println(motCourant+" ");
+				motTrouves.add(motCourant);
+				return motTrouves;
 			}else{
-				System.out.println("Mot introuvable : "+motCourant);
-				motTrouves = motPlusUneLettre(motCourant, motTrouves);
-				System.out.println("Mot plus une lettre :");
-				for(int j=0; j<motTrouves.size(); j++){
-					System.out.println(motTrouves.get(j));
-				}
-				int fin1 = motTrouves.size();
-				motTrouves = motMoinsUneLettre(motCourant, motTrouves);
-				System.out.println("Mot moins une lettre :");
-				for(int j=fin1; j<motTrouves.size(); j++){
-					System.out.println(motTrouves.get(j));
-				}
-				int fin2 = motTrouves.size();
-				motTrouves = motSubUneLettre(motCourant, motTrouves);
-				System.out.println("Mot avec remplacement d'une lettre :");
-				for(int j=fin2; j<motTrouves.size(); j++){
-					System.out.println(motTrouves.get(j));
-				}
-				
+				motTrouves = motPlusUneLettre(motCourant.toLowerCase(), motTrouves);
+				motTrouves = motMoinsUneLettre(motCourant.toLowerCase(), motTrouves);
+				motTrouves = motSubUneLettre(motCourant.toLowerCase(), motTrouves);
 			}
-		}	           
+		}
+		return motTrouves;
 	}
 	
 	
@@ -76,10 +63,8 @@ public class RechercherMot{
 			fin = motCourant.substring(l);
 			while(lettre < 'z'){
 				motTrouve = debut+lettre+fin;
-				
 				b = dico.contains(motTrouve);
 				if(b == true){				
-					//System.out.println(motTrouve);
 					motTrouves.add(motTrouve);
 				}
 			lettre++;
@@ -101,8 +86,7 @@ public class RechercherMot{
 			fin = motCourant.substring(l+1);
 			motTrouve = debut+fin;
 			b = dico.contains(motTrouve);
-			if(b == true){				
-				//System.out.println(motTrouve);
+			if(b == true){
 				motTrouves.add(motTrouve);
 			}
 		}
@@ -127,8 +111,7 @@ public class RechercherMot{
 				//System.out.println(motTrouve);
 				if(motTrouve != motCourant){
 					b = dico.contains(motTrouve);
-					if(b == true){				
-						//System.out.println(motTrouve);
+					if(b == true){
 						motTrouves.add(motTrouve);
 					}
 				}
