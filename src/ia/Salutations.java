@@ -28,14 +28,14 @@ public class Salutations implements Vocabulaire{
 	}
 	
 	/* (non-Javadoc)
-	 * @see facebook.Vocabulaire#getLength()
+	 * @see ia.Vocabulaire#getLength()
 	 */
 	public int getLength(){
 		return expressions.size();
 	}
 
 	/* (non-Javadoc)
-	 * @see facebook.Vocabulaire#aleatoire()
+	 * @see ia.Vocabulaire#aleatoire()
 	 */
 	public String aleatoire() {
 
