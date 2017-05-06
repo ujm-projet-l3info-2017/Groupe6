@@ -1,5 +1,9 @@
 package ia;
 
+/**
+ * Classe de l'arbre de décision de l'IA
+ *
+ */
 public class Arbre {
 	private boolean b_realisateur=false;
 	private boolean b_acteur=false;

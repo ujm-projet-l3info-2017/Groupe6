@@ -34,7 +34,7 @@ public class RechercherMot{
 	
 	/**
 	 * Permet de charger le dictionnaire dans une ArrayList
-	 * @return void
+	 * @throws IOException
 	 */
 	private void chargementDico() throws IOException{
 		try{
@@ -56,7 +56,7 @@ public class RechercherMot{
 	/**
 	 * Permet de lancer les differentes phases d'une recherche
 	 * @param phrase String
-	 * @return void
+	 * @return String
 	 */
 	private String analysePhrase(String phrase[]){
 		String p="";
