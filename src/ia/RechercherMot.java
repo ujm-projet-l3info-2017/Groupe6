@@ -20,7 +20,7 @@ public class RechercherMot{
 	FileReader f;
 
 	/**
-	 * Constructeur pour effectuer la recherche
+	 * Constructeur pour corriger une phrase
 	 * @param phraseBrut String
 	 * @throws IOException
 	 */
@@ -30,6 +30,15 @@ public class RechercherMot{
 		String phraseFinale;
 		phraseFinale = this.analysePhrase(phrase);
 		System.out.println(phraseFinale);
+	}
+	
+	/**
+	 * Constructeur pour effectuer la recherche
+	 * @param dictionnaire ArrayList<String>
+	 * @throws IOException
+	 */
+	public RechercherMot(ArrayList<String> dictionnaire) throws IOException{
+		dico = dictionnaire;
 	}
 	
 	/**
@@ -51,6 +60,23 @@ public class RechercherMot{
 		   dico.add(line);
 		}
 		br.close();
+	}
+	
+	/**
+	 * Permet de lancer une recherche de mots cles
+	 * @param phraseBrut String
+	 * @return ArrayList<String>
+	 */
+	protected ArrayList<String> chercherMotsCles(String phraseBrut){
+		String phrase[] = phraseBrut.split(" ");
+		ArrayList<String> motCle = new ArrayList<String>();
+		for(int i=0; i<phrase.length; i++){
+			String motCourant = phrase[i];
+			if(dico.contains(motCourant.toLowerCase())){
+				motCle.add(motCourant);
+			}
+		}
+		return motCle;
 	}
 	
 	/**
