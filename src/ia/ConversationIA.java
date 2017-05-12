@@ -1,5 +1,9 @@
 package ia;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+
 public class ConversationIA
 {
 	/**
@@ -32,15 +36,32 @@ public class ConversationIA
 	 * Lis et renvoie un message
 	 * @param message String
 	 * @return String : La reponse
+	 * @throws IOException 
 	 */
-	public String traitementMessage(String message)
+	public String traitementMessage(String message) throws IOException
 	{
 		if(etape=="debut")
 		{
 			return "Bonjour. Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
 		}
-		// Il faut lire le message et chercher un mot clé (critere, aleatoire, oui, non, au revoir, realisateur, acteur, date de sortie, genre, termine)
+		// Il faut lire le message et chercher un mot clï¿½ (critere, aleatoire, oui, non, au revoir, realisateur, acteur, date de sortie, genre, termine)
 		
+		ArrayList<String> dico = new ArrayList<String>();
+		ArrayList<String> motTrouves = new ArrayList<String>();
+		dico.add("critere");
+		dico.add("aleatoire");
+		dico.add("oui");
+		dico.add("non");
+		dico.add("realisateur");
+		dico.add("acteur");
+		dico.add("genre");
+		dico.add("termine");
+		dico.add("au revoir");
+		dico.add("date de sortie");
+		
+		RechercherMot recherche = new RechercherMot(dico);
+		motTrouves = recherche.chercherMotsCles(message);
+				
 		return "Je n'ai pas compris, pouvez-vous reformuler ?";
 	}
 
