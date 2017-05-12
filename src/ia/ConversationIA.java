@@ -46,6 +46,7 @@ public class ConversationIA
 		}
 		// Il faut lire le message et chercher un mot cl� (critere, aleatoire, oui, non, au revoir, realisateur, acteur, date de sortie, genre, termine)
 		
+		
 		ArrayList<String> dico = new ArrayList<String>();
 		ArrayList<String> motTrouves = new ArrayList<String>();
 		dico.add("critere");
@@ -59,8 +60,9 @@ public class ConversationIA
 		dico.add("au revoir");
 		dico.add("date de sortie");
 		
-		RechercherMot recherche = new RechercherMot(dico);
-		motTrouves = recherche.chercherMotsCles(message);
+		RechercherMot recherche = new RechercherMot();
+		String messageCorrige = recherche.analysePhrase(message);
+		motTrouves = recherche.chercherMotsCles(messageCorrige, dico);
 				
 		return "Je n'ai pas compris, pouvez-vous reformuler ?";
 	}
