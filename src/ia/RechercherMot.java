@@ -69,9 +69,43 @@ public class RechercherMot{
 	 */
 	protected ArrayList<String> chercherMotsCles(String phraseBrut){
 		String phrase[] = phraseBrut.split(" ");
+		//Liste de mots cles trouves
 		ArrayList<String> motCle = new ArrayList<String>();
-		for(int i=0; i<phrase.length; i++){
-			String motCourant = phrase[i];
+		//Liste de gestion des mots cles constitue de plusieurs termes
+		ArrayList<String> plusieursMotsCles = new ArrayList<String>();
+		String[] motsCles;
+		for(int i=0; i<dico.size(); i++){
+			motsCles=dico.get(i).split(" ");
+			//Si le mot clé est composé d'au moins deux termes
+			if(motsCles.length > 1){
+				//On parcourt la phrase
+				System.out.println(motsCles.length);
+				for(int j=0; j<phrase.length; j++){
+					boolean similaire = false;
+					//Premier terme du mot cle est trouve
+					System.out.println("première cdt :"+phrase[j]+" "+motsCles[0]+"");
+					if(phrase[j].compareTo(motsCles[0]) == 0){
+						System.out.println("passé");
+						similaire = true;
+						//Pour les termes suivants du mot cle
+						for(int k=1; k<motsCles.length; k++){
+							System.out.println("Deuxième condition :"+phrase[j+k]+" "+motsCles[k]);
+							if((phrase[j+k].compareTo(motsCles[k]) == 0) && (similaire == true)){
+								similaire = true;
+							}else{
+								similaire = false;
+							}
+						}
+					}
+					if(similaire == true){
+						motCle.add(dico.get(i));
+					}
+				}
+			}
+		}
+		
+		for(int l=0; l<phrase.length; l++){
+			String motCourant = phrase[l];
 			if(dico.contains(motCourant.toLowerCase())){
 				motCle.add(motCourant);
 			}
