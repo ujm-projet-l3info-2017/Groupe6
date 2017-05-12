@@ -18,6 +18,10 @@ public class RechercheAllocine
     Search recherche;
     AllocineApi a;
     
+    /**
+     * Constructeur RechercheAllocine
+     * @param requete String
+     */
     public RechercheAllocine(String requete)
     {
         HttpClientWrapper wrapper = new HttpClientWrapper(HttpClients.createDefault());
@@ -34,6 +38,12 @@ public class RechercheAllocine
 		}
     }
     
+    /**
+     * @param film String
+     * @param element String
+     * @return String
+     * @throws AllocineException
+     */
     public static String informationFilm(String film, String element) throws AllocineException
     {
     	RechercheAllocine recherche= new RechercheAllocine(film);
@@ -57,11 +67,17 @@ public class RechercheAllocine
     	
     }
     
+    /**
+     * @return List<Movie>
+     */
     public List<Movie> liste_films()
     {
     	return recherche.getMovies();
     }
     
+    /**
+     * @return List<TvSeries>
+     */
     public List<TvSeries> liste_series()
     {
     	return recherche.getTvSeries();

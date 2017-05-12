@@ -1,16 +1,24 @@
 package ia;
 
+/**
+ * Classe de l'arbre de décision de l'IA
+ *
+ */
 public class Arbre {
-	private boolean b_realisateur=false;
-	private boolean b_acteur=false;
-	private boolean b_sortie=false;
-	private boolean b_genre=false;
-	private String s_realisateur,s_acteur,s_sortie,s_genre;
 	
+	
+	/**
+	 * Lance l'IA et salue l'utilisateur
+	 * @return String
+	 */
 	public String lancementArbre(){
-		return "Bonjour"; //Voir avec les listes de vocabulaire
+		return ((Vocabulaire) Salutations.expressions).aleatoire();
 	}
 	
+	/**
+	 * Demande à l'utilisateur quels critère de recherche l'intéressent
+	 * @return String
+	 */
 	public String questionCritere()
 	{
 		String R="";
@@ -18,41 +26,49 @@ public class Arbre {
 		String S="";
 		String G="";
 		// Si Terminé, rechercheCritere();
-		if((b_realisateur==true)&&(b_acteur==true)&&(b_sortie==true)&&(b_genre==true))
+		if((ConversationIA.isB_realisateur()==true)&&(ConversationIA.isB_acteur()==true)&&(ConversationIA.isB_sortie()==true)&&(ConversationIA.isB_genre()==true))
 		{
 			rechercheCritere();
 		}
-		if(b_realisateur==false)
+		if(ConversationIA.isB_realisateur()==false)
 		{
 			R=" realisateur";
 		}
-		if(b_acteur==false)
+		if(ConversationIA.isB_acteur()==false)
 		{
 			A=" acteur";
 		}
-		if(b_sortie==false)
+		if(ConversationIA.isB_sortie()==false)
 		{
 			S=" date de sortie";
 		}
-		if(b_genre==false)
+		if(ConversationIA.isB_genre()==false)
 		{
 			G=" genre";
 		}
-		return "Quel critere recherchez vous:"+R+A+S+G+" ?";
+		return "Quel critere recherchez vous:"+R+A+S+G+" ? Ou bien avez-vous termine ?";
 	}
 	
+	/**
+	 * Renvoit un film en fonction des critères proposés par l'utilisateur
+	 * @return String
+	 */
 	private String rechercheCritere() {
 		
-		return "Voila";//+resultatFilm; //Voir avec listes de vocabulaire
+		return ((Vocabulaire) Recommandation.expressions).aleatoire();//+resultatFilm;
 	}
 
+	/**
+	 * Demande à l'utilisateur si il est satisfait de notre proposition
+	 * @param satisfait boolean
+	 */
 	public void satisfaction(boolean satisfait){
 		if(satisfait==false)
 		{
-			b_realisateur=false;
-			b_acteur=false;
-			b_sortie=false;
-			b_genre=false;
+			ConversationIA.setB_realisateur(false);
+			ConversationIA.setB_acteur(false);
+			ConversationIA.setB_sortie(false);
+			ConversationIA.setB_genre(false);
 			questionCritere();
 		}
 		else{
@@ -60,18 +76,26 @@ public class Arbre {
 		}
 	}
 	
+	/**
+	 * Si aucun film ne correspond aux critères, on relance la recherche
+	 * @return String
+	 */
 	public String erreur(){
 		//Envoi message d'erreur
-		b_realisateur=false;
-		b_acteur=false;
-		b_sortie=false;
-		b_genre=false;
+		ConversationIA.setB_realisateur(false);
+		ConversationIA.setB_acteur(false);
+		ConversationIA.setB_sortie(false);
+		ConversationIA.setB_genre(false);
 		questionCritere();
 		return "truc";
 	}
 	
+	/**
+	 * Salue l'utilisateur et arrête l'IA
+	 * @return String
+	 */
 	public String fin()
 	{
-		return "Au revoir"; //Utiliser les liste de vocabulaire
+		return ((Vocabulaire) FinDeConversation.expressions).aleatoire();
 	}
 }

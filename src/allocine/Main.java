@@ -11,6 +11,12 @@ import facebook4j.internal.org.json.JSONException;
 public class Main 
 {
 
+	/**
+	 * @param args String[]
+	 * @throws FacebookException
+	 * @throws JSONException
+	 * @throws AllocineException
+	 */
 	public static void main(String[] args) throws FacebookException, JSONException, AllocineException 
 	{
 //	    RechercheAllocine recherche = new RechercheAllocine("Titanic");

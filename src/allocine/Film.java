@@ -17,6 +17,10 @@ public class Film
 	private Movie film;
 	private MovieInfos infos;
 	
+	/**
+	 * @param f Movie
+	 * @throws AllocineException
+	 */
 	public Film(Movie f) throws AllocineException
 	{
 		this.film = f;
@@ -24,6 +28,9 @@ public class Film
 		infos = new RechercheAllocine("").a.getMovieInfos(code);
 	}
 	
+    /**
+     * @return String
+     */
     public String titre()
     {
 		if (film.getTitle()==null)
@@ -31,17 +38,25 @@ public class Film
 		else return film.getTitle();
     }
     
+    /**
+     * @return String
+     */
     public String realisateur()
     {
     	return film.getCastingShort().getDirectors().get(0);
     }
     
-
+    /**
+     * @return int
+     */
     public int dateSortie()
     {
     	return film.getProductionYear();
     }
     
+    /**
+     * @return String
+     */
     public String affiche()
     {
     	Artwork x = film.getPoster();
@@ -57,6 +72,9 @@ public class Film
 		return s;
     }
     
+    /**
+     * @return List<String>
+     */
     public List<String> acteursPrincipaux()
     {
     	try 
@@ -71,16 +89,25 @@ public class Film
     }
 
 
+    /**
+     * @return String
+     */
     public String motsClefs()
     {
     	return film.getKeywords();
     }
     
+    /**
+     * @return int
+     */
     public int code()
     {
     	return film.getCode();
     }
 	
+    /**
+     * @return double
+     */
     public double note_public()
     {
     	double x = 0;
@@ -95,6 +122,9 @@ public class Film
     	return x;
     }
     
+    /**
+     * @return double
+     */
     public double note_presse()
     {
     	double x = 0;
@@ -108,6 +138,9 @@ public class Film
     }
     
     
+    /**
+     * @return List<String>
+     */
     public List<String> genres()
     {
     	List<String> liste = new ArrayList<>();
@@ -120,6 +153,9 @@ public class Film
     }
     
     
+    /**
+     * @return String
+     */
     public String synopsis()
     {
     	if (infos.getSynopsis() == null)
@@ -127,6 +163,9 @@ public class Film
     	return infos.getSynopsis();
     }
     
+    /**
+     * @return int
+     */
     public int duree()
     {
     	return infos.getRuntime();

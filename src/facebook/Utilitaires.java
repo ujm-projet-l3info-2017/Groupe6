@@ -4,6 +4,10 @@ import java.util.Date;
 
 public class Utilitaires
 {
+	/**
+	 * @param date String
+	 * @return Date
+	 */
 	@SuppressWarnings("deprecation")
 	public static Date parserDateFacebook(String date) 
 	{

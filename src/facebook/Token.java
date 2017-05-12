@@ -14,7 +14,10 @@ public final class Token
 {
 	/**
 	 * 	Fonction pour charger les propriétés du fichier settings.ini
-	 * @return Propriétés de settings.ini
+	 * @return Properties Propriétés de settings.ini
+	 * @param fichier String
+	 * @throws IOException
+	 * @throws FileNotFoundException
 	 */
 	private static Properties chargement(String fichier) throws IOException, FileNotFoundException
 	{
@@ -34,8 +37,8 @@ public final class Token
 	
 	/**
 	 * Utilise chargement, puis recherche une propriété et renvoi sa valeur
-	 * @param propriete: Propriété à laquelle on renvoit la valeur
-	 * @return La valeur de la propriété
+	 * @param propriete: Propriété à laquelle on renvoit la valeur String
+	 * @return String La valeur de la propriété
 	 */
 	private static String recupererValeur(String propriete)
 	{
@@ -62,6 +65,9 @@ public final class Token
 		return "";	//Jamais atteint
 	}
 
+	/**
+	 * @return String
+	 */
 	private static String trouverLocalisationSettings()
 	{
 		if(System.getProperty("os.name").toLowerCase().indexOf("nux")>=0)	//Linux
@@ -72,7 +78,7 @@ public final class Token
  
 	/**
 	 * 	Fonction pour récupérer le token de la page facebook du fichier settings.ini
-	 * @return Le token de la page
+	 * @return String Le token de la page
 	 */
 	public static String getToken()
 	{
@@ -81,7 +87,7 @@ public final class Token
 	
 	/**
 	 * 	Fonction pour récupérer l'appid de la page facebook du fichier settings.in
-	 * @return Le token de la page
+	 * @return String Le token de la page
 	 */
 	public static String getAppId()
 	{
@@ -90,7 +96,7 @@ public final class Token
 	
 	/**
 	 * 	Fonction pour récupérer le secret code de la page facebook du fichier settings.in
-	 * @return Le token de la page
+	 * @return String Le token de la page
 	 */
 	public static String getSecretCode()
 	{
@@ -99,13 +105,16 @@ public final class Token
 	
 	/**
 	 * 	Fonction pour définir quelle méthode de reception de message on utilise du fichier settings.in
-	 * @return Vrai si le webhook est activé, faux sinon
+	 * @return boolean Vrai si le webhook est activé, faux sinon
 	 */
 	public static boolean isWebhookEnable()
 	{
 		return recupererValeur("WEBHOOKENABLE").compareTo("true")==0?true:false;
 	}
 
+	/**
+	 * @return long
+	 */
 	public static long getInverval()
 	{
 		if(recupererValeur("TESTINTERVAL")==null)

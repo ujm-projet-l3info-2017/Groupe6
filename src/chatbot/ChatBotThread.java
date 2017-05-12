@@ -28,6 +28,9 @@ public class ChatBotThread extends Thread
 		conversationsIA = new Hashtable<>();
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public synchronized void run()
 	{
 		
@@ -120,9 +123,9 @@ public class ChatBotThread extends Thread
 
 	/**
 	 *  Récupère ou crée l'objet ConversationIA associé
-	 * @param conversationId Id de la conversation
-	 * @param username Nom de l'utilisateur avec qui on parle
-	 * @return l'objet contenant l'IA de cette conversation
+	 * @param conversationId Id de la conversation String
+	 * @param username Nom de l'utilisateur avec qui on parle String
+	 * @return ConversationIA l'objet contenant l'IA de cette conversation
 	 */
 	private ConversationIA correspondanceConversation(String conversationId, String username)
 	{

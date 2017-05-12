@@ -62,6 +62,9 @@ public class Admin extends HttpServlet
 
 	/**
 	 *  Vérification du webhook par facebook: Vérification de certains paramètres de la requete et renvoit de hub.challenge
+	 *  @param request HttpServletRequest
+	 *  @param response HttpServletResponse
+	 *  @throws IOException
 	 */
 	private void verificationWebhook(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
