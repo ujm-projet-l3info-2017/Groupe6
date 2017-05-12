@@ -18,28 +18,6 @@ public class RechercherMot{
 	 */
 	ArrayList<String> dico;
 	FileReader f;
-
-	/**
-	 * Constructeur pour corriger une phrase
-	 * @param phraseBrut String
-	 * @throws IOException
-	 */
-	public RechercherMot(String phraseBrut) throws IOException{
-		chargementDico();
-		String phrase[] = phraseBrut.split(" ");
-		String phraseFinale;
-		phraseFinale = this.analysePhrase(phrase);
-		System.out.println(phraseFinale);
-	}
-	
-	/**
-	 * Constructeur pour effectuer la recherche
-	 * @param dictionnaire ArrayList<String>
-	 * @throws IOException
-	 */
-	public RechercherMot(ArrayList<String> dictionnaire) throws IOException{
-		dico = dictionnaire;
-	}
 	
 	/**
 	 * Permet de charger le dictionnaire dans une ArrayList
@@ -67,7 +45,8 @@ public class RechercherMot{
 	 * @param phraseBrut String
 	 * @return ArrayList<String>
 	 */
-	protected ArrayList<String> chercherMotsCles(String phraseBrut){
+	protected ArrayList<String> chercherMotsCles(String phraseBrut, ArrayList<String> dictionnaire){
+		dico = dictionnaire;
 		String phrase[] = phraseBrut.split(" ");
 		//Liste de mots cles trouves
 		ArrayList<String> motCle = new ArrayList<String>();
@@ -79,17 +58,13 @@ public class RechercherMot{
 			//Si le mot clé est composé d'au moins deux termes
 			if(motsCles.length > 1){
 				//On parcourt la phrase
-				System.out.println(motsCles.length);
 				for(int j=0; j<phrase.length; j++){
 					boolean similaire = false;
 					//Premier terme du mot cle est trouve
-					System.out.println("première cdt :"+phrase[j]+" "+motsCles[0]+"");
 					if(phrase[j].compareTo(motsCles[0]) == 0){
-						System.out.println("passé");
 						similaire = true;
 						//Pour les termes suivants du mot cle
 						for(int k=1; k<motsCles.length; k++){
-							System.out.println("Deuxième condition :"+phrase[j+k]+" "+motsCles[k]);
 							if((phrase[j+k].compareTo(motsCles[k]) == 0) && (similaire == true)){
 								similaire = true;
 							}else{
@@ -117,8 +92,11 @@ public class RechercherMot{
 	 * Permet de lancer les differentes phases d'une recherche
 	 * @param phrase String
 	 * @return String
+	 * @throws IOException 
 	 */
-	private String analysePhrase(String phrase[]){
+	protected String analysePhrase(String message) throws IOException{
+		String[] phrase = message.split(" ");
+		chargementDico();
 		String p="";
 		for(int i=0; i<phrase.length; i++){
 			String motCourant = phrase[i];
