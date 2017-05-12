@@ -3,11 +3,12 @@ package ia;
 public class ConversationIA
 {
 	/**
-	 * Contient le nom de l'utilisateur et les criteres (booleen et String)
+	 * Contient le nom de l'utilisateur, les criteres (booleen et String) et l'avancement de la discussion
 	 */
 	static String nomUtilisateur;
 	static boolean b_realisateur, b_acteur, b_sortie, b_genre;
 	static String s_realisateur,s_acteur,s_sortie,s_genre;
+	static String etape; // Quelle est la meilleure maniere de marquer l'avancement : String ou int ?
 	
 	/**
 	 * Initialisation de la conversation
@@ -28,13 +29,19 @@ public class ConversationIA
 	
 
 	/**
-	 * Lis et renvoit un message
+	 * Lis et renvoie un message
 	 * @param message String
-	 * @return String : La réponse
+	 * @return String : La reponse
 	 */
 	public String traitementMessage(String message)
 	{
-		return "réponse de l'IA";
+		if(etape=="debut")
+		{
+			return "Bonjour. Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
+		}
+		// Il faut lire le message et chercher un mot clé (critere, aleatoire, oui, non, au revoir, realisateur, acteur, date de sortie, genre, termine)
+		
+		return "Je n'ai pas compris, pouvez-vous reformuler ?";
 	}
 
 
@@ -197,6 +204,24 @@ public class ConversationIA
 	 */
 	public static void setS_genre(String s_genre) {
 		ConversationIA.s_genre = s_genre;
+	}
+
+
+	/**
+	 * Retourne l'etape actuelle
+	 * @return String : L'etape
+	 */
+	public static String getEtape() {
+		return etape;
+	}
+
+
+	/**
+	 * Change l'etape actuelle
+	 * @param etape String
+	 */
+	public static void setEtape(String etape) {
+		ConversationIA.etape = etape;
 	}
 
 }

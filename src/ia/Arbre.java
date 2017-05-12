@@ -46,7 +46,7 @@ public class Arbre {
 		{
 			G=" genre";
 		}
-		return "Quel critere recherchez vous:"+R+A+S+G+" ?";
+		return "Quel critere recherchez vous:"+R+A+S+G+" ? Ou bien avez-vous termine ?";
 	}
 	
 	/**
