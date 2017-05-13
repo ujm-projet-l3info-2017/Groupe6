@@ -75,12 +75,13 @@ public class ParseurAllocine
 			{
 				liste.add(films.get(i).text());
 			}
+			return liste;
 		} catch (IOException e) 
 		{
 			System.out.println("La recherche avec cet URL n'a rien trouvé.");
 			e.printStackTrace();
 		}
-		return liste;
+		return null;
 	}
 	
 	/**
@@ -112,6 +113,38 @@ public class ParseurAllocine
 		}
 	}
 	
+	
+	public static List<String> chercherFilmDePersonne(String nom)
+	{
+		List<String> films = new ArrayList<>();
+		String code = recupererCodePersonne(nom);
+		String url = "http://www.allocine.fr/personne/fichepersonne-"+code+"/filmographie/top/";
+		try
+		{
+			Document doc = Jsoup.connect(url).get();
+			Elements links = doc.select("a");
+			Elements liste_films = links.select(".meta-title-link");
+			for (int i=0; i<liste_films.size();i++)
+			{
+				films.add(liste_films.get(i).text());
+			}
+			return films;
+		} 
+		catch (IOException e)
+		{
+			System.out.println("Impossible de trouver les films de cette personne");
+			return null;
+		}
+	}
+	
+	private static String recupererCodePersonne(String nom)
+	{
+		String url = chercherPersonne(nom);
+		//L'url est de type : http://www.allocine.fr/personne/fichepersonne_gen_cpersonne=2990.html
+		String apresLeEgal = url.split("=")[1]; //On récupère ce qu'il y a après le égal
+		String code = apresLeEgal.split("\\.")[0]; //Et ce qu'il y a avant le point
+		return code;
+	}
 	
 	/**
 	 * @param date boolean

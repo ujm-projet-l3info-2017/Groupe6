@@ -52,7 +52,11 @@ public class Main
 //		Film f = new Film(r.liste_films().get(0));
 //		f.affiche_infos();
 		
-		System.out.println(ParseurAllocine.chercherPersonne("james cameron"));
+		List<String> films = ParseurAllocine.chercherFilmDePersonne("Quentin Tarantino");
+		for (int i=0; i<films.size();i++)
+		{
+			System.out.println(films.get(i));
+		}
 	} 
 
 }
