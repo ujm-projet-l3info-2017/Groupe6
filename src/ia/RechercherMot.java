@@ -105,7 +105,7 @@ public class RechercherMot
 		for (int l = 0; l < phrase.length; l++)
 		{
 			String motCourant = phrase[l];
-			if (dico.contains(motCourant.toLowerCase()))
+			if (dico.contains(motCourant))
 			{
 				motCle.add(motCourant);
 			}
@@ -131,7 +131,7 @@ public class RechercherMot
 		{
 			String motCourant = phrase[i];
 
-			if (dico.contains(motCourant.toLowerCase()))
+			if (dico.contains(motCourant))
 			{
 				if (i == 0)
 				{
@@ -144,23 +144,23 @@ public class RechercherMot
 			{
 				//On cherche en priorite si le mot mal orthographie se rapproche d'un mot cle
 				String m1, m2, m3, m4;
-				m1 = motPlusUneLettre(motCourant.toLowerCase(), dicoMotsCles);
+				m1 = motPlusUneLettre(motCourant, dicoMotsCles);
 				if (m1 != "")
 				{
 					m4 = m1;
-				} else if ((m2 = motSubUneLettre(motCourant.toLowerCase(), dicoMotsCles)) != "")
+				} else if ((m2 = motSubUneLettre(motCourant, dicoMotsCles)) != "")
 				{
 					m4 = m2;
-				} else if ((m3 = motMoinsUneLettre(motCourant.toLowerCase(), dicoMotsCles)) != "")
+				} else if ((m3 = motMoinsUneLettre(motCourant, dicoMotsCles)) != "")
 				{
 					m4 = m3;
-				} else if ((m1 = motPlusUneLettre(motCourant.toLowerCase(), dico)) != "")
+				} else if ((m1 = motPlusUneLettre(motCourant, dico)) != "")
 				{
 					m4 = m1;
-				}else if((m2 = motSubUneLettre(motCourant.toLowerCase(), dico)) != "")
+				}else if((m2 = motSubUneLettre(motCourant, dico)) != "")
 				{
 					m4 = m2;
-				}else if((m3 = motMoinsUneLettre(motCourant.toLowerCase(), dico)) != "")
+				}else if((m3 = motMoinsUneLettre(motCourant, dico)) != "")
 				{
 					m4 = m3;
 				}else{
@@ -272,5 +272,36 @@ public class RechercherMot
 			}
 		}
 		return "";
+	}
+	
+	/**
+	 * Permet de trouver la date present dans la phrase
+	 * 
+	 * @return String : La date
+	 * @param message
+	 *            String
+	 */
+	public String trouverDate(String message){
+		String date="";
+		String phrase[] = message.split(" ");
+		for (int i=0; i<phrase.length; i++){
+			System.out.println(i);
+			int tailleMot = phrase[i].length();
+			if(tailleMot == 4){
+				char premierCaractere;
+				char deuxiemeCaractere;
+				char troisiemeCaractere;
+				char quatriemeCaractere;
+				String motCourant = phrase[i];
+				premierCaractere = phrase[i].charAt(0);
+				deuxiemeCaractere = phrase[i].charAt(1);
+				troisiemeCaractere = phrase[i].charAt(2);
+				quatriemeCaractere = phrase[i].charAt(3);
+				if (Character.isDigit(premierCaractere) && Character.isDigit(deuxiemeCaractere) && Character.isDigit(troisiemeCaractere) && Character.isDigit(quatriemeCaractere)){
+				   return date = String.valueOf(premierCaractere)+String.valueOf(deuxiemeCaractere)+String.valueOf(troisiemeCaractere)+String.valueOf(quatriemeCaractere);
+			    }
+			}
+		}
+		return date;
 	}
 }
