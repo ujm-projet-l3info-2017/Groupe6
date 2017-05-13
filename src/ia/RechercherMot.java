@@ -351,7 +351,7 @@ public class RechercherMot
 			char_table[0]=Character.toUpperCase(char_table[0]);
 			motCourant = new String(char_table);
 			
-			if(dicoPrenomFeminin.contains(motCourant) || dicoPrenomMasculin.contains(motCourant)){
+			if((dicoPrenomFeminin.contains(motCourant) || dicoPrenomMasculin.contains(motCourant)) && ((i+1)< phrase.length)){
 				nom = phrase[i]+" "+phrase[i+1];
 				return nom;
 			}
