@@ -1,6 +1,5 @@
 package ia;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -12,7 +11,7 @@ public class ConversationIA
 	static String nomUtilisateur;
 	static boolean b_realisateur, b_acteur, b_sortie, b_genre;
 	static String s_realisateur,s_acteur,s_sortie,s_genre;
-	static String etape; // Quelle est la meilleure maniere de marquer l'avancement : String ou int ?
+	private String etape; // debut, discussion, p_critere, recherche, satisfaction, recommencer, erreur, fin
 	
 	/**
 	 * Initialisation de la conversation
@@ -29,27 +28,26 @@ public class ConversationIA
 		s_acteur="";
 		s_sortie="";
 		s_genre="";
+		etape = "debut"; // Si il y a un seul appel de ConversationIA
 	}
 	
 
 	/**
-	 * Lis et renvoie un message
+	 * Lis le message de l'utilisateur, effectue un traitement et renvoie un message
 	 * @param message String
-	 * @return String : La reponse
-	 * @throws IOException 
+	 * @return String : La reponse de l'IA
 	 */
 	public String traitementMessage(String message)
 	{
 		if(etape=="debut")
 		{
-			return "Bonjour. Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
-		}
-		// Il faut lire le message et chercher un mot clï¿½ (critere, aleatoire, oui, non, au revoir, realisateur, acteur, date de sortie, genre, termine)
-		
-		
+			etape="discussion";
+			return Arbre.lancementArbre();
+		}		
 		ArrayList<String> dico = new ArrayList<String>();
 		ArrayList<String> motTrouves = new ArrayList<String>();
 		dico.add("critere");
+		dico.add("criteres");
 		dico.add("aleatoire");
 		dico.add("oui");
 		dico.add("non");
@@ -63,8 +61,131 @@ public class ConversationIA
 		RechercherMot recherche = new RechercherMot();
 		String messageCorrige = recherche.analysePhrase(message);
 		motTrouves = recherche.chercherMotsCles(messageCorrige, dico);
+		
+		if((etape=="discussion")&&((motTrouves.contains("critere"))||(motTrouves.contains("criteres"))))
+		{
+			etape="p_critere";
+			return Arbre.questionCritere();
+		}
+		if((etape=="p_critere")&&(!motTrouves.contains("termine")))
+		{
+			return critereUtilisateur(message, motTrouves);
+		}
+		if((etape=="p_critere")&&(motTrouves.contains("termine")))
+		{
+			etape="recherche";
+			// Faire une recherche avec les criteres enregistrés puis rappeler l'IA
+			// Si on ne trouve aucun film appeler erreur()
+			return "Cas termine";
+		}
+		if((etape=="discussion")&&(motTrouves.contains("aleatoire")))
+		{
+			etape="r_aleatoire";
+			// Faire une recherche aléatoire et envoyer le resultat puis rappeler l'IA
+			// Si on ne trouve aucun film (ce qui serait etrange) appeler erreur()
+			return "Cas aleatoire";
+		}
+		if(etape=="recherche")
+		{
+			etape="satisfaction";
+			return "Etes-vous satisfaits de cette proposition ?";
+		}
+		if((etape=="satisfaction")&&(motTrouves.contains("oui")))
+		{
+			etape="fin";
+			return Arbre.fin();
+			// Stopper l'execution
+		}
+		if((etape=="satisfaction")&&(motTrouves.contains("non")))
+		{
+			etape="recommencer";
+			b_realisateur=false;
+			b_acteur=false;
+			b_sortie=false;
+			b_genre=false;
+			return "Desole. On recommence ?";
+		}
+		if((etape=="recommencer")&&(motTrouves.contains("oui")))
+		{
+			etape="discussion";
+			return "Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
+		}
+		if((etape=="recommencer")&&(motTrouves.contains("non")))
+		{
+			etape="fin";
+			return Arbre.fin();
+			// Stopper l'execution
+		}
+		if(motTrouves.contains("au revoir"))
+		{
+			etape="fin";
+			return Arbre.fin();
+			// Stopper l'execution
+		}
 				
 		return "Je n'ai pas compris, pouvez-vous reformuler ?";
+	}
+	
+	/**
+	 * Stocke les criteres de l'utilisateur
+	 * @param message String
+	 * @param motTrouves ArrayList(String)
+	 * @return String : La reponse de l'IA
+	 */
+	public String critereUtilisateur(String message, ArrayList<String> motTrouves)
+	{
+		if(motTrouves.contains("realisateur"))
+		{
+			System.out.println("real");
+			b_realisateur=true;
+			// Recuperer le nom du realisateur et stocker dans s_realisateur
+			// Si le nom n'est pas dans le message reposer la question
+		}
+		if(motTrouves.contains("acteur"))
+		{
+			System.out.println("acteur");
+			b_acteur=true;
+			// Recuperer le nom de l'acteur et stocker dans s_acteur
+			// Si le nom n'est pas dans le message reposer la question
+		}
+		if(motTrouves.contains("sortie"))
+		{
+			System.out.println("sortie");
+			b_sortie=true;
+			// Recuperer la date de sortie et stocker dans s_sortie
+			// Si la date n'est pas dans le message reposer la question
+		}
+		if(motTrouves.contains("genre"))
+		{
+			System.out.println("genre");
+			b_genre=true;
+			// Recuperer le genre et stocker dans s_genre
+			// Si le genre n'est pas dans le message reposer la question
+		}
+		
+		String R="";
+		String A="";
+		String S="";
+		String G="";
+		
+		if(b_realisateur==false)
+		{
+			R=" realisateur ?";
+		}
+		if(b_acteur==false)
+		{
+			A=" acteur ?";
+		}
+		if(b_sortie==false)
+		{
+			S=" date de sortie ?";
+		}
+		if(b_genre==false)
+		{
+			G=" genre ?";
+		}
+		
+		return "Un autre critere:"+R+A+S+G+", ou avez-vous termine ?";
 	}
 
 
@@ -227,24 +348,6 @@ public class ConversationIA
 	 */
 	public static void setS_genre(String s_genre) {
 		ConversationIA.s_genre = s_genre;
-	}
-
-
-	/**
-	 * Retourne l'etape actuelle
-	 * @return String : L'etape
-	 */
-	public static String getEtape() {
-		return etape;
-	}
-
-
-	/**
-	 * Change l'etape actuelle
-	 * @param etape String
-	 */
-	public static void setEtape(String etape) {
-		ConversationIA.etape = etape;
 	}
 
 }

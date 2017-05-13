@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * Classe du vocabulaire des expressions de recommandation
- * @author Thomas
+ * @author Thomas GRANJON
  *
  */
 public class Recommandation implements Vocabulaire{
