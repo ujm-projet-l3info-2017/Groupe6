@@ -6,14 +6,8 @@ public class FonctionsTest
 {
 	/**
 	 *  Méthode de démo des fonctionnalités de l'api allociné
-<<<<<<< HEAD
-	 * @param Le nom d'un film, virgule, le type de ressource demandé
-	 * @return La ressource demandé
-	 * @throws AllocineException 
-=======
 	 * @param Le nom d'un film, virgule, le type de ressource demandé String
 	 * @return String La ressource demandé
->>>>>>> branch 'develop' of https://github.com/ujm-projet-l3info-2017/Groupe6
 	 */
 	private String testApiAllocine(String message) throws AllocineException
 	{
