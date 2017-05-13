@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="log.LogContenu" %>
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -60,13 +55,6 @@
 			<button type="submit" name="selection" id="selection" value="start">Démarrer l'IA </button>
 			<button type="submit" name="selection" id="selection" value="stop">Arrêter l'IA </button>
 		</form>
-		
-		<jsp:useBean id="log" class="log.LogContenu"></jsp:useBean>
-		
-		
-		<c:forEach var="tmp" items="${log.contenu}">
-		$(tmp)
-		</c:forEach>
 	</div>
 </body>
 </html>

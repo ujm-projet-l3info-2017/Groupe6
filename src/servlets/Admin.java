@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import chatbot.ChatBotThread;
-import log.LogContenu;
 
 /**
  * Servlet implementation class Admin
@@ -48,14 +47,6 @@ public class Admin extends HttpServlet
 			{
 				if(request.getParameter("code").compareTo("lecode") == 0)
 				{
-					//Je veux fare un objet qui continedra tous les logs
-					//A afficher dans la JSP
-					LogContenu l = new LogContenu();
-					ArrayList<String> a = l.getContenu();
-					a.add("aroarjr");
-					l.setContenu(a);
-					request.setAttribute("log", l);
-					
 					//Redirection vers la JSP d'administration
 					RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
 					dispatcher.forward(request, response);
