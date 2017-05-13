@@ -46,8 +46,6 @@ public class RechercherMot
 		{
 
 			FileReader f = new FileReader(chemin);
-			System.out.println("\nOuverture du dictionnaire r�ussi !");
-
 			BufferedReader br = new BufferedReader(f);
 			String line;
 			dico = new ArrayList<>();
