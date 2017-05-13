@@ -45,47 +45,12 @@ public class ConversationIA
 			etape="discussion";
 			return Arbre.lancementArbre();
 		}		
-		ArrayList<String> dico = new ArrayList<String>();
+		
 		ArrayList<String> motTrouves = new ArrayList<String>();
-		
-		//Dictionnaire des mots cles
-		dico.add("critere");
-		dico.add("criteres");
-		dico.add("aleatoire");
-		dico.add("oui");
-		dico.add("non");
-		dico.add("realisateur");
-		dico.add("acteur");
-		dico.add("genre");
-		dico.add("termine");
-		dico.add("au revoir");
-		dico.add("date de sortie");
-		
-		//Dictionnaire des genres
-		dicoGenre = new ArrayList<String>();
-		dicoGenre.add("action");
-		dicoGenre.add("anim");
-		dicoGenre.add("biopic");
-		dicoGenre.add("aventur");
-		dicoGenre.add("comique");
-		dicoGenre.add("comédie");
-		dicoGenre.add("drôle");
-		dicoGenre.add("drole");
-		dicoGenre.add("dram");
-		dicoGenre.add("erotique");
-		dicoGenre.add("sex");
-		dicoGenre.add("histo");
-		dicoGenre.add("fantaisi");
-		dicoGenre.add("polic");
-		dicoGenre.add("roman");
-		dicoGenre.add("science");
-		dicoGenre.add("fiction");
-		dicoGenre.add("thriller");
-		dicoGenre.add("western");
-		
 		recherche = new RechercherMot();
-		String messageCorrige = recherche.analysePhrase(message, dico);
-		motTrouves = recherche.chercherMotsCles(messageCorrige, dico);
+		
+		String messageCorrige = recherche.analysePhrase(message);
+		motTrouves = recherche.chercherMotsCles(messageCorrige);
 		
 		if((etape=="discussion")&&((motTrouves.contains("critere"))||(motTrouves.contains("criteres"))))
 		{
@@ -187,7 +152,7 @@ public class ConversationIA
 		if(motTrouves.contains("genre"))
 		{
 			b_genre=true;
-			String genre = recherche.trouverGenre(message, dicoGenre);
+			String genre = recherche.trouverGenre(message);
 			if(genre != ""){
 				s_genre = genre;
 			}else{
