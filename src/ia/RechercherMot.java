@@ -27,7 +27,7 @@ public class RechercherMot
 	 * Initialisation de la recherche
 	 */
 	public RechercherMot(){
-		dicoFrancais = this.chargementDico("./src/ia/dicoFrançais.txt");
+		dicoFrancais = this.chargementDico("./src/ia/dicoFrancais.txt");
 		dicoMotsCles = this.chargementDico("./src/ia/dicoMotsCles.txt");
 		dicoGenre = this.chargementDico("./src/ia/dicoGenre.txt");
 		dicoPrenomFeminin = this.chargementDico("./src/ia/dicoPrenomFeminin.txt");
