@@ -17,6 +17,7 @@ public class RechercherMot
 	/**
 	 * Liste de mot constituant le dictionnaire
 	 */
+	ArrayList<String> dicoMotsCles;
 	ArrayList<String> dico;
 	FileReader f;
 
@@ -120,8 +121,9 @@ public class RechercherMot
 	 * @return String
 	 * @throws IOException
 	 */
-	protected String analysePhrase(String message)
+	protected String analysePhrase(String message, ArrayList<String> dicoMotCle)
 	{
+		dicoMotsCles = dicoMotCle;
 		String[] phrase = message.split(" ");
 		chargementDico();
 		String p = "";
@@ -140,21 +142,28 @@ public class RechercherMot
 				}
 			} else
 			{
-				String m1 = motPlusUneLettre(motCourant.toLowerCase());
-				String m2 = motSubUneLettre(motCourant.toLowerCase());
-				String m3 = motMoinsUneLettre(motCourant.toLowerCase());
-				String m4;
+				//On cherche en priorite si le mot mal orthographie se rapproche d'un mot cle
+				String m1, m2, m3, m4;
+				m1 = motPlusUneLettre(motCourant.toLowerCase(), dicoMotsCles);
 				if (m1 != "")
 				{
 					m4 = m1;
-				} else if (m2 != "")
+				} else if ((m2 = motSubUneLettre(motCourant.toLowerCase(), dicoMotsCles)) != "")
 				{
 					m4 = m2;
-				} else if (m3 != "")
+				} else if ((m3 = motMoinsUneLettre(motCourant.toLowerCase(), dicoMotsCles)) != "")
 				{
 					m4 = m3;
-				} else
+				} else if ((m1 = motPlusUneLettre(motCourant.toLowerCase(), dico)) != "")
 				{
+					m4 = m1;
+				}else if((m2 = motSubUneLettre(motCourant.toLowerCase(), dico)) != "")
+				{
+					m4 = m2;
+				}else if((m3 = motMoinsUneLettre(motCourant.toLowerCase(), dico)) != "")
+				{
+					m4 = m3;
+				}else{
 					m4 = motCourant;
 				}
 
@@ -178,11 +187,12 @@ public class RechercherMot
 	 * @param motCourant
 	 *            String
 	 */
-	private String motPlusUneLettre(String motCourant)
+	private String motPlusUneLettre(String motCourant, ArrayList<String> dictionnaireMots)
 	{
 		String debut, fin, motTrouve;
 		char lettre;
 		boolean b;
+		
 		for (int l = 0; l < motCourant.length(); l++)
 		{
 			lettre = 'a';
@@ -191,7 +201,7 @@ public class RechercherMot
 			while (lettre < 'z')
 			{
 				motTrouve = debut + lettre + fin;
-				b = dico.contains(motTrouve);
+				b = dictionnaireMots.contains(motTrouve);
 				if (b == true)
 				{
 					return motTrouve;
@@ -210,7 +220,7 @@ public class RechercherMot
 	 * @param motCourant
 	 *            String
 	 */
-	private String motMoinsUneLettre(String motCourant)
+	private String motMoinsUneLettre(String motCourant, ArrayList<String> dictionnaireMots)
 	{
 		String debut, fin, motTrouve;
 		boolean b;
@@ -219,7 +229,7 @@ public class RechercherMot
 			debut = motCourant.substring(0, l);
 			fin = motCourant.substring(l + 1);
 			motTrouve = debut + fin;
-			b = dico.contains(motTrouve);
+			b = dictionnaireMots.contains(motTrouve);
 			if (b == true)
 			{
 				return motTrouve;
@@ -236,7 +246,7 @@ public class RechercherMot
 	 * @param motCourant
 	 *            String
 	 */
-	private String motSubUneLettre(String motCourant)
+	private String motSubUneLettre(String motCourant, ArrayList<String> dictionnaireMots)
 	{
 		String debut, fin, motTrouve;
 		char lettre;
@@ -252,7 +262,7 @@ public class RechercherMot
 				// System.out.println(motTrouve);
 				if (motTrouve != motCourant)
 				{
-					b = dico.contains(motTrouve);
+					b = dictionnaireMots.contains(motTrouve);
 					if (b == true)
 					{
 						return motTrouve;
