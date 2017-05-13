@@ -9,6 +9,7 @@ import com.moviejukebox.allocine.AllocineApi;
 import com.moviejukebox.allocine.AllocineException;
 import com.moviejukebox.allocine.model.Movie;
 import com.moviejukebox.allocine.model.Search;
+import com.moviejukebox.allocine.model.ShortPerson;
 import com.moviejukebox.allocine.model.TvSeries;
 
 public class RechercheAllocine 
@@ -48,29 +49,21 @@ public class RechercheAllocine
     {
     	RechercheAllocine recherche= new RechercheAllocine(film);
     	Film f;
-		try
+		f = new Film(recherche.liste_films().get(0));
+		switch (element)
 		{
-			f = new Film(recherche.liste_films().get(0));
-			switch (element)
-	    	{
-	    		case "titre":
-	    			return f.titre();
-	    		case "realisateur":
-	    			return f.realisateur();
-	    		case "dateSortie":
-	    			return String.valueOf(f.dateSortie());
-	    		case "affiche":
-	    			return f.affiche();
-	    		case "acteurPrincipal":
-	    			return f.acteursPrincipaux().get(0);
-	    		case "note":
-	    			return String.valueOf(f.note_public());
-	    	}
-		}
-		catch (AllocineException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			case "titre":
+				return f.titre();
+			case "realisateur":
+				return f.realisateur();
+			case "dateSortie":
+				return String.valueOf(f.dateSortie());
+			case "affiche":
+				return f.affiche();
+			case "acteurPrincipal":
+				return f.acteursPrincipaux().get(0);
+			case "note":
+				return String.valueOf(f.note_public());
 		}
     	
     	return "Usage : titre, realisateur, dateSortie, affiche, acteurPrincipal, note";
@@ -93,6 +86,11 @@ public class RechercheAllocine
     	return recherche.getTvSeries();
     }
     
+    
+    public List<ShortPerson> liste_personne()
+    {
+    	return recherche.getPersons();
+    }
   
 
     
