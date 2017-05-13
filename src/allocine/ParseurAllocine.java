@@ -121,8 +121,8 @@ public class ParseurAllocine
 		String url = "http://www.allocine.fr/personne/fichepersonne-"+code+"/filmographie/top/";
 		try
 		{
-			Document doc = Jsoup.connect(url).get();
-			Elements links = doc.select("a");
+			Document doc = Jsoup.connect(url).get(); //On récupère le code de la page
+			Elements links = doc.select("a"); //On récupère les balises sur lesquels il y a les films
 			Elements liste_films = links.select(".meta-title-link");
 			for (int i=0; i<liste_films.size();i++)
 			{
