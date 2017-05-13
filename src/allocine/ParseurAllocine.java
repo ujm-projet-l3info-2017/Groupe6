@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,6 +14,8 @@ import org.jsoup.select.Elements;
 
 public class ParseurAllocine 
 {	
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(ParseurAllocine.class.getName());
 	/**
 	 * @return List<String>
 	 */
@@ -76,10 +80,10 @@ public class ParseurAllocine
 				liste.add(films.get(i).text());
 			}
 			return liste;
-		} catch (IOException e) 
+		} 
+		catch (IOException e) 
 		{
-			System.out.println("La recherche avec cet URL n'a rien trouvé.");
-			e.printStackTrace();
+			logger.error("GestionAllocine","La recherche avec cet URL n'a rien trouvé");
 		}
 		return null;
 	}
@@ -103,12 +107,12 @@ public class ParseurAllocine
 					return ref;
 				}
 			}
-			System.out.println("Aucune personne trouvée avec ce nom");
+			logger.error("GestionAllocine","Aucune personne trouvée avec ce nom");
 			return null;
 		} 
 		catch (IOException e) 
 		{
-			System.out.println("Aucune personne trouvée avec ce nom");
+			logger.error("GestionAllocine","Aucune personne trouvée avec ce nom");
 			return null;
 		}
 	}
@@ -136,7 +140,7 @@ public class ParseurAllocine
 		} 
 		catch (IOException e)
 		{
-			System.out.println("Impossible de trouver les films de cette personne");
+			logger.error("GestionAllocine","Impossible de trouver les films de cette personne");
 			return null;
 		}
 	}

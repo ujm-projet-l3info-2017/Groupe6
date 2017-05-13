@@ -1,7 +1,10 @@
 package allocine;
 
 import java.util.List;
+
 import org.apache.http.impl.client.HttpClients;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.yamj.api.common.http.AndroidBrowserUserAgentSelector;
 import org.yamj.api.common.http.HttpClientWrapper;
 
@@ -18,6 +21,9 @@ public class RechercheAllocine
     private static final String SECRET_KEY = "29d185d98c984a359e6e6f26a0474269";
     Search recherche;
     AllocineApi a;
+    
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(RechercheAllocine.class.getName());
     
     /**
      * Constructeur RechercheAllocine
@@ -94,8 +100,18 @@ public class RechercheAllocine
   
     public static Film film(String titreDuFilm)
     {
-    	RechercheAllocine recherche = new RechercheAllocine(titreDuFilm);
-    	return new Film(recherche.liste_films().get(0));
+    	try
+    	{
+    		//On effetue la recherche avec le titre
+        	RechercheAllocine recherche = new RechercheAllocine(titreDuFilm);
+        	//On retourne le premier film trouvé (la recherche étant effectuée par pertinence)
+        	return new Film(recherche.liste_films().get(0));
+    	}
+    	catch (Exception e)
+    	{
+    		logger.error("GestionAllocine","Aucun film trouvé avec ce titre");
+    		return null;
+    	}
     }
     
 }

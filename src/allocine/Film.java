@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.moviejukebox.allocine.AllocineException;
 import com.moviejukebox.allocine.model.Artwork;
 import com.moviejukebox.allocine.model.CodeName;
@@ -16,6 +19,9 @@ public class Film
 {
 	private Movie film;
 	private MovieInfos infos;
+	
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(ParseurAllocine.class.getName());
 	
 	/**
 	 * @param f Movie
@@ -31,7 +37,7 @@ public class Film
 		}
 		catch (AllocineException e)
 		{
-			System.out.println("Les informations du film n'ont pas été trouvées");
+			logger.error("GestionAllocine","Les informations du film n'ont pas été trouvées");
 		}
 	}
 	
@@ -66,17 +72,16 @@ public class Film
      */
     public String affiche()
     {
-    	Artwork x = film.getPoster();
-    	String s;
+    	Artwork x = film.getPoster(); 
 		try 
 		{
-			s=x.getHref();
+			return x.getHref();
 		}
 		catch (Exception e)
 		{
-			s ="Je n'ai pas trouvé l'affiche de ce film";
+			logger.error("GestionAllocine","Affiche du film non trouvé");
 		}
-		return s;
+		return null;
     }
     
     /**
@@ -90,7 +95,7 @@ public class Film
     	}
     	catch (Exception e)
     	{
-    		System.out.println("Pas d'acteurs pour ce film");
+    		logger.error("GestionAllocine","Impossible de trouvé les acteurs de ce film");
     	}
 		return null;
     }
@@ -117,16 +122,15 @@ public class Film
      */
     public double note_public()
     {
-    	double x = 0;
     	try 
     	{
-    		x = film.getStatistics().getDoubleStatistic("userRating");
+    		return film.getStatistics().getDoubleStatistic("userRating");
     	}
     	catch (Exception e)
     	{
-    		
+    		logger.error("GestionAllocine","Note de la presse non disponible");
     	}
-    	return x;
+    	return -1;
     }
     
     /**
@@ -134,14 +138,15 @@ public class Film
      */
     public double note_presse()
     {
-    	double x = 0;
     	try 
     	{
-    		x = film.getStatistics().getDoubleStatistic("pressRating");
+    		return film.getStatistics().getDoubleStatistic("pressRating");
     	}
     	catch (Exception e)
-    	{}
-    	return x;
+    	{
+    		logger.error("GestionAllocine","Note de la presse non disponible");
+    	}
+    	return -1;
     }
     
     
