@@ -19,6 +19,7 @@ public class Recommandation implements Vocabulaire{
 	 * Constructeur de la liste des expressions de recommandation
 	 */
 	public Recommandation(){
+		expressions = new ArrayList<>();
 		expressions.add("Je te recommande");
 		expressions.add("Connais-tu");
 		expressions.add("As-tu-vu");
@@ -39,7 +40,7 @@ public class Recommandation implements Vocabulaire{
 	public String aleatoire() {
 
 		Random rand = new Random();
-		int nbAleatoire = rand.nextInt(((Vocabulaire) expressions).getLength()+1);
+		int nbAleatoire = rand.nextInt(expressions.size()+1);
 		return expressions.get(nbAleatoire);
 	}
 
