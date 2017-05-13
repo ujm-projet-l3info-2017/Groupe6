@@ -5,9 +5,14 @@ import java.util.Date;
 import facebook4j.internal.org.json.JSONArray;
 import facebook4j.internal.org.json.JSONException;
 import facebook4j.internal.org.json.JSONObject;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class ConversationRazbot
 {
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(ConversationRazbot.class.getName());
+	  
 	JSONObject json;
     private String conversationId;
     private String userName;
@@ -27,10 +32,11 @@ public class ConversationRazbot
 	}
 	
 	/**
-	 * 
+	 *  Importation des données depuis le JSON dans les objets adéquate
 	 */
 	public void importer()
 	{
+		logger.info("Importation du JSON");
 		try
 		{
 			//Parcourt du json en ajoutant les infos à ArrayList<MessageRazbot> messages
@@ -38,13 +44,16 @@ public class ConversationRazbot
 			//Paramètres
 			conversationId = json.getString("id");
 
+			//On fixe le nom et l'id de la personne
 			if(json.getJSONObject("senders").getJSONArray("data").getJSONObject(0).optString("id") == "156013618115881")
 			{
+				//Ces 2 données sont stockés dans le 2eme element du tableau
 				userName = json.getJSONObject("senders").getJSONArray("data").getJSONObject(1).getString("name");
 				userId = json.getJSONObject("senders").getJSONArray("data").getJSONObject(1).getString("id");
 			}
 			else
 			{
+				//Ces 2 données sont stockés dans le 1er element du tableau
 				userName = json.getJSONObject("senders").getJSONArray("data").getJSONObject(0).getString("name");
 				userId = json.getJSONObject("senders").getJSONArray("data").getJSONObject(0).getString("id");
 			}
@@ -74,6 +83,7 @@ public class ConversationRazbot
 	}
 
 	/**
+	 *  Renvoi le nombre de messages non lu
 	 * @return int
 	 */
 	private int compterNonLu()
