@@ -314,8 +314,11 @@ public class RechercherMot
 		String phrase[] = message.split(" ");
 		for (int i=0; i<phrase.length; i++){
 			String motCourant = phrase[i];
-			if (dicoGenre.contains(motCourant)){
-				return motCourant;
+			for(int j=0; j<dicoGenre.size(); j++){
+				int tailleGenre = dicoGenre.get(j).length();
+				if(dicoGenre.get(j).compareTo(motCourant.substring(0, tailleGenre)) == 0){
+					return dicoGenre.get(j);
+				}
 			}
 		}
 		return "";
