@@ -38,7 +38,7 @@ public class ConversationIA
 	 * @return String : La reponse
 	 * @throws IOException 
 	 */
-	public String traitementMessage(String message) throws IOException
+	public String traitementMessage(String message)
 	{
 		if(etape=="debut")
 		{
