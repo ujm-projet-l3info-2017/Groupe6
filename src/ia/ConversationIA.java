@@ -88,10 +88,7 @@ public class ConversationIA
 		if((etape=="satisfaction")&&(motTrouves.contains("non")))
 		{
 			etape="recommencer";
-			b_realisateur=false;
-			b_acteur=false;
-			b_sortie=false;
-			b_genre=false;
+			reset(5);
 			return "Desole. On recommence ?";
 		}
 		if((etape=="recommencer")&&(motTrouves.contains("oui")))
@@ -130,7 +127,7 @@ public class ConversationIA
 			if(realisateur != ""){
 				s_realisateur = realisateur;
 			}else{
-				b_realisateur=false;
+				reset(1);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 		}
@@ -141,7 +138,7 @@ public class ConversationIA
 			if(acteur != ""){
 				s_acteur = acteur;
 			}else{
-				b_acteur=false;
+				reset(2);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 		}
@@ -152,7 +149,7 @@ public class ConversationIA
 			if(date != ""){
 				s_sortie = date;
 			}else{
-				b_sortie=false;
+				reset(3);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 			
@@ -165,7 +162,7 @@ public class ConversationIA
 			if(genre != ""){
 				s_genre = genre;
 			}else{
-				b_genre=false;
+				reset(4);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 		}
@@ -207,11 +204,42 @@ public class ConversationIA
 	 */
 	public String erreur(){
 		etape="recommencer";
-		b_realisateur=false;
-		b_acteur=false;
-		b_sortie=false;
-		b_genre=false;
+		reset(5);
 		return "Desole, je n'ai rien trouvé. On recommence ?";
+	}
+	
+	public void reset(int option)
+	{
+		switch(option)
+		{
+		case 1: // Reset realisateur
+			b_realisateur=false;
+			s_realisateur="";
+			break;
+		case 2: // Reset acteur
+			b_acteur=false;
+			s_acteur="";
+			break;
+		case 3: // Reset sortie
+			b_sortie=false;
+			s_sortie="";
+			break;
+		case 4: // Reset genre
+			b_genre=false;
+			s_genre="";
+			break;
+		case 5: // Reset total (Jean-Reset)
+			b_realisateur=false;
+			b_acteur=false;
+			b_sortie=false;
+			b_genre=false;
+			s_realisateur="";
+			s_acteur="";
+			s_sortie="";
+			s_genre="";
+			break;
+		// Faut il un reset absolu qui supprime aussi le nomUtilisateur ?
+		}
 	}
 
 }

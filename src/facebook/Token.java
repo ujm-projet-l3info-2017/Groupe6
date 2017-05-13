@@ -12,6 +12,9 @@ import java.util.Properties;
  */
 public final class Token 
 {
+	private static final String SETTINGS_PATH_LINUX = "/usr/share/tomcat7/conf/settings.ini";
+	private static final String SETTINGS_PATH_WINDOWS = "C:\\Users\\chris\\Desktop\\RazBot\\RaZBoT2\\settings.ini";
+
 	/**
 	 * 	Fonction pour charger les propriétés du fichier settings.ini
 	 * @return Properties Propriétés de settings.ini
@@ -44,7 +47,7 @@ public final class Token
 	{
 		String valeur = ""; System.out.println();
 		try // C:\\Users\\chris\\Desktop\\RazBot\\RaZBoT2\\settings.ini
-		{
+		{			
 			//On charge le fichier et on recupère la valeur de la propriété TOKEN
 			valeur = chargement(trouverLocalisationSettings()).getProperty(propriete, "vide"); // /usr/share/tomcat7/conf/settings.ini
 
@@ -71,9 +74,9 @@ public final class Token
 	private static String trouverLocalisationSettings()
 	{
 		if(System.getProperty("os.name").toLowerCase().indexOf("nux")>=0)	//Linux
-			return "/usr/share/tomcat7/conf/settings.ini";
+			return SETTINGS_PATH_LINUX;
 		else
-			return "C:\\Users\\chris\\Desktop\\RazBot\\RaZBoT2\\settings.ini"; //Il faut modifier le chemin vers mon settings.ini
+			return SETTINGS_PATH_WINDOWS;
 	}
  
 	/**
@@ -125,13 +128,4 @@ public final class Token
 		}
 		return Long.valueOf(recupererValeur("TESTINTERVAL"));	//Récupéré du fichier
 	}
-	
-	/*private static String trouverLocalisationSettings()
-	{
-		if(System.getProperty("os.name").toLowerCase().indexOf("nux")>=0)	//Linux
-			return "/usr/share/tomcat7/conf/settings.ini";
-		else
-			return "C:\\Users\\Ordi\\Desktop\\RazBot\\razbot\\settings.ini";
-		
-	}*/
 }
