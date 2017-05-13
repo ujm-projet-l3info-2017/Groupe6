@@ -97,7 +97,7 @@ public class ConversationIA
 		if((etape=="recommencer")&&(motTrouves.contains("oui")))
 		{
 			etape="discussion";
-			return "Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
+			return "Que souhaitez-vous : une recherche de film par critere ou un film de mon choix ?";
 		}
 		if((etape=="recommencer")&&(motTrouves.contains("non")))
 		{

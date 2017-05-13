@@ -25,7 +25,8 @@ public class Salutations implements Vocabulaire{
 		//expressions.add("Bonsoir"); //Est ce qu'on sait l'heure
 		expressions.add("Salut");
 		expressions.add("Hey");
-		expressions.add("Content de te parler");
+		expressions.add("Salutations");
+		expressions.add("Content de vous parler");
 	}
 	
 	/* (non-Javadoc)
