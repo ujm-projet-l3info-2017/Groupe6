@@ -18,7 +18,7 @@ public class ParseurAllocine
 	public static List<String> recupererFilms()
 	{
 		String url = "http://www.allocine.fr/films/notes/";
-		return chercherFilms(url);
+		return chercherFilmsAvecURL(url);
 	}
 	
 	/**
@@ -29,7 +29,7 @@ public class ParseurAllocine
 	{
 		String url = "http://www.allocine.fr/films/notes/";
 		url += ajouterGenre(genre);	
-		return chercherFilms(url);
+		return chercherFilmsAvecURL(url);
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class ParseurAllocine
 		String url = "http://www.allocine.fr/films/notes/";
 		if (date)
 			url += ajouterDate(date);
-		return chercherFilms(url);
+		return chercherFilmsAvecURL(url);
 	}
 	
 	/**
@@ -55,14 +55,14 @@ public class ParseurAllocine
 		url += ajouterGenre(genre);	
 		if (date)
 			url += ajouterDate(date);
-		return chercherFilms(url);
+		return chercherFilmsAvecURL(url);
 	}
 	
 	/**
 	 * @param url String
 	 * @return List<String>
 	 */
-	private static List<String> chercherFilms(String url)
+	private static List<String> chercherFilmsAvecURL(String url)
 	{
 		List<String> liste = new ArrayList<>();
 		try 
@@ -88,7 +88,7 @@ public class ParseurAllocine
 	 * @param url String
 	 * @return List<String>
 	 */
-	public static String chercherPersonne(String nom)
+	private static String chercherPersonne(String nom)
 	{
 		String url = "http://www.allocine.fr/recherche/?q="+nom;
 		try 
@@ -113,7 +113,11 @@ public class ParseurAllocine
 		}
 	}
 	
-	
+	/**
+	 * Retourne une liste composé des meilleurs films d'un réalisateurs ou d'un acteurs
+	 * @param nom String : le nom d'un acteur ou d'un réalisateur
+	 * @return List<String> 
+	 */
 	public static List<String> chercherFilmDePersonne(String nom)
 	{
 		List<String> films = new ArrayList<>();
@@ -137,9 +141,14 @@ public class ParseurAllocine
 		}
 	}
 	
+	/**
+	 * 
+	 * @param nom String : nom de l'acteur ou du réalisateur
+	 * @return String : le code de l'acteur à utiliser dans l'URL 
+	 */
 	private static String recupererCodePersonne(String nom)
 	{
-		String url = chercherPersonne(nom);
+		String url = chercherPersonne(nom); //On récupère l'url de la fiche de la personne sur Allociné
 		//L'url est de type : http://www.allocine.fr/personne/fichepersonne_gen_cpersonne=2990.html
 		String apresLeEgal = url.split("=")[1]; //On récupère ce qu'il y a après le égal
 		String code = apresLeEgal.split("\\.")[0]; //Et ce qu'il y a avant le point
@@ -156,7 +165,7 @@ public class ParseurAllocine
 	}
 
 	/**
-	 * @param genre String
+	 * @param genre String 
 	 * @return String
 	 */
 	private static String ajouterGenre(String genre) 
