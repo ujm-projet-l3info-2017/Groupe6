@@ -17,7 +17,7 @@ public class RechercherMot
 	/**
 	 * Liste de mot constituant les dictionnaires
 	 */
-	ArrayList<String> dicoFrançais;
+	ArrayList<String> dicoFrancais;
 	ArrayList<String> dicoMotsCles;
 	ArrayList<String> dicoGenre;
 	ArrayList<String> dicoPrenomFeminin;
@@ -27,7 +27,7 @@ public class RechercherMot
 	 * Initialisation de la recherche
 	 */
 	public RechercherMot(){
-		dicoFrançais = this.chargementDico("./src/ia/dicoFrançais.txt");
+		dicoFrancais = this.chargementDico("./src/ia/dicoFrançais.txt");
 		dicoMotsCles = this.chargementDico("./src/ia/dicoMotsCles.txt");
 		dicoGenre = this.chargementDico("./src/ia/dicoGenre.txt");
 		dicoPrenomFeminin = this.chargementDico("./src/ia/dicoPrenomFeminin.txt");
@@ -141,7 +141,7 @@ public class RechercherMot
 		{
 			String motCourant = phrase[i];
 
-			if (dicoFrançais.contains(motCourant))
+			if (dicoFrancais.contains(motCourant))
 			{
 				if (i == 0)
 				{
@@ -164,13 +164,13 @@ public class RechercherMot
 				} else if ((m3 = motMoinsUneLettre(motCourant, dicoMotsCles)) != "")
 				{
 					m4 = m3;
-				} else if ((m1 = motPlusUneLettre(motCourant, dicoFrançais)) != "")
+				} else if ((m1 = motPlusUneLettre(motCourant, dicoFrancais)) != "")
 				{
 					m4 = m1;
-				}else if((m2 = motSubUneLettre(motCourant, dicoFrançais)) != "")
+				}else if((m2 = motSubUneLettre(motCourant, dicoFrancais)) != "")
 				{
 					m4 = m2;
-				}else if((m3 = motMoinsUneLettre(motCourant, dicoFrançais)) != "")
+				}else if((m3 = motMoinsUneLettre(motCourant, dicoFrancais)) != "")
 				{
 					m4 = m3;
 				}else{
