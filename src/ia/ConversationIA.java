@@ -171,7 +171,7 @@ public class ConversationIA
 			// Recuperer le nom de l'acteur et stocker dans s_acteur
 			// Si le nom n'est pas dans le message reposer la question
 		}
-		if(motTrouves.contains("sortie"))
+		if(motTrouves.contains("date de sortie"))
 		{
 			b_sortie=true;
 			String date = recherche.trouverDate(message);
@@ -216,6 +216,12 @@ public class ConversationIA
 		if(b_genre==false)
 		{
 			G=" genre ?";
+		}
+		if((b_realisateur==true)&&(b_acteur==true)&&(b_sortie==true)&&(b_genre==true))
+		{
+			// Lancer la recherche puis rappeler l'IA
+			// Si on ne trouve aucun film appeler erreur()
+			return "Cas tous criteres";
 		}
 		
 		return "Un autre critere:"+R+A+S+G+", ou avez-vous termine ?";
