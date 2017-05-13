@@ -52,11 +52,15 @@ public class Main
 //		Film f = new Film(r.liste_films().get(0));
 //		f.affiche_infos();
 		
-		List<String> films = ParseurAllocine.chercherFilmDePersonne("Quentin Tarantino");
+		List<String> films = ParseurAllocine.chercherFilmDePersonne("Jean Dujardin");
 		for (int i=0; i<films.size();i++)
 		{
-			System.out.println(films.get(i));
+			Film f = RechercheAllocine.film(films.get(i));
+			f.affiche_infos();
+			System.out.println();
 		}
+		
+		
 	} 
 
 }
