@@ -285,7 +285,6 @@ public class RechercherMot
 		String date="";
 		String phrase[] = message.split(" ");
 		for (int i=0; i<phrase.length; i++){
-			System.out.println(i);
 			int tailleMot = phrase[i].length();
 			if(tailleMot == 4){
 				char premierCaractere;
