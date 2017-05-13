@@ -19,6 +19,7 @@ public class FinDeConversation implements Vocabulaire{
 	 * Constructeur de la liste des expressions de fin de conversation
 	 */
 	public FinDeConversation(){
+		expressions = new ArrayList<>();
 		expressions.add("Au revoir");
 		expressions.add("Bye");
 		expressions.add("A bientot");
@@ -39,7 +40,7 @@ public class FinDeConversation implements Vocabulaire{
 	public String aleatoire() {
 
 		Random rand = new Random();
-		int nbAleatoire = rand.nextInt(((Vocabulaire) expressions).getLength()+1);
+		int nbAleatoire = rand.nextInt(expressions.size()+1);
 		return expressions.get(nbAleatoire);
 	}
 

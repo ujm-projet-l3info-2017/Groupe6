@@ -11,15 +11,17 @@ public class Arbre {
 	 * Lance l'IA et salue l'utilisateur
 	 * @return String
 	 */
-	public String lancementArbre(){
-		return ((Vocabulaire) Salutations.expressions).aleatoire();
+	public static String lancementArbre(){
+		Salutations salut = new Salutations();
+		return salut.aleatoire()+". Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
+		//return "Bonjour. Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
 	}
 	
 	/**
 	 * Demande à l'utilisateur quels critère de recherche l'intéressent
 	 * @return String
 	 */
-	public String questionCritere()
+	public static String questionCritere()
 	{
 		String R="";
 		String A="";
@@ -32,55 +34,38 @@ public class Arbre {
 		}
 		if(ConversationIA.isB_realisateur()==false)
 		{
-			R=" realisateur";
+			R=" realisateur ?";
 		}
 		if(ConversationIA.isB_acteur()==false)
 		{
-			A=" acteur";
+			A=" acteur ?";
 		}
 		if(ConversationIA.isB_sortie()==false)
 		{
-			S=" date de sortie";
+			S=" date de sortie ?";
 		}
 		if(ConversationIA.isB_genre()==false)
 		{
-			G=" genre";
+			G=" genre ?";
 		}
-		return "Quel critere recherchez vous:"+R+A+S+G+" ? Ou bien avez-vous termine ?";
+		return "Quel critere recherchez vous:"+R+A+S+G+" Ou bien avez-vous termine ?";
 	}
 	
 	/**
 	 * Renvoit un film en fonction des critères proposés par l'utilisateur
 	 * @return String
 	 */
-	private String rechercheCritere() {
+	private static String rechercheCritere() {
 		
-		return ((Vocabulaire) Recommandation.expressions).aleatoire();//+resultatFilm;
-	}
-
-	/**
-	 * Demande à l'utilisateur si il est satisfait de notre proposition
-	 * @param satisfait boolean
-	 */
-	public void satisfaction(boolean satisfait){
-		if(satisfait==false)
-		{
-			ConversationIA.setB_realisateur(false);
-			ConversationIA.setB_acteur(false);
-			ConversationIA.setB_sortie(false);
-			ConversationIA.setB_genre(false);
-			questionCritere();
-		}
-		else{
-			//Fin conversation
-		}
+		Recommandation recom = new Recommandation();
+		return recom.aleatoire();//+resultatFilm;
 	}
 	
 	/**
 	 * Si aucun film ne correspond aux critères, on relance la recherche
 	 * @return String
 	 */
-	public String erreur(){
+	public static String erreur(){
 		//Envoi message d'erreur
 		ConversationIA.setB_realisateur(false);
 		ConversationIA.setB_acteur(false);
@@ -94,8 +79,10 @@ public class Arbre {
 	 * Salue l'utilisateur et arrête l'IA
 	 * @return String
 	 */
-	public String fin()
+	public static String fin()
 	{
-		return ((Vocabulaire) FinDeConversation.expressions).aleatoire();
+		FinDeConversation fin = new FinDeConversation();
+		return fin.aleatoire();
+		//return "Au revoir.";
 	}
 }
