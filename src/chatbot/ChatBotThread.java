@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
 import facebook.Token;
@@ -11,7 +14,10 @@ import ia.ConversationIA;
 
 public class ChatBotThread extends Thread
 {
-	/** L'objet qui gère les conversations*/
+	/** Initialisation du log */
+	static final Logger logger = LogManager.getLogger(ChatBotThread.class.getName());
+	  
+	/** L'objet qui gère les conversations */
 	public PageRazbot razbot;
 	/** Les IA associées à chaque conversation */
 	private Hashtable<String,ConversationIA> conversationsIA;
@@ -36,23 +42,23 @@ public class ChatBotThread extends Thread
 		
 //		try{System.in.read();}catch (IOException e){e.printStackTrace();} //GETCHAR
 		
-		System.out.println("Démarrage du programme");
+		logger.info("ThreadProgramme","Démarrage du programme");
 		while(continuer && !Thread.currentThread().isInterrupted())
 		{
 			if(Token.isWebhookEnable())
 			{
-				System.out.println("Mode WEBHOOK");
+				logger.info("ThreadProgramme","Mode WebHook");
 				// Méthode par webhook
 				gestionMessagesWebhook();
 			}
 			else
 			{
-				System.out.println("Mode Interval");
+				logger.info("ThreadProgramme","Mode vérification ");
 				// Méthode récupération par interval de temps
 				gestionMessagesInterval();
 			}
 		}
-		System.out.println("Le programme a bien été arrêté");
+		logger.info("ThreadProgramme","Le programme a bien été arrêté");
 	}
 
 	/**
