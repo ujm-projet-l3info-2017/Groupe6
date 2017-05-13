@@ -126,14 +126,24 @@ public class ConversationIA
 		if(motTrouves.contains("realisateur"))
 		{
 			b_realisateur=true;
-			// Recuperer le nom du realisateur et stocker dans s_realisateur
-			// Si le nom n'est pas dans le message reposer la question
+			String realisateur = recherche.trouverPersonne(message);
+			if(realisateur != ""){
+				s_realisateur = realisateur;
+			}else{
+				b_realisateur=false;
+				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+			}
 		}
 		if(motTrouves.contains("acteur"))
 		{
 			b_acteur=true;
-			// Recuperer le nom de l'acteur et stocker dans s_acteur
-			// Si le nom n'est pas dans le message reposer la question
+			String acteur = recherche.trouverPersonne(message);
+			if(acteur != ""){
+				s_acteur = acteur;
+			}else{
+				b_acteur=false;
+				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+			}
 		}
 		if(motTrouves.contains("date de sortie"))
 		{
