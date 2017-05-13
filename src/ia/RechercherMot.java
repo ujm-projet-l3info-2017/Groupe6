@@ -327,8 +327,8 @@ public class RechercherMot
 			String motCourant = phrase[i];
 			for(int j=0; j<dicoGenre.size(); j++){
 				int tailleGenre = dicoGenre.get(j).length();
-				//int tailleMotCourant = motCourant.length();
-				if(/*(tailleMotCourant >= tailleGenre) && */(dicoGenre.get(j).compareTo(motCourant.substring(0, tailleGenre)) == 0)){
+				int tailleMotCourant = motCourant.length();
+				if((tailleMotCourant >= tailleGenre) && (dicoGenre.get(j).compareTo(motCourant.substring(0, tailleGenre)) == 0)){
 					return dicoGenre.get(j);
 				}
 			}
