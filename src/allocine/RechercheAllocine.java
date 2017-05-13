@@ -92,6 +92,10 @@ public class RechercheAllocine
     	return recherche.getPersons();
     }
   
-
+    public static Film film(String titreDuFilm)
+    {
+    	RechercheAllocine recherche = new RechercheAllocine(titreDuFilm);
+    	return new Film(recherche.liste_films().get(0));
+    }
     
 }
