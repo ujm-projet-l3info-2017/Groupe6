@@ -12,8 +12,9 @@ public class Arbre {
 	 * @return String
 	 */
 	public static String lancementArbre(){
-		//return ((Vocabulaire) Salutations.expressions).aleatoire()+". Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
-		return "Bonjour. Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
+		Salutations salut = new Salutations();
+		return salut.aleatoire()+". Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
+		//return "Bonjour. Que souhaitez-vous : une recherche de film par critere ou un film aleatoire ?";
 	}
 	
 	/**
@@ -56,7 +57,8 @@ public class Arbre {
 	 */
 	private static String rechercheCritere() {
 		
-		return ((Vocabulaire) Recommandation.expressions).aleatoire();//+resultatFilm;
+		Recommandation recom = new Recommandation();
+		return recom.aleatoire();//+resultatFilm;
 	}
 	
 	/**
@@ -79,7 +81,8 @@ public class Arbre {
 	 */
 	public static String fin()
 	{
-		//return ((Vocabulaire) FinDeConversation.expressions).aleatoire();
-		return "Au revoir.";
+		FinDeConversation fin = new FinDeConversation();
+		return fin.aleatoire();
+		//return "Au revoir.";
 	}
 }
