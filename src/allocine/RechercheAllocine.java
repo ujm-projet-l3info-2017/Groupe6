@@ -44,25 +44,35 @@ public class RechercheAllocine
      * @return String
      * @throws AllocineException
      */
-    public static String informationFilm(String film, String element) throws AllocineException
+    public static String informationFilm(String film, String element)
     {
     	RechercheAllocine recherche= new RechercheAllocine(film);
-    	Film f = new Film(recherche.liste_films().get(0));
-    	switch (element)
-    	{
-    		case "titre":
-    			return f.titre();
-    		case "realisateur":
-    			return f.realisateur();
-    		case "dateSortie":
-    			return String.valueOf(f.dateSortie());
-    		case "affiche":
-    			return f.affiche();
-    		case "acteurPrincipal":
-    			return f.acteursPrincipaux().get(0);
-    		case "note":
-    			return String.valueOf(f.note_public());
-    	}
+    	Film f;
+		try
+		{
+			f = new Film(recherche.liste_films().get(0));
+			switch (element)
+	    	{
+	    		case "titre":
+	    			return f.titre();
+	    		case "realisateur":
+	    			return f.realisateur();
+	    		case "dateSortie":
+	    			return String.valueOf(f.dateSortie());
+	    		case "affiche":
+	    			return f.affiche();
+	    		case "acteurPrincipal":
+	    			return f.acteursPrincipaux().get(0);
+	    		case "note":
+	    			return String.valueOf(f.note_public());
+	    	}
+		}
+		catch (AllocineException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	return "Usage : titre, realisateur, dateSortie, affiche, acteurPrincipal, note";
     	
     }
