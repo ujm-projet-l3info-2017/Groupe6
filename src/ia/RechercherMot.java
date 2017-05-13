@@ -30,7 +30,7 @@ public class RechercherMot
 		try
 		{
 			f = new FileReader("./src/ia/dico");
-			System.out.println("\nOuverture du dictionnaire réussi !");
+			System.out.println("\nOuverture du dictionnaire rï¿½ussi !");
 
 			BufferedReader br = new BufferedReader(f);
 			String line;
@@ -80,6 +80,10 @@ public class RechercherMot
 						// Pour les termes suivants du mot cle
 						for (int k = 1; k < motsCles.length; k++)
 						{
+							if(phrase.length-1 < j+k){
+								similaire = false;
+								break;
+							}
 							if ((phrase[j + k].compareTo(motsCles[k]) == 0) && (similaire == true))
 							{
 								similaire = true;
