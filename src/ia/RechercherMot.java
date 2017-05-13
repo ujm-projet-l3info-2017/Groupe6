@@ -74,8 +74,6 @@ public class RechercherMot
 		String phrase[] = phraseBrut.split(" ");
 		// Liste de mots cles trouves
 		ArrayList<String> motCle = new ArrayList<String>();
-		// Liste de gestion des mots cles constitue de plusieurs termes
-		ArrayList<String> plusieursMotsCles = new ArrayList<String>();
 		String[] motsCles;
 		for (int i = 0; i < dicoMotsCles.size(); i++)
 		{
@@ -301,7 +299,6 @@ public class RechercherMot
 				char deuxiemeCaractere;
 				char troisiemeCaractere;
 				char quatriemeCaractere;
-				String motCourant = phrase[i];
 				premierCaractere = phrase[i].charAt(0);
 				deuxiemeCaractere = phrase[i].charAt(1);
 				troisiemeCaractere = phrase[i].charAt(2);
