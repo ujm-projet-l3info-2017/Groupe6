@@ -161,43 +161,39 @@ public class ConversationIA
 	{
 		if(motTrouves.contains("realisateur"))
 		{
-			System.out.println("real");
 			b_realisateur=true;
 			// Recuperer le nom du realisateur et stocker dans s_realisateur
 			// Si le nom n'est pas dans le message reposer la question
 		}
 		if(motTrouves.contains("acteur"))
 		{
-			System.out.println("acteur");
 			b_acteur=true;
 			// Recuperer le nom de l'acteur et stocker dans s_acteur
 			// Si le nom n'est pas dans le message reposer la question
 		}
 		if(motTrouves.contains("sortie"))
 		{
-			System.out.println("sortie");
 			b_sortie=true;
 			String date = recherche.trouverDate(message);
 			if(date != ""){
 				s_sortie = date;
 			}else{
-				// Si la date n'est pas dans le message reposer la question
+				b_sortie=false;
+				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
-			// Recuperer la date de sortie et stocker dans s_sortie
 			
 			
 		}
 		if(motTrouves.contains("genre"))
 		{
-			System.out.println("genre");
 			b_genre=true;
 			String genre = recherche.trouverGenre(message, dicoGenre);
 			if(genre != ""){
 				s_genre = genre;
 			}else{
-				// Si le genre n'est pas dans le message reposer la question
-			}			
-			// Recuperer le genre et stocker dans s_genre
+				b_genre=false;
+				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+			}
 		}
 		
 		String R="";
