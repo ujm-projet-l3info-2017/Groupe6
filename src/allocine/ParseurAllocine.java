@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ParseurAllocine 
@@ -17,7 +18,7 @@ public class ParseurAllocine
 	public static List<String> recupererFilms()
 	{
 		String url = "http://www.allocine.fr/films/notes/";
-		return chercherUrl(url);
+		return chercherFilms(url);
 	}
 	
 	/**
@@ -28,7 +29,7 @@ public class ParseurAllocine
 	{
 		String url = "http://www.allocine.fr/films/notes/";
 		url += ajouterGenre(genre);	
-		return chercherUrl(url);
+		return chercherFilms(url);
 	}
 	
 	/**
@@ -40,7 +41,7 @@ public class ParseurAllocine
 		String url = "http://www.allocine.fr/films/notes/";
 		if (date)
 			url += ajouterDate(date);
-		return chercherUrl(url);
+		return chercherFilms(url);
 	}
 	
 	/**
@@ -54,14 +55,14 @@ public class ParseurAllocine
 		url += ajouterGenre(genre);	
 		if (date)
 			url += ajouterDate(date);
-		return chercherUrl(url);
+		return chercherFilms(url);
 	}
 	
 	/**
 	 * @param url String
 	 * @return List<String>
 	 */
-	private static List<String> chercherUrl(String url)
+	private static List<String> chercherFilms(String url)
 	{
 		List<String> liste = new ArrayList<>();
 		try 
@@ -76,10 +77,41 @@ public class ParseurAllocine
 			}
 		} catch (IOException e) 
 		{
+			System.out.println("La recherche avec cet URL n'a rien trouvé.");
 			e.printStackTrace();
 		}
 		return liste;
 	}
+	
+	/**
+	 * @param url String
+	 * @return List<String>
+	 */
+	public static String chercherPersonne(String nom)
+	{
+		String url = "http://www.allocine.fr/recherche/?q="+nom;
+		try 
+		{
+			Document doc = Jsoup.connect(url).get();
+			Elements link = doc.select("a");
+			for (int i=0; i<link.size(); i++)
+			{
+				String ref = link.get(i).attr("abs:href");
+				if (ref.contains("personne"))
+				{
+					return ref;
+				}
+			}
+			System.out.println("Aucune personne trouvée avec ce nom");
+			return null;
+		} 
+		catch (IOException e) 
+		{
+			System.out.println("Aucune personne trouvée avec ce nom");
+			return null;
+		}
+	}
+	
 	
 	/**
 	 * @param date boolean
