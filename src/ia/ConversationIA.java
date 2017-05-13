@@ -12,7 +12,7 @@ public class ConversationIA
 	static boolean b_realisateur, b_acteur, b_sortie, b_genre;
 	static String s_realisateur,s_acteur,s_sortie,s_genre;
 	private String etape; // debut, discussion, p_critere, recherche, satisfaction, recommencer, erreur, fin
-	
+	RechercherMot recherche;
 	/**
 	 * Initialisation de la conversation
 	 * @param nom String
@@ -58,7 +58,7 @@ public class ConversationIA
 		dico.add("au revoir");
 		dico.add("date de sortie");
 		
-		RechercherMot recherche = new RechercherMot();
+		recherche = new RechercherMot();
 		String messageCorrige = recherche.analysePhrase(message, dico);
 		motTrouves = recherche.chercherMotsCles(messageCorrige, dico);
 		
@@ -152,8 +152,15 @@ public class ConversationIA
 		{
 			System.out.println("sortie");
 			b_sortie=true;
+			String date = recherche.trouverDate(message);
+			if(date != ""){
+				s_sortie = date;
+			}else{
+				// Si la date n'est pas dans le message reposer la question
+			}
 			// Recuperer la date de sortie et stocker dans s_sortie
-			// Si la date n'est pas dans le message reposer la question
+			
+			
 		}
 		if(motTrouves.contains("genre"))
 		{
