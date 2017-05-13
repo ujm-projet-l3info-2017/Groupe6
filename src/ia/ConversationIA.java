@@ -13,6 +13,7 @@ public class ConversationIA
 	static String s_realisateur,s_acteur,s_sortie,s_genre;
 	private String etape; // debut, discussion, p_critere, recherche, satisfaction, recommencer, erreur, fin
 	RechercherMot recherche;
+	ArrayList<String> dicoGenre;
 	/**
 	 * Initialisation de la conversation
 	 * @param nom String
@@ -46,6 +47,8 @@ public class ConversationIA
 		}		
 		ArrayList<String> dico = new ArrayList<String>();
 		ArrayList<String> motTrouves = new ArrayList<String>();
+		
+		//Dictionnaire des mots cles
 		dico.add("critere");
 		dico.add("criteres");
 		dico.add("aleatoire");
@@ -57,6 +60,28 @@ public class ConversationIA
 		dico.add("termine");
 		dico.add("au revoir");
 		dico.add("date de sortie");
+		
+		//Dictionnaire des genres
+		dicoGenre = new ArrayList<String>();
+		dicoGenre.add("action");
+		dicoGenre.add("anim");
+		dicoGenre.add("biopic");
+		dicoGenre.add("aventur");
+		dicoGenre.add("comique");
+		dicoGenre.add("comédie");
+		dicoGenre.add("drôle");
+		dicoGenre.add("drole");
+		dicoGenre.add("dram");
+		dicoGenre.add("erotique");
+		dicoGenre.add("sex");
+		dicoGenre.add("histo");
+		dicoGenre.add("fantaisi");
+		dicoGenre.add("polic");
+		dicoGenre.add("roman");
+		dicoGenre.add("science");
+		dicoGenre.add("fiction");
+		dicoGenre.add("thriller");
+		dicoGenre.add("western");
 		
 		recherche = new RechercherMot();
 		String messageCorrige = recherche.analysePhrase(message, dico);
@@ -166,8 +191,13 @@ public class ConversationIA
 		{
 			System.out.println("genre");
 			b_genre=true;
+			String genre = recherche.trouverGenre(message, dicoGenre);
+			if(genre != ""){
+				s_genre = genre;
+			}else{
+				// Si le genre n'est pas dans le message reposer la question
+			}			
 			// Recuperer le genre et stocker dans s_genre
-			// Si le genre n'est pas dans le message reposer la question
 		}
 		
 		String R="";
