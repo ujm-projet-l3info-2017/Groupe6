@@ -319,7 +319,6 @@ public class RechercherMot
 	 * 
 	 * @return String : Le genre
 	 * @param message String
-	 * @param dicoGenre ArrayList<String>
 	 */
 	public String trouverGenre(String message){
 		String phrase[] = message.split(" ");
@@ -334,5 +333,29 @@ public class RechercherMot
 			}
 		}
 		return "";
+	}
+	
+	/**
+	 * Permet de trouver le realisateur ou l'acteur present dans la phrase
+	 * 
+	 * @return String : Le nom et le prenom de la personne
+	 * @param message String
+	 */
+	public String trouverPersonne(String message){
+		String nom = "";
+		String phrase[] = message.split(" ");
+		for (int i=0; i<phrase.length; i++){
+			String motCourant = phrase[i];
+			//Premier caractere en majuscule
+			char[] char_table = motCourant.toCharArray();
+			char_table[0]=Character.toUpperCase(char_table[0]);
+			motCourant = new String(char_table);
+			
+			if(dicoPrenomFeminin.contains(motCourant) || dicoPrenomMasculin.contains(motCourant)){
+				nom = phrase[i]+" "+phrase[i+1];
+				return nom;
+			}
+		}
+		return nom;
 	}
 }
