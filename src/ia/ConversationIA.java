@@ -13,7 +13,6 @@ public class ConversationIA
 	static String s_realisateur,s_acteur,s_sortie,s_genre;
 	private String etape; // debut, discussion, p_critere, recherche, satisfaction, recommencer, erreur, fin
 	RechercherMot recherche;
-	ArrayList<String> dicoGenre;
 	/**
 	 * Initialisation de la conversation
 	 * @param nom String
