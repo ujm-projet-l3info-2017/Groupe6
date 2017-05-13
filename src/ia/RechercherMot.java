@@ -5,204 +5,258 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 /**
  * Classe de la recherche d'un mot dans un dictionnaire
+ * 
  * @author Rémi SIRACUSA
  *
  */
-public class RechercherMot{
+public class RechercherMot
+{
 
 	/**
 	 * Liste de mot constituant le dictionnaire
 	 */
 	ArrayList<String> dico;
 	FileReader f;
-	
+
 	/**
 	 * Permet de charger le dictionnaire dans une ArrayList
+	 * 
 	 * @throws IOException
 	 */
-	private void chargementDico() throws IOException{
-		try{
+	private void chargementDico()
+	{
+		try
+		{
 			f = new FileReader("./src/ia/dico");
-			System.out.println("\nOuverture du dictionnaire réussi !");
-		}catch (IOException e){
-		   	System.out.println("Erreur lors de l'ouverture du dictionnaire");
+			System.out.println("\nOuverture du dictionnaire r�ussi !");
+
+			BufferedReader br = new BufferedReader(f);
+			String line;
+			dico = new ArrayList<>();
+			while ((line = br.readLine()) != null)
+			{
+				dico.add(line);
+			}
+			br.close();
 		}
-		
-		BufferedReader br = new BufferedReader(f);
-		String line;
-		dico = new ArrayList<>();
-		while ((line = br.readLine()) != null) {
-		   dico.add(line);
+		catch (IOException e)
+		{
+			System.out.println("Erreur lors de l'ouverture du dictionnaire");
 		}
-		br.close();
 	}
-	
+
 	/**
 	 * Permet de lancer une recherche de mots cles
-	 * @param phraseBrut String
+	 * 
+	 * @param phraseBrut
+	 *            String
 	 * @return ArrayList<String>
 	 */
-	protected ArrayList<String> chercherMotsCles(String phraseBrut, ArrayList<String> dictionnaire){
+	protected ArrayList<String> chercherMotsCles(String phraseBrut, ArrayList<String> dictionnaire)
+	{
 		dico = dictionnaire;
 		String phrase[] = phraseBrut.split(" ");
-		//Liste de mots cles trouves
+		// Liste de mots cles trouves
 		ArrayList<String> motCle = new ArrayList<String>();
-		//Liste de gestion des mots cles constitue de plusieurs termes
+		// Liste de gestion des mots cles constitue de plusieurs termes
 		ArrayList<String> plusieursMotsCles = new ArrayList<String>();
 		String[] motsCles;
-		for(int i=0; i<dico.size(); i++){
-			motsCles=dico.get(i).split(" ");
-			//Si le mot clé est composé d'au moins deux termes
-			if(motsCles.length > 1){
-				//On parcourt la phrase
-				for(int j=0; j<phrase.length; j++){
+		for (int i = 0; i < dico.size(); i++)
+		{
+			motsCles = dico.get(i).split(" ");
+			// Si le mot clé est composé d'au moins deux termes
+			if (motsCles.length > 1)
+			{
+				// On parcourt la phrase
+				for (int j = 0; j < phrase.length; j++)
+				{
 					boolean similaire = false;
-					//Premier terme du mot cle est trouve
-					if(phrase[j].compareTo(motsCles[0]) == 0){
+					// Premier terme du mot cle est trouve
+					if (phrase[j].compareTo(motsCles[0]) == 0)
+					{
 						similaire = true;
-						//Pour les termes suivants du mot cle
-						for(int k=1; k<motsCles.length; k++){
-							if((phrase[j+k].compareTo(motsCles[k]) == 0) && (similaire == true)){
+						// Pour les termes suivants du mot cle
+						for (int k = 1; k < motsCles.length; k++)
+						{
+							if ((phrase[j + k].compareTo(motsCles[k]) == 0) && (similaire == true))
+							{
 								similaire = true;
-							}else{
+							} else
+							{
 								similaire = false;
 							}
 						}
 					}
-					if(similaire == true){
+					if (similaire == true)
+					{
 						motCle.add(dico.get(i));
 					}
 				}
 			}
 		}
-		
-		for(int l=0; l<phrase.length; l++){
+
+		for (int l = 0; l < phrase.length; l++)
+		{
 			String motCourant = phrase[l];
-			if(dico.contains(motCourant.toLowerCase())){
+			if (dico.contains(motCourant.toLowerCase()))
+			{
 				motCle.add(motCourant);
 			}
 		}
 		return motCle;
 	}
-	
+
 	/**
 	 * Permet de lancer les differentes phases d'une recherche
-	 * @param phrase String
+	 * 
+	 * @param phrase
+	 *            String
 	 * @return String
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	protected String analysePhrase(String message) throws IOException{
+	protected String analysePhrase(String message)
+	{
 		String[] phrase = message.split(" ");
 		chargementDico();
-		String p="";
-		for(int i=0; i<phrase.length; i++){
+		String p = "";
+		for (int i = 0; i < phrase.length; i++)
+		{
 			String motCourant = phrase[i];
-			
-			if(dico.contains(motCourant.toLowerCase())){
-				if(i==0){
-					p=motCourant;
-				}else{
-					p=p+" "+motCourant;
+
+			if (dico.contains(motCourant.toLowerCase()))
+			{
+				if (i == 0)
+				{
+					p = motCourant;
+				} else
+				{
+					p = p + " " + motCourant;
 				}
-			}else{
+			} else
+			{
 				String m1 = motPlusUneLettre(motCourant.toLowerCase());
 				String m2 = motSubUneLettre(motCourant.toLowerCase());
 				String m3 = motMoinsUneLettre(motCourant.toLowerCase());
 				String m4;
-				if(m1 != ""){
-					m4=m1;
-				}else if(m2 != ""){
-					m4=m2;
-				}else if(m3 != ""){
-					m4=m3;
-				}else{
-					m4=motCourant;
+				if (m1 != "")
+				{
+					m4 = m1;
+				} else if (m2 != "")
+				{
+					m4 = m2;
+				} else if (m3 != "")
+				{
+					m4 = m3;
+				} else
+				{
+					m4 = motCourant;
 				}
-				
-				if(i==0){	
-					p=m4;
-				}else{
-					p=p+" "+m4;
+
+				if (i == 0)
+				{
+					p = m4;
+				} else
+				{
+					p = p + " " + m4;
 				}
 			}
 		}
 		return p;
 	}
-	
-	
+
 	/**
-	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on ajoute une lettre au mot courant
+	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on ajoute
+	 * une lettre au mot courant
+	 * 
 	 * @return String : Le mot trouve
-	 * @param motCourant String
+	 * @param motCourant
+	 *            String
 	 */
-	private String motPlusUneLettre(String motCourant){
+	private String motPlusUneLettre(String motCourant)
+	{
 		String debut, fin, motTrouve;
 		char lettre;
 		boolean b;
-		for(int l=0; l< motCourant.length(); l++){
-			lettre = 'a';		
-			debut = motCourant.substring(0, l);			
+		for (int l = 0; l < motCourant.length(); l++)
+		{
+			lettre = 'a';
+			debut = motCourant.substring(0, l);
 			fin = motCourant.substring(l);
-			while(lettre < 'z'){
-				motTrouve = debut+lettre+fin;
+			while (lettre < 'z')
+			{
+				motTrouve = debut + lettre + fin;
 				b = dico.contains(motTrouve);
-				if(b == true){				
+				if (b == true)
+				{
 					return motTrouve;
 				}
-			lettre++;
+				lettre++;
 			}
 		}
 		return "";
 	}
-	
+
 	/**
-	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on enleve une lettre au mot courant
+	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on enleve
+	 * une lettre au mot courant
+	 * 
 	 * @return String : Le mot trouve
-	 * @param motCourant String
+	 * @param motCourant
+	 *            String
 	 */
-	private String motMoinsUneLettre(String motCourant){
+	private String motMoinsUneLettre(String motCourant)
+	{
 		String debut, fin, motTrouve;
 		boolean b;
-		for(int l=0; l< motCourant.length(); l++){	
-			debut = motCourant.substring(0, l);			
-			fin = motCourant.substring(l+1);
-			motTrouve = debut+fin;
+		for (int l = 0; l < motCourant.length(); l++)
+		{
+			debut = motCourant.substring(0, l);
+			fin = motCourant.substring(l + 1);
+			motTrouve = debut + fin;
 			b = dico.contains(motTrouve);
-			if(b == true){
+			if (b == true)
+			{
 				return motTrouve;
 			}
 		}
 		return "";
 	}
-	
+
 	/**
-	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on remplace une lettre dans le mot courant
+	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on remplace
+	 * une lettre dans le mot courant
+	 * 
 	 * @return String : Le mot trouve
-	 * @param motCourant String
+	 * @param motCourant
+	 *            String
 	 */
-	private String motSubUneLettre(String motCourant){
+	private String motSubUneLettre(String motCourant)
+	{
 		String debut, fin, motTrouve;
 		char lettre;
 		boolean b;
-		for(int l=0; l< motCourant.length(); l++){
-			lettre = 'a';		
-			debut = motCourant.substring(0, l);			
-			fin = motCourant.substring(l+1);
-			while(lettre <= 'z'){
-				motTrouve = debut+lettre+fin;
-				//System.out.println(motTrouve);
-				if(motTrouve != motCourant){
+		for (int l = 0; l < motCourant.length(); l++)
+		{
+			lettre = 'a';
+			debut = motCourant.substring(0, l);
+			fin = motCourant.substring(l + 1);
+			while (lettre <= 'z')
+			{
+				motTrouve = debut + lettre + fin;
+				// System.out.println(motTrouve);
+				if (motTrouve != motCourant)
+				{
 					b = dico.contains(motTrouve);
-					if(b == true){
+					if (b == true)
+					{
 						return motTrouve;
 					}
 				}
-			lettre++;
+				lettre++;
 			}
-		}	
+		}
 		return "";
-	}	
+	}
 }
