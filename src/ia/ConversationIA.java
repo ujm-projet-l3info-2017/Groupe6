@@ -238,6 +238,7 @@ public class ConversationIA
 			s_sortie="";
 			s_genre="";
 			break;
+		// Faut il un reset absolu qui supprime aussi le nomUtilisateur ?
 		}
 	}
 
