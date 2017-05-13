@@ -21,11 +21,18 @@ public class Film
 	 * @param f Movie
 	 * @throws AllocineException
 	 */
-	public Film(Movie f) throws AllocineException
+	public Film(Movie f)
 	{
 		this.film = f;
 		String code = String.valueOf(film.getCode());
-		infos = new RechercheAllocine("").a.getMovieInfos(code);
+		try
+		{
+			infos = new RechercheAllocine("").a.getMovieInfos(code);
+		}
+		catch (AllocineException e)
+		{
+			System.out.println("Les informations du film n'ont pas été trouvées");
+		}
 	}
 	
     /**
@@ -169,6 +176,26 @@ public class Film
     public int duree()
     {
     	return infos.getRuntime();
+    }
+    
+    public void affiche_infos()
+    {
+    	System.out.println(titre());
+		System.out.println(realisateur());
+		System.out.println(dateSortie());
+		System.out.println(affiche());
+		
+		List<String> genres = genres();
+		for (int j=0; j<genres.size(); j++)
+		{
+			System.out.println("  "+genres.get(j));
+		}
+		
+		System.out.println(synopsis());
+		
+		System.out.println(duree());
+		
+		System.out.println();
     }
     
 }
