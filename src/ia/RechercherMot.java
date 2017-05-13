@@ -119,7 +119,6 @@ public class RechercherMot
 	 * @param phrase
 	 *            String
 	 * @return String
-	 * @throws IOException
 	 */
 	protected String analysePhrase(String message, ArrayList<String> dicoMotCle)
 	{
@@ -302,5 +301,23 @@ public class RechercherMot
 			}
 		}
 		return date;
+	}
+	
+	/**
+	 * Permet de trouver le genre present dans la phrase
+	 * 
+	 * @return String : Le genre
+	 * @param message String
+	 * @param dicoGenre ArrayList<String>
+	 */
+	public String trouverGenre(String message, ArrayList<String> dicoGenre){
+		String phrase[] = message.split(" ");
+		for (int i=0; i<phrase.length; i++){
+			String motCourant = phrase[i];
+			if (dicoGenre.contains(motCourant)){
+				return motCourant;
+			}
+		}
+		return "";
 	}
 }
