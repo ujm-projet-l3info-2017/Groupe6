@@ -2,24 +2,27 @@ package ia;
 
 import java.util.ArrayList;
 
-
+/**
+ * Contient le nom de l'utilisateur, les criteres (booleen et String) et l'avancement de la discussion
+ */
 public class ConversationIA
 {
-	/**
-	 * Contient le nom de l'utilisateur, les criteres (booleen et String) et l'avancement de la discussion
-	 */
 	protected String nomUtilisateur;
 	protected boolean b_realisateur, b_acteur, b_sortie, b_genre;
 	protected String s_realisateur,s_acteur,s_sortie,s_genre;
-	protected String etape; // debut, discussion, p_critere, recherche, satisfaction, recommencer, erreur, fin
+	/**
+	 *  debut, discussion, p_critere, recherche, satisfaction, recommencer, erreur, fin, r_aleatoire
+	 */
+	protected Etape etape;
 	RechercherMot recherche;
+	
 	/**
 	 * Initialisation de la conversation
 	 * @param nom String
 	 */
 	public ConversationIA(String nom)
 	{
-		nomUtilisateur = nom;
+		nomUtilisateur=nom;
 		b_realisateur=false;
 		b_acteur=false;
 		b_sortie=false;
@@ -28,7 +31,7 @@ public class ConversationIA
 		s_acteur="";
 		s_sortie="";
 		s_genre="";
-		etape = "debut"; // Si il y a un seul appel de ConversationIA
+		etape = Etape.DEBUT; // Si il y a un seul appel de ConversationIA
 	}
 	
 
@@ -39,9 +42,9 @@ public class ConversationIA
 	 */
 	public String traitementMessage(String message)
 	{
-		if(etape=="debut")
+		if(etape==Etape.DEBUT)
 		{
-			etape="discussion";
+			etape=Etape.DISCUSSION;
 			return Arbre.lancementArbre();
 		}		
 		
@@ -51,60 +54,60 @@ public class ConversationIA
 		String messageCorrige = recherche.analysePhrase(message);
 		motTrouves = recherche.chercherMotsCles(messageCorrige);
 		
-		if((etape=="discussion")&&((motTrouves.contains("critere"))||(motTrouves.contains("criteres"))))
+		if((etape==Etape.DISCUSSION)&&((motTrouves.contains("critere"))||(motTrouves.contains("criteres"))))
 		{
-			etape="p_critere";
+			etape=Etape.P_CRITERE;
 			return critereUtilisateur(message, motTrouves);
 		}
-		if((etape=="p_critere")&&(!motTrouves.contains("termine")))
+		if((etape==Etape.P_CRITERE)&&(!motTrouves.contains("termine")))
 		{
 			return critereUtilisateur(message, motTrouves);
 		}
-		if((etape=="p_critere")&&(motTrouves.contains("termine")))
+		if((etape==Etape.P_CRITERE)&&(motTrouves.contains("termine")))
 		{
-			etape="recherche";
+			etape=Etape.RECHERCHE;
 			// Faire une recherche avec les criteres enregistrï¿½s puis rappeler l'IA
 			// Si on ne trouve aucun film appeler erreur()
 			return "Cas termine";
 		}
-		if((etape=="discussion")&&(motTrouves.contains("aleatoire")))
+		if((etape==Etape.DISCUSSION)&&(motTrouves.contains("aleatoire")))
 		{
-			etape="r_aleatoire";
+			etape=Etape.R_ALEATOIRE;
 			// Faire une recherche alï¿½atoire et envoyer le resultat puis rappeler l'IA
 			// Si on ne trouve aucun film (ce qui serait etrange) appeler erreur()
 			return "Cas aleatoire";
 		}
-		if(etape=="recherche")
+		if(etape==Etape.RECHERCHE)
 		{
-			etape="satisfaction";
+			etape=Etape.SATISFACTION;
 			return "Etes-vous satisfaits de cette proposition ?";
 		}
-		if((etape=="satisfaction")&&(motTrouves.contains("oui")))
+		if((etape==Etape.SATISFACTION)&&(motTrouves.contains("oui")))
 		{
-			etape="fin";
+			etape=Etape.FIN;
 			return Arbre.fin();
 			// Stopper l'execution
 		}
-		if((etape=="satisfaction")&&(motTrouves.contains("non")))
+		if((etape==Etape.SATISFACTION)&&(motTrouves.contains("non")))
 		{
-			etape="recommencer";
+			etape=Etape.RECOMMENCER;
 			reset(5);
 			return "Desole. On recommence ?";
 		}
-		if((etape=="recommencer")&&(motTrouves.contains("oui")))
+		if((etape==Etape.RECOMMENCER)&&(motTrouves.contains("oui")))
 		{
-			etape="discussion";
+			etape=Etape.DISCUSSION;
 			return "Que souhaitez-vous : une recherche de film par critere ou un film de mon choix ?";
 		}
-		if((etape=="recommencer")&&(motTrouves.contains("non")))
+		if((etape==Etape.RECOMMENCER)&&(motTrouves.contains("non")))
 		{
-			etape="fin";
+			etape=Etape.FIN;
 			return Arbre.fin();
 			// Stopper l'execution
 		}
 		if(motTrouves.contains("au revoir"))
 		{
-			etape="fin";
+			etape=Etape.FIN;
 			return Arbre.fin();
 			// Stopper l'execution
 		}
@@ -124,20 +127,26 @@ public class ConversationIA
 		{
 			b_realisateur=true;
 			String realisateur = recherche.trouverPersonne(message);
-			if(realisateur != ""){
+			if(realisateur != "")
+			{
 				s_realisateur = realisateur;
-			}else{
+			}
+			else
+			{
 				reset(1);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 		}
 		if(motTrouves.contains("acteur"))
 		{
-			b_acteur=true;
+			b_acteur = true;
 			String acteur = recherche.trouverPersonne(message);
-			if(acteur != ""){
+			if (acteur != "")
+			{
 				s_acteur = acteur;
-			}else{
+			}
+			else
+			{
 				reset(2);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
@@ -146,9 +155,12 @@ public class ConversationIA
 		{
 			b_sortie=true;
 			String date = recherche.trouverDate(message);
-			if(date != ""){
+			if (date != "")
+			{
 				s_sortie = date;
-			}else{
+			}
+			else
+			{
 				reset(3);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
@@ -159,9 +171,12 @@ public class ConversationIA
 		{
 			b_genre=true;
 			String genre = recherche.trouverGenre(message);
-			if(genre != ""){
+			if (genre != "")
+			{
 				s_genre = genre;
-			}else{
+			}
+			else
+			{
 				reset(4);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
@@ -172,23 +187,23 @@ public class ConversationIA
 		String S="";
 		String G="";
 		
-		if(b_realisateur==false)
+		if(!b_realisateur)
 		{
 			R=" realisateur ?";
 		}
-		if(b_acteur==false)
+		if(!b_acteur)
 		{
 			A=" acteur ?";
 		}
-		if(b_sortie==false)
+		if(!b_sortie)
 		{
 			S=" date de sortie ?";
 		}
-		if(b_genre==false)
+		if(!b_genre)
 		{
 			G=" genre ?";
 		}
-		if((b_realisateur==true)&&(b_acteur==true)&&(b_sortie==true)&&(b_genre==true))
+		if(b_realisateur && b_acteur && b_sortie && b_genre)
 		{
 			// Lancer la recherche puis rappeler l'IA
 			// Si on ne trouve aucun film appeler erreur()
@@ -202,8 +217,9 @@ public class ConversationIA
 	 * Si aucun film ne correspond aux critères, on relance la recherche
 	 * @return String
 	 */
-	public String erreur(){
-		etape="recommencer";
+	public String erreur()
+	{
+		etape=Etape.RECOMMENCER;
 		reset(5);
 		return "Desole, je n'ai rien trouvé. On recommence ?";
 	}
