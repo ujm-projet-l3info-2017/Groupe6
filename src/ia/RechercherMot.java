@@ -15,24 +15,37 @@ public class RechercherMot
 {
 
 	/**
-	 * Liste de mot constituant le dictionnaire
+	 * Liste de mot constituant les dictionnaires
 	 */
+	ArrayList<String> dicoFrançais;
 	ArrayList<String> dicoMotsCles;
-	ArrayList<String> dico;
-	FileReader f;
+	ArrayList<String> dicoGenre;
+	ArrayList<String> dicoPrenomFeminin;
+	ArrayList<String> dicoPrenomMasculin;
 
+	/**
+	 * Initialisation de la recherche
+	 */
+	public RechercherMot(){
+		dicoFrançais = this.chargementDico("./src/ia/dicoFrançais.txt");
+		dicoMotsCles = this.chargementDico("./src/ia/dicoMotsCles.txt");
+		dicoGenre = this.chargementDico("./src/ia/dicoGenre.txt");
+		dicoPrenomFeminin = this.chargementDico("./src/ia/dicoPrenomFeminin.txt");
+		dicoPrenomMasculin = this.chargementDico("./src/ia/dicoPrenomMasculin.txt");
+	}
+	
 	/**
 	 * Permet de charger le dictionnaire dans une ArrayList
 	 * 
 	 * @throws IOException
 	 */
-	private void chargementDico()
+	private ArrayList<String> chargementDico(String chemin)
 	{
+		ArrayList<String> dico = new ArrayList<String>();
 		try
 		{
-			f = new FileReader("./src/ia/dico");
-			System.out.println("\nOuverture du dictionnaire r�ussi !");
 
+			FileReader f = new FileReader(chemin);
 			BufferedReader br = new BufferedReader(f);
 			String line;
 			dico = new ArrayList<>();
@@ -46,6 +59,7 @@ public class RechercherMot
 		{
 			System.out.println("Erreur lors de l'ouverture du dictionnaire");
 		}
+		return dico;
 	}
 
 	/**
@@ -55,18 +69,17 @@ public class RechercherMot
 	 *            String
 	 * @return ArrayList<String>
 	 */
-	protected ArrayList<String> chercherMotsCles(String phraseBrut, ArrayList<String> dictionnaire)
+	protected ArrayList<String> chercherMotsCles(String phraseBrut)
 	{
-		dico = dictionnaire;
 		String phrase[] = phraseBrut.split(" ");
 		// Liste de mots cles trouves
 		ArrayList<String> motCle = new ArrayList<String>();
 		// Liste de gestion des mots cles constitue de plusieurs termes
 		ArrayList<String> plusieursMotsCles = new ArrayList<String>();
 		String[] motsCles;
-		for (int i = 0; i < dico.size(); i++)
+		for (int i = 0; i < dicoMotsCles.size(); i++)
 		{
-			motsCles = dico.get(i).split(" ");
+			motsCles = dicoMotsCles.get(i).split(" ");
 			// Si le mot clé est composé d'au moins deux termes
 			if (motsCles.length > 1)
 			{
@@ -96,7 +109,7 @@ public class RechercherMot
 					}
 					if (similaire == true)
 					{
-						motCle.add(dico.get(i));
+						motCle.add(dicoMotsCles.get(i));
 					}
 				}
 			}
@@ -105,7 +118,7 @@ public class RechercherMot
 		for (int l = 0; l < phrase.length; l++)
 		{
 			String motCourant = phrase[l];
-			if (dico.contains(motCourant))
+			if (dicoMotsCles.contains(motCourant))
 			{
 				motCle.add(motCourant);
 			}
@@ -120,17 +133,15 @@ public class RechercherMot
 	 *            String
 	 * @return String
 	 */
-	protected String analysePhrase(String message, ArrayList<String> dicoMotCle)
+	protected String analysePhrase(String message)
 	{
-		dicoMotsCles = dicoMotCle;
 		String[] phrase = message.split(" ");
-		chargementDico();
 		String p = "";
 		for (int i = 0; i < phrase.length; i++)
 		{
 			String motCourant = phrase[i];
 
-			if (dico.contains(motCourant))
+			if (dicoFrançais.contains(motCourant))
 			{
 				if (i == 0)
 				{
@@ -153,13 +164,13 @@ public class RechercherMot
 				} else if ((m3 = motMoinsUneLettre(motCourant, dicoMotsCles)) != "")
 				{
 					m4 = m3;
-				} else if ((m1 = motPlusUneLettre(motCourant, dico)) != "")
+				} else if ((m1 = motPlusUneLettre(motCourant, dicoFrançais)) != "")
 				{
 					m4 = m1;
-				}else if((m2 = motSubUneLettre(motCourant, dico)) != "")
+				}else if((m2 = motSubUneLettre(motCourant, dicoFrançais)) != "")
 				{
 					m4 = m2;
-				}else if((m3 = motMoinsUneLettre(motCourant, dico)) != "")
+				}else if((m3 = motMoinsUneLettre(motCourant, dicoFrançais)) != "")
 				{
 					m4 = m3;
 				}else{
@@ -310,14 +321,14 @@ public class RechercherMot
 	 * @param message String
 	 * @param dicoGenre ArrayList<String>
 	 */
-	public String trouverGenre(String message, ArrayList<String> dicoGenre){
+	public String trouverGenre(String message){
 		String phrase[] = message.split(" ");
 		for (int i=0; i<phrase.length; i++){
 			String motCourant = phrase[i];
 			for(int j=0; j<dicoGenre.size(); j++){
 				int tailleGenre = dicoGenre.get(j).length();
-				int tailleMotCourant = motCourant.length();
-				if((tailleMotCourant >= tailleGenre) && (dicoGenre.get(j).compareTo(motCourant.substring(0, tailleGenre)) == 0)){
+				//int tailleMotCourant = motCourant.length();
+				if(/*(tailleMotCourant >= tailleGenre) && */(dicoGenre.get(j).compareTo(motCourant.substring(0, tailleGenre)) == 0)){
 					return dicoGenre.get(j);
 				}
 			}
