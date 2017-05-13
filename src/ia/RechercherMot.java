@@ -30,7 +30,7 @@ public class RechercherMot
 		try
 		{
 			f = new FileReader("./src/ia/dico");
-			System.out.println("\nOuverture du dictionnaire réussi !");
+			//System.out.println("\nOuverture du dictionnaire réussie !");
 
 			BufferedReader br = new BufferedReader(f);
 			String line;
