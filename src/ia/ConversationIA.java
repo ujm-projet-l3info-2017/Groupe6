@@ -59,7 +59,7 @@ public class ConversationIA
 		dico.add("date de sortie");
 		
 		RechercherMot recherche = new RechercherMot();
-		String messageCorrige = recherche.analysePhrase(message);
+		String messageCorrige = recherche.analysePhrase(message, dico);
 		motTrouves = recherche.chercherMotsCles(messageCorrige, dico);
 		
 		if((etape=="discussion")&&((motTrouves.contains("critere"))||(motTrouves.contains("criteres"))))
@@ -74,14 +74,14 @@ public class ConversationIA
 		if((etape=="p_critere")&&(motTrouves.contains("termine")))
 		{
 			etape="recherche";
-			// Faire une recherche avec les criteres enregistrés puis rappeler l'IA
+			// Faire une recherche avec les criteres enregistrï¿½s puis rappeler l'IA
 			// Si on ne trouve aucun film appeler erreur()
 			return "Cas termine";
 		}
 		if((etape=="discussion")&&(motTrouves.contains("aleatoire")))
 		{
 			etape="r_aleatoire";
-			// Faire une recherche aléatoire et envoyer le resultat puis rappeler l'IA
+			// Faire une recherche alï¿½atoire et envoyer le resultat puis rappeler l'IA
 			// Si on ne trouve aucun film (ce qui serait etrange) appeler erreur()
 			return "Cas aleatoire";
 		}
