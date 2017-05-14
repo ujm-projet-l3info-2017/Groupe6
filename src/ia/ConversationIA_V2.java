@@ -57,6 +57,7 @@ public class ConversationIA_V2
 		switch (prochaineEtape)
 		{
 		case DEBUT:
+			// Si le message contient juste bonjour
 			if (motTrouves.contains("bonjour"))
 			{
 				prochaineEtape = Etape.SALUTATION;
@@ -65,7 +66,7 @@ public class ConversationIA_V2
 				Salutations salut = new Salutations();
 				prochaineEtape = Etape.AVIS;
 				return salut.aleatoire() + " " + nom + ".";
-			} else if (motTrouves.contains("cherch"))
+			} else if (motTrouves.contains("cherche"))
 			{
 				Salutations salut = new Salutations();
 				prochaineEtape = Etape.PROPOSITION;
@@ -77,6 +78,18 @@ public class ConversationIA_V2
 			break;
 		case SALUTATION:
 			Salutations salut = new Salutations();
+			if (motTrouves.contains("avis"))
+			{
+				prochaineEtape = Etape.AVIS;
+				return salut.aleatoire() + " " + nom
+						+ ".";
+			}
+			if	(motTrouves.contains("cherche"))
+			{
+				prochaineEtape = Etape.PROPOSITION;
+				return salut.aleatoire() + " " + nom
+						+ ".";
+			}
 			return salut.aleatoire() + " " + nom
 					+ ". Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
 		case AVIS:
