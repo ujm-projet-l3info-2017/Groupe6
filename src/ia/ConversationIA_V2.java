@@ -74,7 +74,7 @@ public class ConversationIA_V2
 			break;
 		case SALUTATION:
 			Salutations salut = new Salutations();
-			return salut.aleatoire()+". Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
+			return salut.aleatoire()+" "+nom+". Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
 		case AVIS:
 			
 			break;
