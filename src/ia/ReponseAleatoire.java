@@ -1,11 +1,14 @@
 package ia;
 
+import java.util.Random;
+
 public class ReponseAleatoire
 {
 	private static String aleatoireTableau(String[] tableau)
 	{
-		int rangAlea = (int) ((Math.random()*1000)%-2+tableau.length)+1;
-    	return tableau[rangAlea];
+		Random rand = new Random();
+		int nbAleatoire = rand.nextInt(tableau.length);
+		return tableau[nbAleatoire];
 	}
 	
     public static String jadore()
