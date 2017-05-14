@@ -1,7 +1,13 @@
 package ia;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class ConversationIA_V2
 {
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(ConversationIA_V2.class.getName());
+		
 	private String nom;
 	private Etape prochaineEtape;
 	
