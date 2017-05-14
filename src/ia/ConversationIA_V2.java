@@ -19,8 +19,14 @@ public class ConversationIA_V2
 	private RechercherMot recherche; // Pour rechercher des mots dans le message
 	private ArrayList<String> motTrouves; // Liste des mots clés du message
 	private String messageCorrige; // Message après passage par le dictionnaire
+	
+	//Pour proposition
 	private boolean b_realisateur, b_acteur, b_sortie, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
 	private boolean proposition, satisfaction, retour; // Sous-étapes
+	
+	//Pour avis
+	private boolean b_film;
+	
 	private String s_realisateur, s_acteur, s_sortie, s_genre; // Contient les choix de l'utilisateur
 	private List<String> liste; // Liste de films trouvés
 	private String film; // Film selectionné
@@ -35,6 +41,7 @@ public class ConversationIA_V2
 		proposition = false;
 		satisfaction = false;
 		retour = false;
+		b_film = false;
 		s_realisateur = "";
 		s_acteur = "";
 		s_sortie = "";
@@ -80,7 +87,16 @@ public class ConversationIA_V2
 			return salut.aleatoire() + " " + nom
 					+ ". Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
 		case AVIS:
-
+			//Recherche du film contenu dans le message / demande du film duquel il veut un avis
+			if(!b_film)
+			{
+				return " Vous voulez mon avis sur quel film?";
+			}
+			
+			//On dit qui est le réalisateur et on met l'affiche, qui joue dedans etc.
+			
+			//Avis en fonction de la note des utilisateurs et de la presse
+			
 			break;
 		case PROPOSITION:
 			if (b_genre && (motTrouves.contains("non")))
