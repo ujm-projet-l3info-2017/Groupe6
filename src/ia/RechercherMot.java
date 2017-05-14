@@ -198,7 +198,7 @@ public class RechercherMot
 		}
 		System.out.println("Phrase corrigée : " + p);
 		
-		suppressionAccents(p);
+		p = suppressionAccents(p);
 		
 		System.out.println("Phrase corrigée sans accents : " + p);
 		
@@ -212,17 +212,17 @@ public class RechercherMot
 	 */
 	private String suppressionAccents(String p)
 	{
-		p.replaceAll("é", "e");
-		p.replaceAll("è", "e");
-		p.replaceAll("ë", "e");
-		p.replaceAll("ê", "e");
-		p.replaceAll("à", "a");
-		p.replaceAll("ï", "i");
-		p.replaceAll("î", "i");
-		p.replaceAll("â", "a");
-		p.replaceAll("û", "u");
-		p.replaceAll("o", "ô");
-
+		p = p.replace('é', 'e');
+		p = p.replace('è', 'e');
+		p = p.replace('ë', 'e');
+		p = p.replace('ê', 'e');
+		p = p.replace('à', 'a');
+		p = p.replace('ï', 'i');
+		p = p.replace('î', 'i');
+		p = p.replace('â', 'a');
+		p = p.replace('û', 'u');
+		p = p.replace('o', 'ô');
+		
 		return p;
 	}
 
