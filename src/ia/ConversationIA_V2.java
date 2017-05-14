@@ -19,11 +19,11 @@ public class ConversationIA_V2
 	private RechercherMot recherche; // Pour rechercher des mots dans le message
 	private ArrayList<String> motTrouves; // Liste des mots clés du message
 	private String messageCorrige; // Message après passage par le dictionnaire
-	private boolean b_realisateur, b_acteur, b_sortie, b_genre; // 
-	private boolean proposition, satisfaction, retour;
-	private String s_realisateur,s_acteur,s_sortie,s_genre;
-	private List<String> liste; 
-	private String film;
+	private boolean b_realisateur, b_acteur, b_sortie, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
+	private boolean proposition, satisfaction, retour; // Sous-étapes
+	private String s_realisateur,s_acteur,s_sortie,s_genre; // Contient les choix de l'utilisateur
+	private List<String> liste; // Liste de films trouvés
+	private String film; // Film selectionné
 	
 	public ConversationIA_V2(String nom)
 	{
