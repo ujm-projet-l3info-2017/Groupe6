@@ -99,6 +99,7 @@ public class ConversationIA_V2
 			{
 				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.queVeuxTu();
 			}
+		
 			
 		case DEBUT:
 			
@@ -127,6 +128,7 @@ public class ConversationIA_V2
 			{
 				return ReponseAleatoire.queVeuxTu();
 			}
+			
 			
 			
 		case AVIS:
@@ -185,8 +187,8 @@ public class ConversationIA_V2
 					else 
 						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
 					
-					prochaineEtape = Etape.AVIS;
-					return "Je te propose le film "+film.titre();
+					prochaineEtape = Etape.CONNAIT_OU_PAS;
+					return "Je te propose le film "+film.titre() + ". Tu connais ?";
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
 				{
@@ -196,8 +198,8 @@ public class ConversationIA_V2
 					if (s_genre != "")
 					{
 						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre)));
-						prochaineEtape = Etape.AVIS;
-						return "Je te propose le film "+film.titre();
+						prochaineEtape = Etape.CONNAIT_OU_PAS;
+						return "Je te propose le film "+film.titre() +". Tu connais ?";
 					}
 					else 
 					{
@@ -217,8 +219,8 @@ public class ConversationIA_V2
 					b_realisateur = true;
 					s_realisateur = Reconnaissance.acteurRealisateur(messageCorrige);
 					film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
-					prochaineEtape = Etape.AVIS;
-					return "Je te propose le film "+film+".";
+					prochaineEtape = Etape.CONNAIT_OU_PAS;
+					return "Je te propose le film "+film+". Tu connais ?";
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==1)
 				{
@@ -227,9 +229,10 @@ public class ConversationIA_V2
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
 				{
+					b_realisateur = true;
 					film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
-					prochaineEtape = Etape.AVIS;
-					return "Je te propose le film "+film+".";
+					prochaineEtape = Etape.CONNAIT_OU_PAS;
+					return "Je te propose le film "+film+". Tu connais ?";
 				}
 				else 
 				{
@@ -237,6 +240,17 @@ public class ConversationIA_V2
 
 				}
 			}
+			else 
+			{
+				return "Pas compris"; //NORMALEMENT ON EST JAMAIS ICI
+			}
+		
+		case CONNAIT_OU_PAS :
+			
+			
+			
+			
+			
 			
 			
 			
