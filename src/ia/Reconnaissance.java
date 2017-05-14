@@ -85,8 +85,19 @@ public class Reconnaissance
 		return false;
 	}
 	
-	
-	
+	/**
+	 * Renvoie un entier qui correspond à ce qu'on a compris
+	 * @param phrase
+	 * return int 1 : la réponse est oui, 0 la réponse est non, 2 on n'a pas compris
+	 */
+	public static int ouiOuNon(String phrase)
+	{
+		if (phrase.contains(" oui ") || phrase.contains("evidemment") || phrase.contains(" ouais ") || phrase.contains(" yes ") || phrase.contains(" bien sur "))
+			return 1;
+		if (phrase.contains(" non ") || phrase.contains(" pas du tout ") || phrase.contains(" pas particulierement ") || phrase.contains(" pas trop ") || phrase.contains(" pas vraiment ") || phrase.contains(" absolument pas ") || phrase.contains(" pas du tout "))
+			return 0;
+		return 2;
+	}
 	
 	
 	
