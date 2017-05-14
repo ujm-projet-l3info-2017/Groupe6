@@ -54,10 +54,5 @@ public class Salutations implements Vocabulaire
 		int nbAleatoire = rand.nextInt(expressions.size());
 		return expressions.get(nbAleatoire);
 	}
-	
-	public String alea()
-	{
-		return aleatoire();
-	}
 
 }
