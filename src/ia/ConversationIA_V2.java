@@ -7,19 +7,23 @@ import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import allocine.ParseurAllocine;
+
 public class ConversationIA_V2
 {
 	//Initialisation du log
 	static final Logger logger = LogManager.getLogger(ConversationIA_V2.class.getName());
 		
-	private String nom;
-	private Etape prochaineEtape;
-	private RechercherMot recherche;
-	private ArrayList<String> motTrouves;
-	private String messageCorrige;
-	private boolean b_realisateur, b_acteur, b_sortie, b_genre;
+	private String nom; // Nom de l'utilisateur
+	private Etape prochaineEtape; // Prochaine étape à lancer
+	private RechercherMot recherche; // Pour rechercher des mots dans le message
+	private ArrayList<String> motTrouves; // Liste des mots clés du message
+	private String messageCorrige; // Message après passage par le dictionnaire
+	private boolean b_realisateur, b_acteur, b_sortie, b_genre; // 
 	private boolean proposition, satisfaction, retour;
-	protected String s_realisateur,s_acteur,s_sortie,s_genre;
+	private String s_realisateur,s_acteur,s_sortie,s_genre;
+	private List<String> liste; 
+	private String film;
 	
 	public ConversationIA_V2(String nom)
 	{
@@ -59,12 +63,15 @@ public class ConversationIA_V2
 			}
 			else if(motTrouves.contains("avis"))
 			{
+				Salutations salut = new Salutations();
 				prochaineEtape = Etape.AVIS;
+				return salut.aleatoire()+" "+nom+".";
 			}
 			else if(motTrouves.contains("cherche"))
 			{
+				Salutations salut = new Salutations();
 				prochaineEtape = Etape.PROPOSITION;
-				return "Avez-vous un genre favori ?";
+				return salut.aleatoire()+" "+nom+". Avez-vous un genre favori ?";
 			}
 			else
 			{
@@ -113,8 +120,10 @@ public class ConversationIA_V2
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
 				proposition=true;
+				liste = ParseurAllocine.recupererFilms(s_genre);
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
 			}
 			if((b_genre==true)&&(b_sortie==true)&&((motTrouves.contains("oui"))||(retour==true)))
 			{
@@ -177,18 +186,18 @@ public class ConversationIA_V2
 					retour=true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
-				// Rechercher film avec realisateur
-				proposition=true;
+				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
 			}
 			if((b_acteur==true)&&(motTrouves.contains("non")))
 			{
 				b_acteur=false;
-				// Rechercher film aleatoire
-				proposition=true;
+				liste = ParseurAllocine.recupererFilms();
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
 			}
 			if((b_acteur==true)&&((motTrouves.contains("oui"))||(retour==true)))
 			{
@@ -203,15 +212,15 @@ public class ConversationIA_V2
 					retour=true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
-				// Rechercher film avec acteur
-				proposition=true;
+				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
 			}
 			if((proposition=true)&&(motTrouves.contains("non")))
 			{
 				prochaineEtape = Etape.AVIS;
-				// Comment stocker le film ?
+				// Le film est stocké dans film
 			}
 			if((proposition==true)&&(motTrouves.contains("oui")))
 			{
@@ -221,13 +230,13 @@ public class ConversationIA_V2
 			if((satisfaction==true)&&(motTrouves.contains("non")))
 			{
 				prochaineEtape = Etape.AVIS;
-				// Comment stocker le film ?
+				// Le film est stocké dans film
 			}
 			if((satisfaction==true)&&(motTrouves.contains("oui")))
 			{
-				// Rechercher un autre film
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return "Un autre alors. " + recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
 			}
 			return "Je n'ai pas compris, pouvez-vous reformuler ?";
 		default:
