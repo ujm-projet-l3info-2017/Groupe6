@@ -69,7 +69,7 @@ public class Reconnaissance
 	public static boolean avis(String phrase)
 	{
 		//Article DEFINI => L'utilisateur parle d'un film qu'il connait et veut des avis / infos
-		if (phrase.contains("avis") | phrase.contains("conseil"))
+		if (phrase.contains("avis"))
 			return true;
 		return false;
 	}
