@@ -138,7 +138,8 @@ public class RechercherMot
 	 */
 	protected String analysePhrase(String message)
 	{
-		String[] phrase = message.split(" ");
+		String m = message.toLowerCase();
+		String[] phrase = m.split(" ");
 		String p = "";
 		for (int i = 0; i < phrase.length; i++)
 		{
@@ -153,7 +154,8 @@ public class RechercherMot
 				{
 					p = p + " " + motCourant;
 				}
-			} else
+			} 
+			else
 			{
 				//On cherche en priorite si le mot mal orthographie se rapproche d'un mot cle
 				String m1, m2, m3, m4;
@@ -188,7 +190,9 @@ public class RechercherMot
 					p = p + " " + m4;
 				}
 			}
+			
 		}
+		System.out.println("Phrase corrigée : " + p);
 		return p;
 	}
 
