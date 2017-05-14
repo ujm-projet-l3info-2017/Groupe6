@@ -138,8 +138,12 @@ public class RechercherMot
 	 */
 	protected String analysePhrase(String message)
 	{
+		//On passe la phrase en minuscule
 		String m = message.toLowerCase();
+
+		//On transforme la phrase en tableau de mots
 		String[] phrase = m.split(" ");
+		
 		String p = "";
 		for (int i = 0; i < phrase.length; i++)
 		{
@@ -193,6 +197,32 @@ public class RechercherMot
 			
 		}
 		System.out.println("Phrase corrigée : " + p);
+		
+		suppressionAccents(p);
+		
+		System.out.println("Phrase corrigée sans accents : " + p);
+		
+		return p;
+	}
+
+	/**
+	 *  Supprime les accents du String en paramètre et renvoit la phrase
+	 * @param p
+	 * @return p sans accents
+	 */
+	private String suppressionAccents(String p)
+	{
+		p.replaceAll("é", "e");
+		p.replaceAll("è", "e");
+		p.replaceAll("ë", "e");
+		p.replaceAll("ê", "e");
+		p.replaceAll("à", "a");
+		p.replaceAll("ï", "i");
+		p.replaceAll("î", "i");
+		p.replaceAll("â", "a");
+		p.replaceAll("û", "u");
+		p.replaceAll("o", "ô");
+
 		return p;
 	}
 
