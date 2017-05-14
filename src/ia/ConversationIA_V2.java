@@ -23,13 +23,14 @@ public class ConversationIA_V2
 	private String messageCorrige; // Message après passage par le dictionnaire
 	
 	//Pour proposition
-	private boolean b_realisateur, b_acteur, b_sortie, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
+	private boolean b_realisateur, b_acteur, b_recent, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
 	private boolean proposition, satisfaction, retour; // Sous-étapes
 	
 	//Pour avis
 	private boolean b_film;
 	
-	private String s_realisateur, s_acteur, s_sortie, s_genre; // Contient les choix de l'utilisateur
+	private String s_realisateur, s_acteur, s_genre; // Contient les choix de l'utilisateur
+	private boolean s_recent;
 	private List<String> liste; // Liste de films trouvés
 	//private String film; // Film selectionné
 	private Film film; //le film dont on est en train de parler 
@@ -37,17 +38,17 @@ public class ConversationIA_V2
 	public ConversationIA_V2(String nom)
 	{
 		this.nom = nom;
-		b_realisateur = true;
-		b_acteur = true;
-		b_sortie = true;
-		b_genre = true;
+		b_realisateur = false;
+		b_acteur = false;
+		b_recent = false;
+		b_genre = false;
 		proposition = false;
 		satisfaction = false;
 		retour = false;
 		b_film = false;
 		s_realisateur = "";
 		s_acteur = "";
-		s_sortie = "";
+		s_recent = false;
 		s_genre = "";
 		film = null;
 		prochaineEtape = Etape.SALUTATION;
@@ -143,151 +144,192 @@ public class ConversationIA_V2
 			break;
 			
 		case PROPOSITION:
-			if (b_genre && (motTrouves.contains("non"))) // Si l'utilisateur ne veut pas de genre précis
+			
+			if (!b_genre) //L'utilisateur n'a pas r�pondu pour le genre
 			{
-				b_genre = false;
-				return "Preferez-vous un film récent ?";
-			}
-			if (b_genre && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un genre précis ou si on ne reconnait pas le genre donné par l'utilisateur
-			{
-				String genre = recherche.trouverGenre(messageCorrige);
-				if (genre != "")
+				if (Reconnaissance.ouiOuNon(messageCorrige)==0) //L'utilisateur ne recherche pas de genre en particulier
 				{
-					retour = false;
-					s_genre = genre;
-				} else
-				{
-					retour = true;
-					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+					b_genre = true; //Il faut plus demander
+					return "Preferez-vous un film r�cent ?";
 				}
-				return "Preferez-vous un film récent ?";
-			}
-			if (b_genre && b_sortie && motTrouves.contains("non")) // Si l'utilisateur veut un genre particulier mais pas de date de sortie précise
-			{
-				b_sortie = false;
-				proposition = true;
-				liste = ParseurAllocine.recupererFilms(s_genre);
-				film = RechercheAllocine.film(tirageAleatoire(liste));
-				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
-			}
-			if (b_genre && b_sortie && (motTrouves.contains("oui") || retour)) // Si l'utilisateur veut un genre et une date de sortie particuliers ou si on ne reconnait pas la date donnée par l'utilisateur
-			{
-				// Comment se passe la récupération de date ?
-				String date = recherche.trouverDate(messageCorrige);
-				if (date != "")
+				else if (Reconnaissance.genre(messageCorrige) != null)
 				{
-					retour = false;
-					s_sortie = date;
-				} else
-				{
-					retour = true;
-					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+					b_genre = true; //Il faut plus demande
+					s_genre = Reconnaissance.genre(messageCorrige);
+					return "Film r�cent ?";
 				}
-
-				liste = ParseurAllocine.recupererFilms(s_genre,true);
-				film = RechercheAllocine.film(tirageAleatoire(liste));
-				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
-			}
-			if (b_sortie && motTrouves.contains("non")) // Si l'utilisateur ne veut pas de genre ni de date de sortie précis
-			{
-				b_sortie = false;
-				return "Cherchez-vous un realisateur en particulier ?";
-			}
-			if (b_sortie && (motTrouves.contains("oui") || retour)) // Si l'utilisateur ne veut pas de genre précis mais une date de sortie précise ou si on ne comprend pas la date entrée par l'utilisateur
-			{
-				// Comment se passe la récupération de date ?
-				String date = recherche.trouverDate(messageCorrige);
-				if (date != "")
+				else if (Reconnaissance.ouiOuNon(messageCorrige)==1)
 				{
-					retour = false;
-					s_sortie = date;
-				} else
-				{
-					retour = true;
-					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+					//L'utilisateur a juste r�pondu oui ... il faut lui demander quel genre
+					return "Quel genre de film ?";
 				}
-
-				liste = ParseurAllocine.recupererFilms(true);
-				film = RechercheAllocine.film(tirageAleatoire(liste));
-				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
-			}
-			if (b_realisateur && (motTrouves.contains("non"))) // Si l'utilisateur ne veut pas de réalisateur précis
-			{
-				b_realisateur = false;
-				return "Peut-être recherchez-vous un acteur en particulier";
-			}
-			if (b_realisateur && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un réalissateur particulier ou si on ne comprend pas le realisateur entré par l'utilisateur
-			{
-				String realisateur = recherche.trouverPersonne(messageCorrige);
-				if (realisateur != "")
+				else 
 				{
-					retour = false;
-					s_realisateur = realisateur;
-				} else
-				{
-					retour = true;
-					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+					//On a pas compris (on a identifi� ni oui, ni non, ni un genre ...) 
+					return "J'ai pas compris ...";
 				}
-				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
-				film = RechercheAllocine.film(tirageAleatoire(liste));
-				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
-			}
-			if (b_acteur && motTrouves.contains("non")) // Si l'utilisateur ne veut pas d'acteur précis
+			} 
+			else if (!b_recent) //L'utilisateur n'a pas encore pr�cis� s'il voulait un film r�cent ou non
 			{
-				b_acteur = false;
-				liste = ParseurAllocine.recupererFilms();
-				film = RechercheAllocine.film(tirageAleatoire(liste));
-				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
-			}
-			if (b_acteur && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un acteur précis ou si on ne comprend pas l'acteur donné par l'utilisateur
-			{
-				String acteur = recherche.trouverPersonne(messageCorrige);
-				if (acteur != "")
+				if (Reconnaissance.ouiOuNon(messageCorrige)==1)
 				{
-					retour = false;
-					s_acteur = acteur;
-				} else
-				{
-					retour = true;
-					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+					//Il veut un film r�cent
+					s_recent = true;
+					if (s_genre != "")
+						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre, true)));
+					else 
+						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
+					return "Je te propose le film "+film.titre();
 				}
-				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
-				film = RechercheAllocine.film(tirageAleatoire(liste));
-				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
 			}
-			if (proposition && motTrouves.contains("non")) // On propose un film que l'utilisateur ne connait pas
-			{
-				prochaineEtape = Etape.AVIS;
-				// Le film est stocké dans film
-				break;
-			}
-			if (proposition && motTrouves.contains("oui")) // On propose un film que l'utilisateur connait
-			{
-				satisfaction = true;
-				return "L'avez-vous aimé ?";
-			}
-			if (satisfaction && motTrouves.contains("non")) // On propose un film que l'utilisateur n'aime pas
-			{
-				prochaineEtape = Etape.AVIS;
-				// Le film est stocké dans film
-				break;
-			}
-			if (satisfaction && motTrouves.contains("oui")) // On propose un film que l'utilisateur aime
-			{
-				film = RechercheAllocine.film(tirageAleatoire(liste));
-				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
-			}
-			return "Je n'ai pas compris, pouvez-vous reformuler ?";
-		default:
-			logger.error("IA", "Etape non reconnue");
-			return null;
+			
+			
+			
+//			if (!b_genre && Reconnaissance.ouiOuNon(messageCorrige)==0) // Si l'utilisateur ne veut pas de genre précis
+//			{
+//				b_genre = false;
+//				return "Preferez-vous un film r�cent ?";
+//			}
+//			if (b_genre && Reconnaissance.ouiOuNon(messageCorrige)==1 && Reconnaissance  ) // Si l'utilisateur veut un genre précis ou si on ne reconnait pas le genre donné par l'utilisateur
+//			{
+//				String genre = recherche.trouverGenre(messageCorrige);
+//				if (genre != "")
+//				{
+//					retour = false;
+//					s_genre = genre;
+//				} else
+//				{
+//					retour = true;
+//					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+//				}
+//				return "Preferez-vous un film récent ?";
+//			}
+//			if (b_genre && b_sortie && motTrouves.contains("non")) // Si l'utilisateur veut un genre particulier mais pas de date de sortie précise
+//			{
+//				b_sortie = false;
+//				proposition = true;
+//				liste = ParseurAllocine.recupererFilms(s_genre);
+//				film = RechercheAllocine.film(tirageAleatoire(liste));
+//				Recommandation recom = new Recommandation();
+//				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
+//			}
+//			if (b_genre && b_sortie && (motTrouves.contains("oui") || retour)) // Si l'utilisateur veut un genre et une date de sortie particuliers ou si on ne reconnait pas la date donnée par l'utilisateur
+//			{
+//				// Comment se passe la récupération de date ?
+//				String date = recherche.trouverDate(messageCorrige);
+//				if (date != "")
+//				{
+//					retour = false;
+//					s_sortie = date;
+//				} else
+//				{
+//					retour = true;
+//					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+//				}
+//
+//				liste = ParseurAllocine.recupererFilms(s_genre,true);
+//				film = RechercheAllocine.film(tirageAleatoire(liste));
+//				Recommandation recom = new Recommandation();
+//				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
+//			}
+//			if (b_sortie && motTrouves.contains("non")) // Si l'utilisateur ne veut pas de genre ni de date de sortie précis
+//			{
+//				b_sortie = false;
+//				return "Cherchez-vous un realisateur en particulier ?";
+//			}
+//			if (b_sortie && (motTrouves.contains("oui") || retour)) // Si l'utilisateur ne veut pas de genre précis mais une date de sortie précise ou si on ne comprend pas la date entrée par l'utilisateur
+//			{
+//				// Comment se passe la récupération de date ?
+//				String date = recherche.trouverDate(messageCorrige);
+//				if (date != "")
+//				{
+//					retour = false;
+//					s_sortie = date;
+//				} else
+//				{
+//					retour = true;
+//					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+//				}
+//
+//				liste = ParseurAllocine.recupererFilms(true);
+//				film = RechercheAllocine.film(tirageAleatoire(liste));
+//				Recommandation recom = new Recommandation();
+//				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
+//			}
+//			if (b_realisateur && (motTrouves.contains("non"))) // Si l'utilisateur ne veut pas de réalisateur précis
+//			{
+//				b_realisateur = false;
+//				return "Peut-être recherchez-vous un acteur en particulier";
+//			}
+//			if (b_realisateur && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un réalissateur particulier ou si on ne comprend pas le realisateur entré par l'utilisateur
+//			{
+//				String realisateur = recherche.trouverPersonne(messageCorrige);
+//				if (realisateur != "")
+//				{
+//					retour = false;
+//					s_realisateur = realisateur;
+//				} else
+//				{
+//					retour = true;
+//					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+//				}
+//				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
+//				film = RechercheAllocine.film(tirageAleatoire(liste));
+//				Recommandation recom = new Recommandation();
+//				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
+//			}
+//			if (b_acteur && motTrouves.contains("non")) // Si l'utilisateur ne veut pas d'acteur précis
+//			{
+//				b_acteur = false;
+//				liste = ParseurAllocine.recupererFilms();
+//				film = RechercheAllocine.film(tirageAleatoire(liste));
+//				Recommandation recom = new Recommandation();
+//				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
+//			}
+//			if (b_acteur && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un acteur précis ou si on ne comprend pas l'acteur donné par l'utilisateur
+//			{
+//				String acteur = recherche.trouverPersonne(messageCorrige);
+//				if (acteur != "")
+//				{
+//					retour = false;
+//					s_acteur = acteur;
+//				} else
+//				{
+//					retour = true;
+//					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+//				}
+//				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
+//				film = RechercheAllocine.film(tirageAleatoire(liste));
+//				Recommandation recom = new Recommandation();
+//				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
+//			}
+//			if (proposition && motTrouves.contains("non")) // On propose un film que l'utilisateur ne connait pas
+//			{
+//				prochaineEtape = Etape.AVIS;
+//				// Le film est stocké dans film
+//				break;
+//			}
+//			if (proposition && motTrouves.contains("oui")) // On propose un film que l'utilisateur connait
+//			{
+//				satisfaction = true;
+//				return "L'avez-vous aimé ?";
+//			}
+//			if (satisfaction && motTrouves.contains("non")) // On propose un film que l'utilisateur n'aime pas
+//			{
+//				prochaineEtape = Etape.AVIS;
+//				// Le film est stocké dans film
+//				break;
+//			}
+//			if (satisfaction && motTrouves.contains("oui")) // On propose un film que l'utilisateur aime
+//			{
+//				film = RechercheAllocine.film(tirageAleatoire(liste));
+//				Recommandation recom = new Recommandation();
+//				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous déjà vu ?";
+//			}
+//			return "Je n'ai pas compris, pouvez-vous reformuler ?";
+//		default:
+//			logger.error("IA", "Etape non reconnue");
+//			return null;
 		}
 		return null;
 	}
