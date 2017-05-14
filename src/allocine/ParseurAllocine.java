@@ -92,7 +92,7 @@ public class ParseurAllocine
 	 * @param url String
 	 * @return List<String>
 	 */
-	private static String chercherPersonne(String nom)
+	public static String chercherPersonne(String nom)
 	{
 		String url = "http://www.allocine.fr/recherche/?q="+nom;
 		try 
@@ -188,7 +188,7 @@ public class ParseurAllocine
 			param+="05";
 		if (genre.contains("dram"))
 			param+="08";
-		if (genre.contains("érotique") || genre.contains("sex"))
+		if (genre.contains("erotique") || genre.contains("sex") || genre.contains("boule") || genre.contains("cul"))
 			param+="10";
 		if (genre.contains("histo"))
 			param+="15";
