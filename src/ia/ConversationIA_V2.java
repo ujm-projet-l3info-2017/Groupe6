@@ -15,7 +15,7 @@ public class ConversationIA_V2
 	private RechercherMot recherche;
 	private ArrayList<String> motTrouves;
 	private boolean b_realisateur, b_acteur, b_sortie, b_genre;
-	private boolean proposition;
+	private boolean proposition, satisfaction;
 	protected String s_realisateur,s_acteur,s_sortie,s_genre;
 	
 	public ConversationIA_V2(String nom)
@@ -26,6 +26,7 @@ public class ConversationIA_V2
 		b_sortie=true;
 		b_genre=true;
 		proposition=false;
+		satisfaction=false;
 		s_realisateur="";
 		s_acteur="";
 		s_sortie="";
@@ -90,7 +91,7 @@ public class ConversationIA_V2
 				// Recuperer film avec genre
 				proposition=true;
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film
+				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
 			}
 			if((b_genre==true)&&(b_sortie==true)&&(motTrouves.contains("oui")))
 			{
@@ -98,7 +99,7 @@ public class ConversationIA_V2
 				// Recuperer film avec genre et date
 				proposition=true;
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film
+				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
 			}
 			if((b_sortie==true)&&(motTrouves.contains("non")))
 			{
@@ -111,12 +112,12 @@ public class ConversationIA_V2
 				// Recuperer film avec date
 				proposition=true;
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film
+				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
 			}
 			if((b_realisateur==true)&&(motTrouves.contains("non")))
 			{
 				b_realisateur=false;
-				return "Peut-être recherchez-vous unn acteur en particulier";
+				return "Peut-être recherchez-vous un acteur en particulier";
 			}
 			if((b_realisateur==true)&&(motTrouves.contains("oui")))
 			{
@@ -124,7 +125,7 @@ public class ConversationIA_V2
 				// Rechercher film avec realisateur
 				proposition=true;
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film
+				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
 			}
 			if((b_acteur==true)&&(motTrouves.contains("non")))
 			{
@@ -132,7 +133,7 @@ public class ConversationIA_V2
 				// Rechercher film aleatoire
 				proposition=true;
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film
+				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
 			}
 			if((b_acteur==true)&&(motTrouves.contains("oui")))
 			{
@@ -140,7 +141,28 @@ public class ConversationIA_V2
 				// Rechercher film avec acteur
 				proposition=true;
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film
+				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
+			}
+			if((proposition=true)&&(motTrouves.contains("non")))
+			{
+				prochaineEtape = Etape.AVIS;
+				//Comment stocker le film ?
+			}
+			if((proposition==true)&&(motTrouves.contains("oui")))
+			{
+				satisfaction = true;
+				return "L'avez-vous aimé ?";				
+			}
+			if((satisfaction==true)&&(motTrouves.contains("non")))
+			{
+				prochaineEtape = Etape.AVIS;
+				//Comment stocker le film ?
+			}
+			if((satisfaction==true)&&(motTrouves.contains("oui")))
+			{
+				// Rechercher un autre film
+				Recommandation recom = new Recommandation();
+				return "Un autre alors. " + recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
 			}
 			return "Je n'ai pas compris, pouvez-vous reformuler ?";
 		default:
