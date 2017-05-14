@@ -9,3 +9,7 @@ genre
 termine
 au revoir
 date de sortie
+bonjour
+avis
+cherche
+connais

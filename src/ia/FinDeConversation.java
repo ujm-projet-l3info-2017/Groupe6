@@ -29,7 +29,7 @@ public class FinDeConversation implements Vocabulaire
 		expressions.add("Bye");
 		expressions.add("A bientot");
 		expressions.add("A la prochaine");
-		expressions.add("J'espere te revoir");
+		expressions.add("J'espere vous revoir");
 	}
 
 	/*

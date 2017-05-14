@@ -26,11 +26,10 @@ public class Recommandation implements Vocabulaire
 	 */
 	public Recommandation(){
 		expressions = new ArrayList<>();
-		expressions.add("Je te recommande");
-		expressions.add("Connais-tu");
-		expressions.add("As-tu-vu");
-		expressions.add("Tu devrais voir");
-		expressions.add("Tu devrais regarder");
+		expressions.add("Je vous recommande");
+		expressions.add("Connaissez-vous");
+		expressions.add("Vous devriez voir");
+		expressions.add("Vous devriez regarder");
 	}
 	
 	/* (non-Javadoc)
