@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 /**
  * Interface des listes de vocabulaire
- * @author Thomas GRANJON
  *
  */
-public interface Vocabulaire{
+public interface Vocabulaire
+{
 	
 	/**
 	 * Cette liste contiendra les expressions relatives a chaque occasion

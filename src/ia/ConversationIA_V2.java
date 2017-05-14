@@ -27,7 +27,7 @@ public class ConversationIA_V2
 	private boolean b_realisateur, b_acteur, b_recent, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
 	private boolean proposition, satisfaction, retour; // Sous-Ã©tapes
 	
-	//Pour avis
+	//Est-ce qu'on a fixé un film sur lequel donner son avis?
 	private boolean b_film;
 	
 	private String s_realisateur, s_acteur, s_genre; // Contient les choix de l'utilisateur
@@ -83,60 +83,62 @@ public class ConversationIA_V2
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return salut.aleatoire() + " " + nom
-						+ ". Je connais ce film !";
+				return salut.aleatoire() + " " + nom + ". " +ReponseAleatoire.jeConnaisFilm();
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
 				prochaineEtape = Etape.AVIS;
-				return salut.aleatoire() + " " + nom
-						+ ". Vous avez besoin d'un avis sur quel film ?";
+				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.avisSurQuelFilm();
 			} 
 			else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
 			{
 				prochaineEtape = Etape.PROPOSITION;
-				return salut.aleatoire() + " " + nom + ". Avez-vous un genre favori ?";
+				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.questionGenre();
 			} 
 			else // Si rien n'est reconnu
 			{
-				return salut.aleatoire() + " " + nom
-						+ ". Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
+				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.queVeuxTu();
 			}
 			
 		case DEBUT:
 			
 			if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
 			{
-				return "Besoin d'un conseil ?";
+				return ReponseAleatoire.queVeuxTu();
 			} 
 			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvÃ©
 			{
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return "Je connais ce film.";
+				return ReponseAleatoire.jeConnaisFilm();
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
 				prochaineEtape = Etape.AVIS;
-				return "Sur quel film voulez-vous un avis ?";
+				return ReponseAleatoire.avisSurQuelFilm();
 			} 
 			else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
 			{
 				prochaineEtape = Etape.PROPOSITION;
-				return "Avez-vous un genre particulier de film que vous souhaitez regarder ?";
+				return ReponseAleatoire.questionGenre();
 			} 
 			else // Si rien n'est reconnu
 			{
-				return "Besoin d'un conseil ?";
+				return ReponseAleatoire.queVeuxTu();
 			}
 			
 			
 		case AVIS:
-			//Recherche du film contenu dans le message / demande du film duquel il veut un avis
+			//Il veut un avis mais il n'a pas fixé de film
 			if(!b_film)
 			{
-				return " Vous voulez mon avis sur quel film ?";
+				return ReponseAleatoire.avisSurQuelFilm();
+			}
+			//Il a fixé un film
+			if(b_film)
+			{
+				
 			}
 			
 			//On dit qui est le rÃ©alisateur et on met l'affiche, qui joue dedans etc.
@@ -152,23 +154,23 @@ public class ConversationIA_V2
 				if (Reconnaissance.ouiOuNon(messageCorrige)==0) //L'utilisateur ne recherche pas de genre en particulier
 				{
 					b_genre = true; //Il faut plus demander
-					return "Preferez-vous un film récent ?";
+					return ReponseAleatoire.questionAnnee();
 				}
 				else if (Reconnaissance.genre(messageCorrige) != null)
 				{
 					b_genre = true; //Il faut plus demande
 					s_genre = Reconnaissance.genre(messageCorrige);
-					return "Film récent ?";
+					return ReponseAleatoire.questionAnnee();
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==1)
 				{
 					//L'utilisateur a juste répondu oui ... il faut lui demander quel genre
-					return "Quel genre de film ?";
+					return ReponseAleatoire.questionGenre();
 				}
 				else 
 				{
 					//On a pas compris (on a identifié ni oui, ni non, ni un genre ...) 
-					return "J'ai pas compris ...";
+					return ReponseAleatoire.incomprehension();
 				}
 			} 
 			else if (!b_recent) //L'utilisateur n'a pas encore précisé s'il voulait un film récent ou non
@@ -232,6 +234,7 @@ public class ConversationIA_V2
 				else 
 				{
 					return "Pas compris";
+
 				}
 			}
 			
