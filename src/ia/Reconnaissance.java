@@ -41,7 +41,7 @@ public class Reconnaissance
 	 * @param phrase
 	 * @return le film si on l'a trouvé, null sinon
 	 */
-	public static Film avis(String phrase)
+	public static Film avisFilm(String phrase)
 	{
 		//Article DEFINI => L'utilisateur parle d'un film qu'il connait et veut des avis / infos
 		if (phrase.contains("le film") | phrase.contains("du film"))
@@ -59,6 +59,19 @@ public class Reconnaissance
 			return RechercheAllocine.film(phrase.split("entendu parler de ")[1]);
 		}
 		else return null;
+	}
+	
+	/**
+	 * renvoie true si le gars veut un avis, false sinon
+	 * @param phrase
+	 * @return boolean
+	 */
+	public static boolean avis(String phrase)
+	{
+		//Article DEFINI => L'utilisateur parle d'un film qu'il connait et veut des avis / infos
+		if (phrase.contains("avis") | phrase.contains("conseil"))
+			return true;
+		return false;
 	}
 	
 	/**
