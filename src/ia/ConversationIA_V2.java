@@ -17,21 +17,21 @@ public class ConversationIA_V2
 	static final Logger logger = LogManager.getLogger(ConversationIA_V2.class.getName());
 
 	private String nom; // Nom de l'utilisateur
-	private Etape prochaineEtape; // Prochaine Ètape ‡ lancer
+	private Etape prochaineEtape; // Prochaine √©tape √† lancer
 	private RechercherMot recherche; // Pour rechercher des mots dans le message
-	private ArrayList<String> motTrouves; // Liste des mots clÈs du message
-	private String messageCorrige; // Message aprËs passage par le dictionnaire
+	private ArrayList<String> motTrouves; // Liste des mots cl√©s du message
+	private String messageCorrige; // Message apr√®s passage par le dictionnaire
 	
 	//Pour proposition
 	private boolean b_realisateur, b_acteur, b_sortie, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
-	private boolean proposition, satisfaction, retour; // Sous-Ètapes
+	private boolean proposition, satisfaction, retour; // Sous-√©tapes
 	
 	//Pour avis
 	private boolean b_film;
 	
 	private String s_realisateur, s_acteur, s_sortie, s_genre; // Contient les choix de l'utilisateur
-	private List<String> liste; // Liste de films trouvÈs
-	//private String film; // Film selectionnÈ
+	private List<String> liste; // Liste de films trouv√©s
+	//private String film; // Film selectionn√©
 	private Film film; //le film dont on est en train de parler 
 
 	public ConversationIA_V2(String nom)
@@ -67,7 +67,7 @@ public class ConversationIA_V2
 	{
 		switch (prochaineEtape)
 		{
-		case SALUTATION:  //PremiËre Ètape. Lors du premier message de l'utilisateur, on dit bonjour
+		case SALUTATION:  //Premi√®re √©tape. Lors du premier message de l'utilisateur, on dit bonjour
 			
 			Salutations salut = new Salutations(); //On dit bonjour
 			if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
@@ -75,7 +75,7 @@ public class ConversationIA_V2
 				prochaineEtape = Etape.DEBUT;
 				return salut.aleatoire() + " " + nom + ".";
 			} 
-			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvÈ
+			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouv√©
 			{
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
@@ -106,7 +106,7 @@ public class ConversationIA_V2
 			{
 				return "Besoin d'un conseil ?";
 			} 
-			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvÈ
+			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouv√©
 			{
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
@@ -116,12 +116,12 @@ public class ConversationIA_V2
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
 				prochaineEtape = Etape.AVIS;
-				return "Sur quel film veux-tu un avis ?";
+				return "Sur quel film voulez-vous un avis ?";
 			} 
 			else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
 			{
 				prochaineEtape = Etape.PROPOSITION;
-				return "Tu as un genre particulier de film que tu souhaites regarder ?";
+				return "Avez-vous un genre particulier de film que vous souhaitez regarder ?";
 			} 
 			else // Si rien n'est reconnu
 			{
@@ -133,22 +133,22 @@ public class ConversationIA_V2
 			//Recherche du film contenu dans le message / demande du film duquel il veut un avis
 			if(!b_film)
 			{
-				return " Vous voulez mon avis sur quel film?";
+				return " Vous voulez mon avis sur quel film ?";
 			}
 			
-			//On dit qui est le rÈalisateur et on met l'affiche, qui joue dedans etc.
+			//On dit qui est le r√©alisateur et on met l'affiche, qui joue dedans etc.
 			
 			//Avis en fonction de la note des utilisateurs et de la presse
 			
 			break;
 			
 		case PROPOSITION:
-			if (b_genre && (motTrouves.contains("non"))) // Si l'utilisateur ne veut pas de genre prÈcis
+			if (b_genre && (motTrouves.contains("non"))) // Si l'utilisateur ne veut pas de genre pr√©cis
 			{
 				b_genre = false;
-				return "Preferez-vous un film rÈcent ?";
+				return "Preferez-vous un film r√©cent ?";
 			}
-			if (b_genre && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un genre prÈcis ou si on ne reconnait pas le genre donnÈ par l'utilisateur
+			if (b_genre && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un genre pr√©cis ou si on ne reconnait pas le genre donn√© par l'utilisateur
 			{
 				String genre = recherche.trouverGenre(messageCorrige);
 				if (genre != "")
@@ -160,20 +160,20 @@ public class ConversationIA_V2
 					retour = true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
-				return "Preferez-vous un film rÈcent ?";
+				return "Preferez-vous un film r√©cent ?";
 			}
-			if (b_genre && b_sortie && motTrouves.contains("non")) // Si l'utilisateur veut un genre particulier mais pas de date de sortie prÈcise
+			if (b_genre && b_sortie && motTrouves.contains("non")) // Si l'utilisateur veut un genre particulier mais pas de date de sortie pr√©cise
 			{
 				b_sortie = false;
 				proposition = true;
 				liste = ParseurAllocine.recupererFilms(s_genre);
 				film = RechercheAllocine.film(tirageAleatoire(liste));
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÈj‡ vu ?";
+				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous d√©j√† vu ?";
 			}
-			if (b_genre && b_sortie && (motTrouves.contains("oui") || retour)) // Si l'utilisateur veut un genre et une date de sortie particuliers ou si on ne reconnait pas la date donnÈe par l'utilisateur
+			if (b_genre && b_sortie && (motTrouves.contains("oui") || retour)) // Si l'utilisateur veut un genre et une date de sortie particuliers ou si on ne reconnait pas la date donn√©e par l'utilisateur
 			{
-				// Comment se passe la rÈcupÈration de date ?
+				// Comment se passe la r√©cup√©ration de date ?
 				String date = recherche.trouverDate(messageCorrige);
 				if (date != "")
 				{
@@ -188,16 +188,16 @@ public class ConversationIA_V2
 				liste = ParseurAllocine.recupererFilms(s_genre,true);
 				film = RechercheAllocine.film(tirageAleatoire(liste));
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÈj‡ vu ?";
+				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous d√©j√† vu ?";
 			}
-			if (b_sortie && motTrouves.contains("non")) // Si l'utilisateur ne veut pas de genre ni de date de sortie prÈcis
+			if (b_sortie && motTrouves.contains("non")) // Si l'utilisateur ne veut pas de genre ni de date de sortie pr√©cis
 			{
 				b_sortie = false;
 				return "Cherchez-vous un realisateur en particulier ?";
 			}
-			if (b_sortie && (motTrouves.contains("oui") || retour)) // Si l'utilisateur ne veut pas de genre prÈcis mais une date de sortie prÈcise ou si on ne comprend pas la date entrÈe par l'utilisateur
+			if (b_sortie && (motTrouves.contains("oui") || retour)) // Si l'utilisateur ne veut pas de genre pr√©cis mais une date de sortie pr√©cise ou si on ne comprend pas la date entr√©e par l'utilisateur
 			{
-				// Comment se passe la rÈcupÈration de date ?
+				// Comment se passe la r√©cup√©ration de date ?
 				String date = recherche.trouverDate(messageCorrige);
 				if (date != "")
 				{
@@ -212,14 +212,14 @@ public class ConversationIA_V2
 				liste = ParseurAllocine.recupererFilms(true);
 				film = RechercheAllocine.film(tirageAleatoire(liste));
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÈj‡ vu ?";
+				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous d√©j√† vu ?";
 			}
-			if (b_realisateur && (motTrouves.contains("non"))) // Si l'utilisateur ne veut pas de rÈalisateur prÈcis
+			if (b_realisateur && (motTrouves.contains("non"))) // Si l'utilisateur ne veut pas de r√©alisateur pr√©cis
 			{
 				b_realisateur = false;
-				return "Peut-Ítre recherchez-vous un acteur en particulier";
+				return "Peut-√™tre recherchez-vous un acteur en particulier";
 			}
-			if (b_realisateur && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un rÈalissateur particulier ou si on ne comprend pas le realisateur entrÈ par l'utilisateur
+			if (b_realisateur && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un r√©alissateur particulier ou si on ne comprend pas le realisateur entr√© par l'utilisateur
 			{
 				String realisateur = recherche.trouverPersonne(messageCorrige);
 				if (realisateur != "")
@@ -234,17 +234,17 @@ public class ConversationIA_V2
 				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
 				film = RechercheAllocine.film(tirageAleatoire(liste));
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÈj‡ vu ?";
+				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous d√©j√† vu ?";
 			}
-			if (b_acteur && motTrouves.contains("non")) // Si l'utilisateur ne veut pas d'acteur prÈcis
+			if (b_acteur && motTrouves.contains("non")) // Si l'utilisateur ne veut pas d'acteur pr√©cis
 			{
 				b_acteur = false;
 				liste = ParseurAllocine.recupererFilms();
 				film = RechercheAllocine.film(tirageAleatoire(liste));
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÈj‡ vu ?";
+				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous d√©j√† vu ?";
 			}
-			if (b_acteur && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un acteur prÈcis ou si on ne comprend pas l'acteur donnÈ par l'utilisateur
+			if (b_acteur && ((motTrouves.contains("oui")) || retour)) // Si l'utilisateur veut un acteur pr√©cis ou si on ne comprend pas l'acteur donn√© par l'utilisateur
 			{
 				String acteur = recherche.trouverPersonne(messageCorrige);
 				if (acteur != "")
@@ -259,30 +259,30 @@ public class ConversationIA_V2
 				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
 				film = RechercheAllocine.film(tirageAleatoire(liste));
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÈj‡ vu ?";
+				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous d√©j√† vu ?";
 			}
 			if (proposition && motTrouves.contains("non")) // On propose un film que l'utilisateur ne connait pas
 			{
 				prochaineEtape = Etape.AVIS;
-				// Le film est stockÈ dans film
+				// Le film est stock√© dans film
 				break;
 			}
 			if (proposition && motTrouves.contains("oui")) // On propose un film que l'utilisateur connait
 			{
 				satisfaction = true;
-				return "L'avez-vous aimÈ ?";
+				return "L'avez-vous aim√© ?";
 			}
 			if (satisfaction && motTrouves.contains("non")) // On propose un film que l'utilisateur n'aime pas
 			{
 				prochaineEtape = Etape.AVIS;
-				// Le film est stockÈ dans film
+				// Le film est stock√© dans film
 				break;
 			}
 			if (satisfaction && motTrouves.contains("oui")) // On propose un film que l'utilisateur aime
 			{
 				film = RechercheAllocine.film(tirageAleatoire(liste));
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÈj‡ vu ?";
+				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous d√©j√† vu ?";
 			}
 			return "Je n'ai pas compris, pouvez-vous reformuler ?";
 		default:
