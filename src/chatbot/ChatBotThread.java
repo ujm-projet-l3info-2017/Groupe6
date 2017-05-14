@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
 import facebook.Token;
@@ -11,7 +14,10 @@ import ia.ConversationIA;
 
 public class ChatBotThread extends Thread
 {
-	/** L'objet qui gère les conversations*/
+	/** Initialisation du log */
+	static final Logger logger = LogManager.getLogger(ChatBotThread.class.getName());
+	  
+	/** L'objet qui gère les conversations */
 	public PageRazbot razbot;
 	/** Les IA associées à chaque conversation */
 	private Hashtable<String,ConversationIA> conversationsIA;
@@ -36,23 +42,23 @@ public class ChatBotThread extends Thread
 		
 //		try{System.in.read();}catch (IOException e){e.printStackTrace();} //GETCHAR
 		
-		System.out.println("Démarrage du programme");
+		logger.info("ThreadProgramme","Démarrage du programme");
 		while(continuer && !Thread.currentThread().isInterrupted())
 		{
 			if(Token.isWebhookEnable())
 			{
-				System.out.println("Mode WEBHOOK");
+				logger.info("ThreadProgramme","Mode WebHook");
 				// Méthode par webhook
 				gestionMessagesWebhook();
 			}
 			else
 			{
-				System.out.println("Mode Interval");
+				logger.info("ThreadProgramme","Mode vérification ");
 				// Méthode récupération par interval de temps
 				gestionMessagesInterval();
 			}
 		}
-		System.out.println("Le programme a bien été arrêté");
+		logger.info("ThreadProgramme","Le programme a bien été arrêté");
 	}
 
 	/**
@@ -68,7 +74,7 @@ public class ChatBotThread extends Thread
 			//On les traite une par une
 			for (ConversationRazbot conv : conversationsATraiter)
 			{
-				System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
+				logger.info(conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
 				
 				//On charge la conversation correspondante (ou on la crée)
 				ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
@@ -98,7 +104,7 @@ public class ChatBotThread extends Thread
 				//On les traite une par une
 				for (ConversationRazbot conv : conversationsATraiter)
 				{
-					System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
+					logger.info(conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
 					
 					//On charge la conversation correspondante (ou on la crée)
 					ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
@@ -110,13 +116,14 @@ public class ChatBotThread extends Thread
 					//razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage())); //Test Allocine
 				}
 				
-				System.out.println("Programme en attente de webhook");
+				logger.info("ThreadProgramme","Programme en attente de webhook");
 				wait();
-				System.out.println("Webhook de nouveau message reçu");
+				logger.info("ThreadProgramme","Webhook de nouveau message reçu");
 			}
 		}
 		catch (InterruptedException e)
 		{
+			logger.error("ThreadProgramme","Interruption de la boucle");
 			e.printStackTrace();
 		}
 	}
@@ -132,12 +139,12 @@ public class ChatBotThread extends Thread
 		//Si la l'IA de cette conversation existe déjà
 		if(conversationsIA.containsKey(conversationId))
 		{
-			System.out.println("Utilisation d'un objet de gestion d'IA existant pour cette conversation\n");
+			logger.info("ThreadProgramme","Utilisation d'un objet de gestion d'IA existant pour cette conversation");
 			return conversationsIA.get(conversationId);
 		}
 		else //Sinon on la crée
 		{
-			System.out.println("Création d'un objet de gestion d'IA pour cette conversation\n");
+			logger.info("ThreadProgramme","Création d'un objet de gestion d'IA pour cette conversation");
 			conversationsIA.put(conversationId, new ConversationIA(username));
 			return conversationsIA.get(conversationId);
 		}

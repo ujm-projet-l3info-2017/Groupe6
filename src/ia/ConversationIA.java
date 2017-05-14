@@ -2,11 +2,17 @@ package ia;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Contient le nom de l'utilisateur, les criteres (booleen et String) et l'avancement de la discussion
  */
 public class ConversationIA
-{
+{	
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(ConversationIA.class.getName());
+	
 	protected String nomUtilisateur;
 	protected boolean b_realisateur, b_acteur, b_sortie, b_genre;
 	protected String s_realisateur,s_acteur,s_sortie,s_genre;
@@ -31,7 +37,7 @@ public class ConversationIA
 		s_acteur="";
 		s_sortie="";
 		s_genre="";
-		etape = Etape.DEBUT; // Si il y a un seul appel de ConversationIA
+		etape = Etape.DEBUT;
 	}
 	
 
@@ -91,7 +97,7 @@ public class ConversationIA
 		if((etape==Etape.SATISFACTION)&&(motTrouves.contains("non")))
 		{
 			etape=Etape.RECOMMENCER;
-			reset(5);
+			reset(TypeReset.TOTAL);
 			return "Desole. On recommence ?";
 		}
 		if((etape==Etape.RECOMMENCER)&&(motTrouves.contains("oui")))
@@ -133,7 +139,7 @@ public class ConversationIA
 			}
 			else
 			{
-				reset(1);
+				reset(TypeReset.REALISATEUR);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 		}
@@ -147,7 +153,7 @@ public class ConversationIA
 			}
 			else
 			{
-				reset(2);
+				reset(TypeReset.ACTEUR);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 		}
@@ -161,7 +167,7 @@ public class ConversationIA
 			}
 			else
 			{
-				reset(3);
+				reset(TypeReset.SORTIE);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 			
@@ -177,7 +183,7 @@ public class ConversationIA
 			}
 			else
 			{
-				reset(4);
+				reset(TypeReset.GENRE);
 				return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 			}
 		}
@@ -220,31 +226,31 @@ public class ConversationIA
 	public String erreur()
 	{
 		etape=Etape.RECOMMENCER;
-		reset(5);
+		reset(TypeReset.TOTAL);
 		return "Desole, je n'ai rien trouvé. On recommence ?";
 	}
 	
-	public void reset(int option)
+	public void reset(TypeReset option)
 	{
 		switch(option)
 		{
-		case 1: // Reset realisateur
+		case REALISATEUR: // Reset realisateur
 			b_realisateur=false;
 			s_realisateur="";
 			break;
-		case 2: // Reset acteur
+		case ACTEUR: // Reset acteur
 			b_acteur=false;
 			s_acteur="";
 			break;
-		case 3: // Reset sortie
+		case SORTIE: // Reset sortie
 			b_sortie=false;
 			s_sortie="";
 			break;
-		case 4: // Reset genre
+		case GENRE: // Reset genre
 			b_genre=false;
 			s_genre="";
 			break;
-		case 5: // Reset total (Jean-Reset)
+		case TOTAL: // Reset total (Jean-Reset)
 			b_realisateur=false;
 			b_acteur=false;
 			b_sortie=false;
