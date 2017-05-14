@@ -2,9 +2,12 @@ package facebook;
 
 import java.util.Date;
 
+/**
+ *  Classe contenant les (ou la) fonctions utilitaires
+ */
 public class Utilitaires
 {
-	/**
+	/** Parse la date de format Facebook, désolé pour la deprecation
 	 * @param date String
 	 * @return Date
 	 */
