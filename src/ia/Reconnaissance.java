@@ -1,5 +1,13 @@
 package ia;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import allocine.Film;
 import allocine.RechercheAllocine;
 
@@ -10,6 +18,9 @@ import allocine.RechercheAllocine;
  */
 public class Reconnaissance
 {
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(Reconnaissance.class.getName());
+	
 	/**
 	 * Renvoie true si c'est une question, false sinon
 	 * @param phrase
@@ -105,11 +116,38 @@ public class Reconnaissance
 	 */
 	public static int ouiOuNon(String phrase)
 	{
-		if (phrase.contains(" oui ") || phrase.contains("evidemment") || phrase.contains(" ouais ") || phrase.contains(" yes ") || phrase.contains(" bien sur "))
+		if (phrase.contains("oui") || phrase.contains("evidemment") || phrase.contains("ouais") || phrase.contains("yes") || phrase.contains("bien sur"))
 			return 1;
-		if (phrase.contains(" non ") || phrase.contains(" pas du tout ") || phrase.contains(" pas particulierement ") || phrase.contains(" pas trop ") || phrase.contains(" pas vraiment ") || phrase.contains(" absolument pas ") || phrase.contains(" pas du tout "))
+		if (phrase.contains("non") || phrase.contains("pas du tout") || phrase.contains("est egal") || phrase.contains("peu importe") || phrase.contains("pas particulierement") || phrase.contains("pas trop") || phrase.contains("pas vraiment") || phrase.contains("absolument pas") || phrase.contains("pas du tout"))
 			return 0;
 		return 2;
+	}
+	
+	public static String genre(String phrase)
+	{
+		try
+		{
+			FileReader f = new FileReader("./src/ia/dicoGenre.txt");
+			BufferedReader br = new BufferedReader(f);
+			String line;
+			while ((line = br.readLine()) != null)
+			{
+				if (phrase.contains(line))
+				{
+					br.close();
+					f.close();
+					return line; //On a trouvé un genre dans la phrase
+				}
+			}
+			br.close();
+			f.close();
+		}
+		catch (IOException e)
+		{
+			logger.error("chargementDico","Erreur lors de l'ouverture du dictionnaire");
+			return null;
+		}
+		return null;
 	}
 	
 	
