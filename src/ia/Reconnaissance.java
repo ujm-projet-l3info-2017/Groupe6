@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import allocine.Film;
+import allocine.ParseurAllocine;
 import allocine.RechercheAllocine;
 
 
@@ -150,6 +151,47 @@ public class Reconnaissance
 		return null;
 	}
 	
+	public static String acteurRealisateur(String phrase)
+	{
+		String[] lesMots = phrase.split(" ");
+		int nbMots = lesMots.length;
+		for (int i=0; i<nbMots; i++)
+		{
+			if (lesMots[i].charAt(0)>='A' && lesMots[i].charAt(0)<='Z')
+			{
+				//Le mot commence par une majuscule
+				if (i < (nbMots-1)) //Il y a encore un mot après
+				{
+					if (lesMots[i+1].charAt(0)>='A' && lesMots[i+1].charAt(0)<='Z')
+					{
+						String acteur = ParseurAllocine.chercherPersonne(lesMots[i]+" "+lesMots[i+1]);
+						if (acteur != null)
+						{
+							return lesMots[i]+" "+lesMots[i+1];
+						}
+					}
+					else 
+					{
+						String acteur = ParseurAllocine.chercherPersonne(lesMots[i]);
+						if (acteur != null)
+						{
+							return lesMots[i];
+						}
+					}
+				}
+				else
+				{
+					String acteur = ParseurAllocine.chercherPersonne(lesMots[i]);
+					if (acteur != null)
+					{
+						return lesMots[i];
+					}
+				}
+			}
+		}
+		return null;
+			
+	}
 	
 	
 	
