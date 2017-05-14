@@ -74,7 +74,7 @@ public class ChatBotThread extends Thread
 			//On les traite une par une
 			for (ConversationRazbot conv : conversationsATraiter)
 			{
-				System.out.println(new Date()+": "+conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
+				logger.info(conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
 				
 				//On charge la conversation correspondante (ou on la crée)
 				ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
