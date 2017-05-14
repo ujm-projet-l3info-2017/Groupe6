@@ -139,6 +139,7 @@ public class ConversationIA_V2
 			}
 			if (b_genre && b_sortie && (motTrouves.contains("oui") || retour))
 			{
+				// Comment se passe la récupération de date ?
 				String date = recherche.trouverDate(messageCorrige);
 				if (date != "")
 				{
@@ -150,10 +151,10 @@ public class ConversationIA_V2
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
 
-				// Recuperer film avec genre et date
-				proposition = true;
+				liste = ParseurAllocine.recupererFilms(s_genre,true);
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();// + resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
 			if (b_sortie && motTrouves.contains("non"))
 			{
@@ -162,6 +163,7 @@ public class ConversationIA_V2
 			}
 			if (b_sortie && (motTrouves.contains("oui") || retour))
 			{
+				// Comment se passe la récupération de date ?
 				String date = recherche.trouverDate(messageCorrige);
 				if (date != "")
 				{
@@ -173,10 +175,10 @@ public class ConversationIA_V2
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
 
-				// Recuperer film avec date
-				proposition = true;
+				liste = ParseurAllocine.recupererFilms(true);
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();// + resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
 			if (b_realisateur && (motTrouves.contains("non")))
 			{
