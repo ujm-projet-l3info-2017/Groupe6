@@ -19,5 +19,7 @@ public enum Etape
 	//DEBUT,
 	SALUTATION,
 	AVIS,
-	PROPOSITION
+	PROPOSITION,
+	CONNAIT_OU_PAS
+	
 }
