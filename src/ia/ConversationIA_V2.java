@@ -11,9 +11,9 @@ import allocine.ParseurAllocine;
 
 public class ConversationIA_V2
 {
-	//Initialisation du log
+	// Initialisation du log
 	static final Logger logger = LogManager.getLogger(ConversationIA_V2.class.getName());
-		
+
 	private String nom; // Nom de l'utilisateur
 	private Etape prochaineEtape; // Prochaine étape à lancer
 	private RechercherMot recherche; // Pour rechercher des mots dans le message
@@ -21,231 +21,223 @@ public class ConversationIA_V2
 	private String messageCorrige; // Message après passage par le dictionnaire
 	private boolean b_realisateur, b_acteur, b_sortie, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
 	private boolean proposition, satisfaction, retour; // Sous-étapes
-	private String s_realisateur,s_acteur,s_sortie,s_genre; // Contient les choix de l'utilisateur
+	private String s_realisateur, s_acteur, s_sortie, s_genre; // Contient les choix de l'utilisateur
 	private List<String> liste; // Liste de films trouvés
 	private String film; // Film selectionné
-	
+
 	public ConversationIA_V2(String nom)
 	{
 		this.nom = nom;
-		b_realisateur=true;
-		b_acteur=true;
-		b_sortie=true;
-		b_genre=true;
-		proposition=false;
-		satisfaction=false;
+		b_realisateur = true;
+		b_acteur = true;
+		b_sortie = true;
+		b_genre = true;
+		proposition = false;
+		satisfaction = false;
 		retour = false;
-		s_realisateur="";
-		s_acteur="";
-		s_sortie="";
-		s_genre="";
+		s_realisateur = "";
+		s_acteur = "";
+		s_sortie = "";
+		s_genre = "";
 		prochaineEtape = Etape.DEBUT;
 	}
-	
+
 	public String traitementMessage(String message)
 	{
 		motTrouves = new ArrayList<String>();
 		recherche = new RechercherMot();
 		messageCorrige = recherche.analysePhrase(message);
 		motTrouves = recherche.chercherMotsCles(messageCorrige);
-		
+
 		return executerProchaineEtape();
 	}
-	
+
 	public String executerProchaineEtape()
 	{
-		switch(prochaineEtape)
+		switch (prochaineEtape)
 		{
 		case DEBUT:
-			if(motTrouves.contains("bonjour"))
+			if (motTrouves.contains("bonjour"))
 			{
 				prochaineEtape = Etape.SALUTATION;
-			}
-			else if(motTrouves.contains("avis"))
+			} else if (motTrouves.contains("avis"))
 			{
 				Salutations salut = new Salutations();
 				prochaineEtape = Etape.AVIS;
-				return salut.aleatoire()+" "+nom+".";
-			}
-			else if(motTrouves.contains("cherch"))
+				return salut.aleatoire() + " " + nom + ".";
+			} else if (motTrouves.contains("cherch"))
 			{
 				Salutations salut = new Salutations();
 				prochaineEtape = Etape.PROPOSITION;
-				return salut.aleatoire()+" "+nom+". Avez-vous un genre favori ?";
-			}
-			else
+				return salut.aleatoire() + " " + nom + ". Avez-vous un genre favori ?";
+			} else
 			{
 				return "Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
 			}
 			break;
 		case SALUTATION:
 			Salutations salut = new Salutations();
-			return salut.aleatoire()+" "+nom+". Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
+			return salut.aleatoire() + " " + nom
+					+ ". Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
 		case AVIS:
-			
+
 			break;
 		case PROPOSITION:
-			if((b_genre==true)&&(motTrouves.contains("non")))
+			if (b_genre && (motTrouves.contains("non")))
 			{
 				b_genre = false;
 				return "Preferez-vous un film récent ?";
 			}
-			if((b_genre==true)&&((motTrouves.contains("oui"))||(retour==true)))
+			if (b_genre && ((motTrouves.contains("oui")) || retour))
 			{
 				String genre = recherche.trouverGenre(messageCorrige);
 				if (genre != "")
 				{
 					retour = false;
 					s_genre = genre;
-				}
-				else
+				} else
 				{
 					retour = true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
 				return "Preferez-vous un film récent ?";
 			}
-			if((b_genre==true)&&(b_sortie==true)&&((motTrouves.contains("non"))||(retour==true)))
+			if (b_genre && b_sortie && (motTrouves.contains("non") || retour))
 			{
-				b_sortie=false;
+				b_sortie = false;
 				String genre = recherche.trouverGenre(messageCorrige);
 				if (genre != "")
 				{
 					retour = false;
 					s_genre = genre;
-				}
-				else
+				} else
 				{
 					retour = true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
-				proposition=true;
+				proposition = true;
 				liste = ParseurAllocine.recupererFilms(s_genre);
 				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
-			if((b_genre==true)&&(b_sortie==true)&&((motTrouves.contains("oui"))||(retour==true)))
+			if (b_genre && b_sortie && (motTrouves.contains("oui") || retour))
 			{
 				String date = recherche.trouverDate(messageCorrige);
 				if (date != "")
 				{
-					retour=false;
+					retour = false;
 					s_sortie = date;
-				}
-				else
+				} else
 				{
-					retour=true;
+					retour = true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
-				
+
 				// Recuperer film avec genre et date
-				proposition=true;
+				proposition = true;
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire();// + resultat film +" L'avez-vous déjà vu ?";
 			}
-			if((b_sortie==true)&&(motTrouves.contains("non")))
+			if (b_sortie && motTrouves.contains("non"))
 			{
-				b_sortie=false;
+				b_sortie = false;
 				return "Cherchez-vous un realisateur en particulier ?";
 			}
-			if((b_sortie==true)&&((motTrouves.contains("oui"))||(retour==true)))
+			if (b_sortie && (motTrouves.contains("oui") || retour))
 			{
 				String date = recherche.trouverDate(messageCorrige);
 				if (date != "")
 				{
-					retour=false;
+					retour = false;
 					s_sortie = date;
-				}
-				else
+				} else
 				{
-					retour=true;
+					retour = true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
-				
+
 				// Recuperer film avec date
-				proposition=true;
+				proposition = true;
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire();// + resultat film +" L'avez-vous déjà vu ?";
 			}
-			if((b_realisateur==true)&&(motTrouves.contains("non")))
+			if (b_realisateur && (motTrouves.contains("non")))
 			{
-				b_realisateur=false;
+				b_realisateur = false;
 				return "Peut-être recherchez-vous un acteur en particulier";
 			}
-			if((b_realisateur==true)&&((motTrouves.contains("oui"))||(retour==true)))
+			if (b_realisateur && ((motTrouves.contains("oui")) || retour))
 			{
 				String realisateur = recherche.trouverPersonne(messageCorrige);
-				if(realisateur != "")
+				if (realisateur != "")
 				{
-					retour=false;
+					retour = false;
 					s_realisateur = realisateur;
-				}
-				else
+				} else
 				{
-					retour=true;
+					retour = true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
 				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
 				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
-			if((b_acteur==true)&&(motTrouves.contains("non")))
+			if (b_acteur && motTrouves.contains("non"))
 			{
-				b_acteur=false;
+				b_acteur = false;
 				liste = ParseurAllocine.recupererFilms();
 				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
-			if((b_acteur==true)&&((motTrouves.contains("oui"))||(retour==true)))
+			if (b_acteur && ((motTrouves.contains("oui")) || retour))
 			{
 				String acteur = recherche.trouverPersonne(messageCorrige);
 				if (acteur != "")
 				{
-					retour=false;
+					retour = false;
 					s_acteur = acteur;
-				}
-				else
+				} else
 				{
-					retour=true;
+					retour = true;
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
 				liste = ParseurAllocine.chercherFilmDePersonne(s_realisateur);
 				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
-			if((proposition=true)&&(motTrouves.contains("non")))
+			if (proposition && motTrouves.contains("non"))
 			{
 				prochaineEtape = Etape.AVIS;
 				// Le film est stocké dans film
 			}
-			if((proposition==true)&&(motTrouves.contains("oui")))
+			if (proposition && motTrouves.contains("oui"))
 			{
 				satisfaction = true;
-				return "L'avez-vous aimé ?";				
+				return "L'avez-vous aimé ?";
 			}
-			if((satisfaction==true)&&(motTrouves.contains("non")))
+			if (satisfaction && motTrouves.contains("non"))
 			{
 				prochaineEtape = Etape.AVIS;
 				// Le film est stocké dans film
 			}
-			if((satisfaction==true)&&(motTrouves.contains("oui")))
+			if (satisfaction && motTrouves.contains("oui"))
 			{
 				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire()+" "+ film +". L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
 			return "Je n'ai pas compris, pouvez-vous reformuler ?";
 		default:
-			logger.error("executerProchaineEtape", "Etape non reconnue");
+			logger.error("IA", "Etape non reconnue");
 			return null;
 		}
 		return null;
 	}
-	
+
 	public String tirageAleatoire(List<String> films)
 	{
 		Random rand = new Random();
