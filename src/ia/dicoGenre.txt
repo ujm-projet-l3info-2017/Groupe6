@@ -3,8 +3,9 @@ anim
 biopic
 aventur
 comique
-comÃ©die
-drÃ´le
+comédie
+comedie
+drôle
 drole
 dram
 erotique
