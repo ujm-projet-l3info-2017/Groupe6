@@ -184,7 +184,7 @@ public class ParseurAllocine
 			param+="27";
 		if (genre.contains("aventur"))
 			param+="01";
-		if (genre.contains("comique") || genre.contains("comédie"))
+		if (genre.contains("comique") || genre.contains("comedie"))
 			param+="05";
 		if (genre.contains("dram"))
 			param+="08";
