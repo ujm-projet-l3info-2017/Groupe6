@@ -204,7 +204,8 @@ public class ReponseAleatoire
 	{
 		String[] choix = {
 				"Je connais ce film !",
-				"Oui, je connais ce film là."};
+				"Oui, je connais ce film là.",
+				};
 
     	return aleatoireTableau(choix);
 	}
@@ -213,7 +214,26 @@ public class ReponseAleatoire
 	{
 		String[] choix = {
 				"Tu as besoin d'un avis sur quel film ?",
-				"Tu veux mon avis sur quel film"};
+				"Tu veux mon avis sur quel film ?",
+				"Tu veux que je te dise ce que je pense de quel film ?"};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String questionCriterePersonne()
+	{
+		String[] choix = {
+				"Il y a un réalisateur, un acteur que tu aimes bien ?",
+				"Des préférences sur un réalisateur ou un acteur ?"};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String qui()
+	{
+		String[] choix = {
+				"Qui donc ?",
+				"Qui ?"};
 
     	return aleatoireTableau(choix);
 	}
