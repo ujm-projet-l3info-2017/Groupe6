@@ -128,12 +128,6 @@ public class ReponseAleatoire
 
     	return aleatoireTableau(choix);	    
     }
-    public static String proposeLeFilm()
-    {
-		String[] choix = {"Je peux te proposer le film "};
-
-    	return aleatoireTableau(choix);    	    
-    }
     public static String messageBonjour()
     {
 		String[] choix = {"Bonjour", "Salut"};
@@ -146,9 +140,9 @@ public class ReponseAleatoire
 
     	return aleatoireTableau(choix);    	    
     }
-	public static String propositionFilm()
+	public static String proposeLeFilm()
 	{
-		String[] choix = {"Je te propose le film ", "J'ai ce film à te proposer :","Je te conseil ce film :"};
+		String[] choix = {"Je te propose le film ", "J'ai ce film à te proposer :", "Je te conseil ce film :", "Je peux te proposer le film "};
 
     	return aleatoireTableau(choix);
 	}
