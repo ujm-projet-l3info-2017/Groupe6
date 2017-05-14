@@ -247,6 +247,79 @@ public class ConversationIA_V2
 		
 		case CONNAIT_OU_PAS :
 			
+			if (Reconnaissance.ouiOuNon(messageCorrige) == 1)
+			{
+				//Aie aie aie, l'utilisateur connait le film qu'on lui a proposé
+				if (s_genre != null)
+				{
+					if (s_recent)
+					{
+						Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre, true)));
+						while (f.code() != film.code())
+						{
+							//Tant qu'il est pas différent de celui d'avant
+							f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre, true)));
+						}
+						film = f;
+						return "Je te propose le film "+f.titre()+" Tu connais celui là ?";				
+					}
+					else 
+					{
+						Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre)));
+						while (f.code() != film.code())
+						{
+							//Tant qu'il est pas différent de celui d'avant
+							f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre)));
+						}
+						film = f;
+						return "Je te propose le film "+f.titre()+" Tu connais celui là ?";
+					}
+				}
+				else 
+				{
+					if (s_recent)
+					{
+						Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
+						while (f.code() != film.code())
+						{
+							//Tant qu'il est pas différent de celui d'avant
+							f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
+						}
+						film = f;
+						return "Je te propose le film "+f.titre()+" Tu connais celui là ?";				
+					}
+					else 
+					{
+						if (s_realisateur != null)
+						{
+							Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
+							while (f.code() != film.code())
+							{
+								//Tant qu'il est pas différent de celui d'avant
+								f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
+							}
+							film = f;
+							return "Je te propose le film "+f.titre()+" Tu connais celui là ?";	
+						}
+						else
+						{
+							Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
+							while (f.code() != film.code())
+							{
+								//Tant qu'il est pas différent de celui d'avant
+								f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
+							}
+							film = f;
+							return "Je te propose le film "+f.titre()+" Tu connais celui là ?";	
+						}
+					}
+				}
+			}
+			else
+			{
+				prochaineEtape = Etape.AVIS;
+				return "Je commence à donner mon avis sur le film";
+			}
 			
 			
 			
@@ -395,7 +468,6 @@ public class ConversationIA_V2
 //				Recommandation recom = new Recommandation();
 //				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÃ©jÃ  vu ?";
 //			}
-			return "Je n'ai pas compris, pouvez-vous reformuler ?";
 		default:
 			logger.error("IA", "Etape non reconnue");
 			return null;
