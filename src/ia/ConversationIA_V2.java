@@ -188,7 +188,7 @@ public class ConversationIA_V2
 						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
 					
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return "Je te propose le film "+film.titre() + ". Tu connais ?";
+					return ReponseAleatoire.proposeLeFilm()+film.titre()+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
 				{
@@ -199,16 +199,16 @@ public class ConversationIA_V2
 					{
 						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre)));
 						prochaineEtape = Etape.CONNAIT_OU_PAS;
-						return "Je te propose le film "+film.titre() +". Tu connais ?";
+						return ReponseAleatoire.proposeLeFilm()+film.titre()+" "+ReponseAleatoire.connaisQuestion2();
 					}
 					else 
 					{
-						return "Il y a un réalisateur, un acteur que tu aimes bien ?";
+						return ReponseAleatoire.questionCriterePersonne();
 					}
 				}
 				else //On a pas compris
 				{
-					return "Ca te dérange si le film est vieux ?";
+					return ReponseAleatoire.questionAnnee();
 				}
 			}
 			if (! b_realisateur)
@@ -220,29 +220,29 @@ public class ConversationIA_V2
 					s_realisateur = Reconnaissance.acteurRealisateur(messageCorrige);
 					film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return "Je te propose le film "+film+". Tu connais ?";
+					return ReponseAleatoire.proposeLeFilm()+film.titre()+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==1)
 				{
 					//le mec a juste dit oui
-					return "Qui donc ?";
+					return ReponseAleatoire.qui();
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
 				{
 					b_realisateur = true;
 					film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return "Je te propose le film "+film+". Tu connais ?";
+					return ReponseAleatoire.proposeLeFilm()+film.titre()+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else 
 				{
-					return "Pas compris";
+					return ReponseAleatoire.incomprehension();
 
 				}
 			}
 			else 
 			{
-				return "Pas compris"; //NORMALEMENT ON EST JAMAIS ICI
+				return ReponseAleatoire.incomprehension(); //NORMALEMENT ON EST JAMAIS ICI
 			}
 		
 		case CONNAIT_OU_PAS :
