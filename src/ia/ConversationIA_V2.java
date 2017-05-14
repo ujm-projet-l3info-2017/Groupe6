@@ -12,6 +12,10 @@ public class ConversationIA_V2
 		executerProchaineEtape();
 	}
 	
+	public String traitementMessage(String message)
+	{
+		return executerProchaineEtape();
+	}
 	
 	public String executerProchaineEtape()
 	{
