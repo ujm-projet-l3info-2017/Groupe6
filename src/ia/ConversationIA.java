@@ -37,7 +37,7 @@ public class ConversationIA
 		s_acteur="";
 		s_sortie="";
 		s_genre="";
-		etape = Etape.DEBUT; // Si il y a un seul appel de ConversationIA
+		etape = Etape.DEBUT;
 	}
 	
 

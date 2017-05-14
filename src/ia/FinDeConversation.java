@@ -51,7 +51,7 @@ public class FinDeConversation implements Vocabulaire
 	{
 
 		Random rand = new Random();
-		int nbAleatoire = rand.nextInt(expressions.size() + 1);
+		int nbAleatoire = rand.nextInt(expressions.size());
 		return expressions.get(nbAleatoire);
 	}
 
