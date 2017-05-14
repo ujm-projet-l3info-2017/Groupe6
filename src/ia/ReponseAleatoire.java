@@ -88,7 +88,7 @@ public class ReponseAleatoire
     }
     public static String questionGenre()
     {
-		String[] choix = {"Tu veux regarder quel genre de film ?", "Tu préfères les films d'action ?, d'aventure ?, romantique ? ...", "Quel genre de film préfères-tu ?"};
+		String[] choix = {"Tu veux regarder quel genre de film ?", "Tu préfères les films d'action ?, d'aventure ?, romantique ? ...", "Quel genre de film préfères-tu ?", "As-tu un genre favori ?"};
 
     	return aleatoireTableau(choix);    	    
     }
@@ -143,6 +143,20 @@ public class ReponseAleatoire
 	public static String proposeLeFilm()
 	{
 		String[] choix = {"Je te propose le film ", "J'ai ce film à te proposer :", "Je te conseil ce film :", "Je peux te proposer le film "};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String jeConnaisFilm()
+	{
+		String[] choix = {"Je connais ce film !", "Oui, je connais ce film là."};
+
+    	return aleatoireTableau(choix);
+	}
+	
+	public static String avisSurQuelFilm()
+	{
+		String[] choix = {"Tu as besoin d'un avis sur quel film ?", "Tu veux mon avis sur quel film"};
 
     	return aleatoireTableau(choix);
 	}
