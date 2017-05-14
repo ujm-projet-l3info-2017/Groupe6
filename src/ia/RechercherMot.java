@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Classe de la recherche d'un mot dans un dictionnaire
  * 
@@ -13,6 +16,8 @@ import java.util.ArrayList;
  */
 public class RechercherMot
 {
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(RechercherMot.class.getName());
 
 	/**
 	 * Liste de mot constituant les dictionnaires
@@ -57,7 +62,7 @@ public class RechercherMot
 		}
 		catch (IOException e)
 		{
-			System.out.println("Erreur lors de l'ouverture du dictionnaire");
+			logger.error("chargementDico","Erreur lors de l'ouverture du dictionnaire");
 		}
 		return dico;
 	}

@@ -3,12 +3,18 @@ package ia;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Classe du vocabulaire des expressions de recommandation
  * @author Thomas GRANJON
  *
  */
-public class Recommandation implements Vocabulaire{
+public class Recommandation implements Vocabulaire
+{
+	//Initialisation du log
+		static final Logger logger = LogManager.getLogger(Recommandation.class.getName());
 	
 	/**
 	 * Liste des expressions de recommandation
