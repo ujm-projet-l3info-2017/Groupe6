@@ -1,6 +1,8 @@
 package ia;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,8 +16,9 @@ public class ConversationIA_V2
 	private Etape prochaineEtape;
 	private RechercherMot recherche;
 	private ArrayList<String> motTrouves;
+	private String messageCorrige;
 	private boolean b_realisateur, b_acteur, b_sortie, b_genre;
-	private boolean proposition, satisfaction;
+	private boolean proposition, satisfaction, retour;
 	protected String s_realisateur,s_acteur,s_sortie,s_genre;
 	
 	public ConversationIA_V2(String nom)
@@ -27,6 +30,7 @@ public class ConversationIA_V2
 		b_genre=true;
 		proposition=false;
 		satisfaction=false;
+		retour = false;
 		s_realisateur="";
 		s_acteur="";
 		s_sortie="";
@@ -38,7 +42,7 @@ public class ConversationIA_V2
 	{
 		motTrouves = new ArrayList<String>();
 		recherche = new RechercherMot();
-		String messageCorrige = recherche.analysePhrase(message);
+		messageCorrige = recherche.analysePhrase(message);
 		motTrouves = recherche.chercherMotsCles(messageCorrige);
 		
 		return executerProchaineEtape();
@@ -79,22 +83,53 @@ public class ConversationIA_V2
 				b_genre = false;
 				return "Preferez-vous un film récent ?";
 			}
-			if((b_genre==true)&&(motTrouves.contains("oui")))
+			if((b_genre==true)&&((motTrouves.contains("oui"))||(retour==true)))
 			{
-				// Rechercher genre dans message puis le stocker dans s_genre
+				String genre = recherche.trouverGenre(messageCorrige);
+				if (genre != "")
+				{
+					retour = false;
+					s_genre = genre;
+				}
+				else
+				{
+					retour = true;
+					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+				}
 				return "Preferez-vous un film récent ?";
 			}
-			if((b_genre==true)&&(b_sortie==true)&&(motTrouves.contains("non")))
+			if((b_genre==true)&&(b_sortie==true)&&((motTrouves.contains("non"))||(retour==true)))
 			{
 				b_sortie=false;
-				// Recuperer film avec genre
+				String genre = recherche.trouverGenre(messageCorrige);
+				if (genre != "")
+				{
+					retour = false;
+					s_genre = genre;
+				}
+				else
+				{
+					retour = true;
+					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+				}
 				proposition=true;
 				Recommandation recom = new Recommandation();
 				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
 			}
-			if((b_genre==true)&&(b_sortie==true)&&(motTrouves.contains("oui")))
+			if((b_genre==true)&&(b_sortie==true)&&((motTrouves.contains("oui"))||(retour==true)))
 			{
-				// Rechercher date dans message puis la stocker dans s_sortie
+				String date = recherche.trouverDate(messageCorrige);
+				if (date != "")
+				{
+					retour=false;
+					s_sortie = date;
+				}
+				else
+				{
+					retour=true;
+					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+				}
+				
 				// Recuperer film avec genre et date
 				proposition=true;
 				Recommandation recom = new Recommandation();
@@ -105,9 +140,20 @@ public class ConversationIA_V2
 				b_sortie=false;
 				return "Cherchez-vous un realisateur en particulier ?";
 			}
-			if((b_sortie==true)&&(motTrouves.contains("oui")))
+			if((b_sortie==true)&&((motTrouves.contains("oui"))||(retour==true)))
 			{
-				// Rechercher date dans message puis la stocker dans s_sortie
+				String date = recherche.trouverDate(messageCorrige);
+				if (date != "")
+				{
+					retour=false;
+					s_sortie = date;
+				}
+				else
+				{
+					retour=true;
+					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+				}
+				
 				// Recuperer film avec date
 				proposition=true;
 				Recommandation recom = new Recommandation();
@@ -118,9 +164,19 @@ public class ConversationIA_V2
 				b_realisateur=false;
 				return "Peut-être recherchez-vous un acteur en particulier";
 			}
-			if((b_realisateur==true)&&(motTrouves.contains("oui")))
+			if((b_realisateur==true)&&((motTrouves.contains("oui"))||(retour==true)))
 			{
-				// Recuperer nomRealisateur dans message puis le sotcker dans s_realisateur
+				String realisateur = recherche.trouverPersonne(messageCorrige);
+				if(realisateur != "")
+				{
+					retour=false;
+					s_realisateur = realisateur;
+				}
+				else
+				{
+					retour=true;
+					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+				}
 				// Rechercher film avec realisateur
 				proposition=true;
 				Recommandation recom = new Recommandation();
@@ -134,9 +190,19 @@ public class ConversationIA_V2
 				Recommandation recom = new Recommandation();
 				return recom.aleatoire();//+ resultat film +" L'avez-vous déjà vu ?";
 			}
-			if((b_acteur==true)&&(motTrouves.contains("oui")))
+			if((b_acteur==true)&&((motTrouves.contains("oui"))||(retour==true)))
 			{
-				// Recuperer nomActeur dans message puis me stocker dans s_acteur
+				String acteur = recherche.trouverPersonne(messageCorrige);
+				if (acteur != "")
+				{
+					retour=false;
+					s_acteur = acteur;
+				}
+				else
+				{
+					retour=true;
+					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
+				}
 				// Rechercher film avec acteur
 				proposition=true;
 				Recommandation recom = new Recommandation();
@@ -145,7 +211,7 @@ public class ConversationIA_V2
 			if((proposition=true)&&(motTrouves.contains("non")))
 			{
 				prochaineEtape = Etape.AVIS;
-				//Comment stocker le film ?
+				// Comment stocker le film ?
 			}
 			if((proposition==true)&&(motTrouves.contains("oui")))
 			{
@@ -155,7 +221,7 @@ public class ConversationIA_V2
 			if((satisfaction==true)&&(motTrouves.contains("non")))
 			{
 				prochaineEtape = Etape.AVIS;
-				//Comment stocker le film ?
+				// Comment stocker le film ?
 			}
 			if((satisfaction==true)&&(motTrouves.contains("oui")))
 			{
@@ -169,5 +235,12 @@ public class ConversationIA_V2
 			return null;
 		}
 		return null;
+	}
+	
+	public String tirageAleatoire(List<String> films)
+	{
+		Random rand = new Random();
+		int nbAleatoire = rand.nextInt(films.size());
+		return films.get(nbAleatoire);
 	}
 }
