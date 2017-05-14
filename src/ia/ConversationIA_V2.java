@@ -19,8 +19,14 @@ public class ConversationIA_V2
 	private RechercherMot recherche; // Pour rechercher des mots dans le message
 	private ArrayList<String> motTrouves; // Liste des mots clés du message
 	private String messageCorrige; // Message après passage par le dictionnaire
+	
+	//Pour proposition
 	private boolean b_realisateur, b_acteur, b_sortie, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
 	private boolean proposition, satisfaction, retour; // Sous-étapes
+	
+	//Pour avis
+	private boolean b_film;
+	
 	private String s_realisateur, s_acteur, s_sortie, s_genre; // Contient les choix de l'utilisateur
 	private List<String> liste; // Liste de films trouvés
 	private String film; // Film selectionné
@@ -35,6 +41,7 @@ public class ConversationIA_V2
 		proposition = false;
 		satisfaction = false;
 		retour = false;
+		b_film = false;
 		s_realisateur = "";
 		s_acteur = "";
 		s_sortie = "";
@@ -57,6 +64,7 @@ public class ConversationIA_V2
 		switch (prochaineEtape)
 		{
 		case DEBUT:
+			// Si le message contient juste bonjour
 			if (motTrouves.contains("bonjour"))
 			{
 				prochaineEtape = Etape.SALUTATION;
@@ -65,7 +73,7 @@ public class ConversationIA_V2
 				Salutations salut = new Salutations();
 				prochaineEtape = Etape.AVIS;
 				return salut.aleatoire() + " " + nom + ".";
-			} else if (motTrouves.contains("cherch"))
+			} else if (motTrouves.contains("cherche"))
 			{
 				Salutations salut = new Salutations();
 				prochaineEtape = Etape.PROPOSITION;
@@ -77,10 +85,31 @@ public class ConversationIA_V2
 			break;
 		case SALUTATION:
 			Salutations salut = new Salutations();
+			if (motTrouves.contains("avis"))
+			{
+				prochaineEtape = Etape.AVIS;
+				return salut.aleatoire() + " " + nom
+						+ ".";
+			}
+			if	(motTrouves.contains("cherche"))
+			{
+				prochaineEtape = Etape.PROPOSITION;
+				return salut.aleatoire() + " " + nom
+						+ ".";
+			}
 			return salut.aleatoire() + " " + nom
 					+ ". Souhaitez-vous que je vous donne mon avis sur un film ou que je vous en propose un ?";
 		case AVIS:
-
+			//Recherche du film contenu dans le message / demande du film duquel il veut un avis
+			if(!b_film)
+			{
+				return " Vous voulez mon avis sur quel film?";
+			}
+			
+			//On dit qui est le réalisateur et on met l'affiche, qui joue dedans etc.
+			
+			//Avis en fonction de la note des utilisateurs et de la presse
+			
 			break;
 		case PROPOSITION:
 			if (b_genre && (motTrouves.contains("non")))
@@ -123,6 +152,7 @@ public class ConversationIA_V2
 			}
 			if (b_genre && b_sortie && (motTrouves.contains("oui") || retour))
 			{
+				// Comment se passe la récupération de date ?
 				String date = recherche.trouverDate(messageCorrige);
 				if (date != "")
 				{
@@ -134,10 +164,10 @@ public class ConversationIA_V2
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
 
-				// Recuperer film avec genre et date
-				proposition = true;
+				liste = ParseurAllocine.recupererFilms(s_genre,true);
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();// + resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
 			if (b_sortie && motTrouves.contains("non"))
 			{
@@ -146,6 +176,7 @@ public class ConversationIA_V2
 			}
 			if (b_sortie && (motTrouves.contains("oui") || retour))
 			{
+				// Comment se passe la récupération de date ?
 				String date = recherche.trouverDate(messageCorrige);
 				if (date != "")
 				{
@@ -157,10 +188,10 @@ public class ConversationIA_V2
 					return "Je n'ai pas bien compris, pouvez-vous reformuler ?";
 				}
 
-				// Recuperer film avec date
-				proposition = true;
+				liste = ParseurAllocine.recupererFilms(true);
+				film = tirageAleatoire(liste);
 				Recommandation recom = new Recommandation();
-				return recom.aleatoire();// + resultat film +" L'avez-vous déjà vu ?";
+				return recom.aleatoire() + " " + film + ". L'avez-vous déjà vu ?";
 			}
 			if (b_realisateur && (motTrouves.contains("non")))
 			{
