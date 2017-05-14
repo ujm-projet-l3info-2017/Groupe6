@@ -61,7 +61,7 @@ public class ConversationIA_V2
 			{
 				prochaineEtape = Etape.AVIS;
 			}
-			else if(motTrouves.contains("cherche"))
+			else if(motTrouves.contains("cherch"))
 			{
 				prochaineEtape = Etape.PROPOSITION;
 				return "Avez-vous un genre favori ?";
