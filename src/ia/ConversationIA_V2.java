@@ -1,6 +1,8 @@
 package ia;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -234,5 +236,12 @@ public class ConversationIA_V2
 			return null;
 		}
 		return null;
+	}
+	
+	public String tirageAleatoire(List<String> films)
+	{
+		Random rand = new Random();
+		int nbAleatoire = rand.nextInt(films.size());
+		return films.get(nbAleatoire);
 	}
 }
