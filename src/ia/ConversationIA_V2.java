@@ -21,6 +21,7 @@ public class ConversationIA_V2
 	private RechercherMot recherche; // Pour rechercher des mots dans le message
 	private ArrayList<String> motTrouves; // Liste des mots clÃ©s du message
 	private String messageCorrige; // Message aprÃ¨s passage par le dictionnaire
+	private String messageOrigine; //Message sans correction
 	
 	//Pour proposition
 	private boolean b_realisateur, b_acteur, b_recent, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
@@ -60,6 +61,7 @@ public class ConversationIA_V2
 		recherche = new RechercherMot();
 		messageCorrige = recherche.analysePhrase(message);
 		motTrouves = recherche.chercherMotsCles(messageCorrige);
+		messageOrigine = message;
 
 		return executerProchaineEtape();
 	}
@@ -177,11 +179,62 @@ public class ConversationIA_V2
 				{
 					//Il veut un film récent
 					s_recent = true;
+					b_recent = true;
 					if (s_genre != "")
 						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre, true)));
 					else 
 						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
-					return ReponseAleatoire.proposeLeFilm()+film.titre();
+					
+					prochaineEtape = Etape.AVIS;
+					return "Je te propose le film "+film.titre();
+				}
+				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
+				{
+					//Il veut pas forcément un film récent
+					s_recent = false;
+					b_recent = true;
+					if (s_genre != "")
+					{
+						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre)));
+						prochaineEtape = Etape.AVIS;
+						return "Je te propose le film "+film.titre();
+					}
+					else 
+					{
+						return "Il y a un réalisateur, un acteur que tu aimes bien ?";
+					}
+				}
+				else //On a pas compris
+				{
+					return "Ca te dérange si le film est vieux ?";
+				}
+			}
+			if (! b_realisateur)
+			{
+				if (Reconnaissance.acteurRealisateur(messageCorrige)!= null)
+				{
+					//On a trouvé un réalisateur ou un acteur qui existe
+					b_realisateur = true;
+					s_realisateur = Reconnaissance.acteurRealisateur(messageCorrige);
+					film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
+					prochaineEtape = Etape.AVIS;
+					return "Je te propose le film "+film+".";
+				}
+				else if (Reconnaissance.ouiOuNon(messageCorrige)==1)
+				{
+					//le mec a juste dit oui
+					return "Qui donc ?";
+				}
+				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
+				{
+					film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
+					prochaineEtape = Etape.AVIS;
+					return "Je te propose le film "+film+".";
+				}
+				else 
+				{
+					return "Pas compris";
+
 				}
 			}
 			
@@ -328,10 +381,10 @@ public class ConversationIA_V2
 //				Recommandation recom = new Recommandation();
 //				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÃ©jÃ  vu ?";
 //			}
-//			return "Je n'ai pas compris, pouvez-vous reformuler ?";
-//		default:
-//			logger.error("IA", "Etape non reconnue");
-//			return null;
+			return "Je n'ai pas compris, pouvez-vous reformuler ?";
+		default:
+			logger.error("IA", "Etape non reconnue");
+			return null;
 		}
 		return null;
 	}
