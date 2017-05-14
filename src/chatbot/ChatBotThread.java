@@ -116,13 +116,14 @@ public class ChatBotThread extends Thread
 					//razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage())); //Test Allocine
 				}
 				
-				System.out.println("Programme en attente de webhook");
+				logger.info("ThreadProgramme","Programme en attente de webhook");
 				wait();
-				System.out.println("Webhook de nouveau message reçu");
+				logger.info("ThreadProgramme","Webhook de nouveau message reçu");
 			}
 		}
 		catch (InterruptedException e)
 		{
+			logger.error("ThreadProgramme","Interruption de la boucle");
 			e.printStackTrace();
 		}
 	}
@@ -138,12 +139,12 @@ public class ChatBotThread extends Thread
 		//Si la l'IA de cette conversation existe déjà
 		if(conversationsIA.containsKey(conversationId))
 		{
-			System.out.println("Utilisation d'un objet de gestion d'IA existant pour cette conversation\n");
+			logger.info("ThreadProgramme","Utilisation d'un objet de gestion d'IA existant pour cette conversation");
 			return conversationsIA.get(conversationId);
 		}
 		else //Sinon on la crée
 		{
-			System.out.println("Création d'un objet de gestion d'IA pour cette conversation\n");
+			logger.info("ThreadProgramme","Création d'un objet de gestion d'IA pour cette conversation");
 			conversationsIA.put(conversationId, new ConversationIA(username));
 			return conversationsIA.get(conversationId);
 		}
