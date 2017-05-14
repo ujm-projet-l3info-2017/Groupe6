@@ -10,5 +10,14 @@ public enum Etape
 	RECOMMENCER,
 	ERREUR,
 	FIN,
-	R_ALEATOIRE
+	R_ALEATOIRE,
+	
+	
+	
+	//Pour la V2
+	
+	//DEBUT,
+	SALUTATION,
+	AVIS,
+	PROPOSITION
 }
