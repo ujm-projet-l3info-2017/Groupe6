@@ -36,7 +36,6 @@ public class ConversationIA_V2
 		s_sortie="";
 		s_genre="";
 		prochaineEtape = Etape.DEBUT;
-		executerProchaineEtape();
 	}
 	
 	public String traitementMessage(String message)
