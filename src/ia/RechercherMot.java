@@ -62,10 +62,10 @@ public class RechercherMot
 		}
 		catch(IOException e)
 		{
-			//On essaye avec un autre chemin
-			if(chemin.compareTo("./WEB-INF/classes/ia/")!=0)
+			//On essaye avec un autre chemin (Solution pour le serveur)
+			if(chemin.compareTo("/var/lib/tomcat8/webapps/razbot/WEB-INF/classes/ia/")!=0)
 			{
-				chargementDico("./WEB-INF/classes/ia/", nom);
+				chargementDico("/var/lib/tomcat8/webapps/razbot/WEB-INF/classes/ia/", nom);
 			}
 			else
 				logger.catching(e);
