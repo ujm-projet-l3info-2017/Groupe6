@@ -242,7 +242,7 @@ public class Reconnaissance
 	 */
 	public static boolean acteurs(String phrase)
 	{
-		if (phrase.contains("acteur") || phrase.contains("actrice"))
+		if (phrase.contains("acteur") || phrase.contains("actrice") || phrase.contains("joue"))
 			return true;
 		else return false;
 	}
@@ -279,6 +279,19 @@ public class Reconnaissance
 	public static boolean annee(String phrase)
 	{
 		if (phrase.contains("annee") || phrase.contains("date"))
+			return true;
+		else return false;
+	}
+	
+	/**
+	 * Renvoie true si l'utilisateur demande si le film est bien
+	 * @param phrase
+	 * @return
+	 */
+	public static boolean bien(String phrase)
+	{
+		
+		if (question(phrase) && (phrase.contains("bien") || phrase.contains("aimé")))
 			return true;
 		else return false;
 	}
