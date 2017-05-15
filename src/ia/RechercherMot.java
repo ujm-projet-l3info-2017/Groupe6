@@ -154,9 +154,54 @@ public class RechercherMot
 		for (int i = 0; i < phrase.length; i++)
 		{
 			String motCourant = phrase[i];
-
-			if (dicoFrancais.contains(motCourant))
+			if(motCourant.length()>3 && !(motCourant.substring(0, 1).matches("[A-Z]")))
 			{
+				if (dicoFrancais.contains(motCourant))
+				{
+					if (i == 0)
+					{
+						p = motCourant;
+					} else
+					{
+						p = p + " " + motCourant;
+					}
+				} 
+				else
+				{
+					//On cherche en priorite si le mot mal orthographie se rapproche d'un mot cle
+					String m1, m2, m3, m4;
+					m1 = motPlusUneLettre(motCourant, dicoMotsCles);
+					if (m1 != "")
+					{
+						m4 = m1;
+					} else if ((m2 = motSubUneLettre(motCourant, dicoMotsCles)) != "")
+					{
+						m4 = m2;
+					} else if ((m3 = motMoinsUneLettre(motCourant, dicoMotsCles)) != "")
+					{
+						m4 = m3;
+					} else if ((m1 = motPlusUneLettre(motCourant, dicoFrancais)) != "")
+					{
+						m4 = m1;
+					}else if((m2 = motSubUneLettre(motCourant, dicoFrancais)) != "")
+					{
+						m4 = m2;
+					}else if((m3 = motMoinsUneLettre(motCourant, dicoFrancais)) != "")
+					{
+						m4 = m3;
+					}else{
+						m4 = motCourant;
+					}
+	
+					if (i == 0)
+					{
+						p = m4;
+					} else
+					{
+						p = p + " " + m4;
+					}
+				}
+			}else{
 				if (i == 0)
 				{
 					p = motCourant;
@@ -164,71 +209,36 @@ public class RechercherMot
 				{
 					p = p + " " + motCourant;
 				}
-			} 
-			else
-			{
-				//On cherche en priorite si le mot mal orthographie se rapproche d'un mot cle
-				String m1, m2, m3, m4;
-				m1 = motPlusUneLettre(motCourant, dicoMotsCles);
-				if (m1 != "")
-				{
-					m4 = m1;
-				} else if ((m2 = motSubUneLettre(motCourant, dicoMotsCles)) != "")
-				{
-					m4 = m2;
-				} else if ((m3 = motMoinsUneLettre(motCourant, dicoMotsCles)) != "")
-				{
-					m4 = m3;
-				} else if ((m1 = motPlusUneLettre(motCourant, dicoFrancais)) != "")
-				{
-					m4 = m1;
-				}else if((m2 = motSubUneLettre(motCourant, dicoFrancais)) != "")
-				{
-					m4 = m2;
-				}else if((m3 = motMoinsUneLettre(motCourant, dicoFrancais)) != "")
-				{
-					m4 = m3;
-				}else{
-					m4 = motCourant;
-				}
-
-				if (i == 0)
-				{
-					p = m4;
-				} else
-				{
-					p = p + " " + m4;
-				}
 			}
 			
 		}
-		System.out.println("Phrase corrigée : " + p);
+		System.out.println("Phrase corrigï¿½e : " + p);
 		
 		p = suppressionAccents(p);
 		
-		System.out.println("Phrase corrigée sans accents : " + p);
+		System.out.println("Phrase corrigï¿½e sans accents : " + p);
 		
 		return p;
 	}
 
 	/**
-	 *  Supprime les accents du String en paramètre et renvoit la phrase
+	 *  Supprime les accents du String en paramï¿½tre et renvoit la phrase
 	 * @param p
 	 * @return p sans accents
 	 */
 	private String suppressionAccents(String p)
 	{
-		p = p.replace('é', 'e');
-		p = p.replace('è', 'e');
-		p = p.replace('ë', 'e');
-		p = p.replace('ê', 'e');
-		p = p.replace('à', 'a');
-		p = p.replace('ï', 'i');
-		p = p.replace('î', 'i');
-		p = p.replace('â', 'a');
-		p = p.replace('û', 'u');
-		p = p.replace('ô', 'o');
-		p = p.replace('ç', 'c');
+		p = p.replace('ï¿½', 'e');
+		p = p.replace('ï¿½', 'e');
+		p = p.replace('ï¿½', 'e');
+		p = p.replace('ï¿½', 'e');
+		p = p.replace('ï¿½', 'a');
+		p = p.replace('ï¿½', 'i');
+		p = p.replace('ï¿½', 'i');
+		p = p.replace('ï¿½', 'a');
+		p = p.replace('ï¿½', 'u');
+		p = p.replace('ï¿½', 'o');
+		p = p.replace('ï¿½', 'c');
 		
 		return p;
 	}
