@@ -147,7 +147,7 @@ public class ConversationIA
 					return "Voici l'affiche de ce film : "+film.affiche();
 				
 				if (Reconnaissance.annee(messageCorrige))
-					return "Ce film est sorti en "+film.affiche()+".";
+					return "Ce film est sorti en "+film.dateSortie()+".";
 				
 				if (Reconnaissance.acteurs(messageCorrige))
 				{
