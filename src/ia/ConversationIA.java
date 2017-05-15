@@ -314,6 +314,7 @@ public class ConversationIA
 			{
 				//L'utilisateur veut des infos, on passe dans l'état AVIS
 				prochaineEtape = Etape.AVIS;
+				film = RechercheAllocine.film(titreFilm);
 				return "Qu'est ce que tu veux savoir ?";
 			}
 			else if (Reconnaissance.ouiOuNon(messageCorrige) == 2)
