@@ -36,7 +36,6 @@ public class ConversationRazbot
 	 */
 	public void importer()
 	{
-		logger.info("Importation du JSON");
 		try
 		{
 			//Parcourt du json en ajoutant les infos à ArrayList<MessageRazbot> messages
