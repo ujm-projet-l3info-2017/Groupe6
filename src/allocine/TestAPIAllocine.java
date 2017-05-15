@@ -25,14 +25,12 @@ public class TestAPIAllocine
 	public static void main(String[] args)
 	{		
 		List<String> films = ParseurAllocine.chercherFilmDePersonne("Jean Dujardin");
-		for (int i=0; i<films.size();i++)
-		{
-			Film f = RechercheAllocine.film(films.get(i));
-			if (f != null) 
-				f.affiche_infos();
-			System.out.println();
-		}
+		Film lefilm = RechercheAllocine.film("Inglorious Bitches");
+		System.out.println(lefilm.titre());
+		System.out.println(lefilm.realisateur());
+		System.out.println(lefilm.affiche());
 		
+	
 		
 	} 
 
