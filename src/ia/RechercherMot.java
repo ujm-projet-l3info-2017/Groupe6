@@ -154,8 +154,8 @@ public class RechercherMot
 	 */
 	protected String analysePhrase(String message)
 	{
-		//On transforme la phrase en tableau de mots
-		String[] phrase = message.split(" ");
+		String m = message.toLowerCase();
+		String[] phrase = m.split(" ");
 		
 		String p = "";
 		
@@ -164,8 +164,8 @@ public class RechercherMot
 		{
 			String motCourant = phrase[i];
 			
-			//Si la taille du mot > 3 lettre et le premier caractere n'est pas une majuscule on corrige le mot
-			if(motCourant.length()>3 && !(motCourant.substring(0, 1).matches("[A-Z]")))
+			//Si la taille du mot > 3 lettre
+			if(motCourant.length()>3)
 			{
 				//Si le mot est juste
 				if (dicoFrancais.contains(motCourant))
