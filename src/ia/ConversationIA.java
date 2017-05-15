@@ -62,7 +62,6 @@ public class ConversationIA
 
 
 	
-	
 	public String executerProchaineEtape()
 	{
 		switch (prochaineEtape)
@@ -203,7 +202,7 @@ public class ConversationIA
 						titreFilm = tirageAleatoire(ParseurAllocine.recupererFilms(true));
 					
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return ReponseAleatoire.proposeLeFilm()+titreFilm+" "+ReponseAleatoire.connaisQuestion2();
+					return ReponseAleatoire.proposeLeFilm(titreFilm)+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
 				{
@@ -214,7 +213,7 @@ public class ConversationIA
 					{
 						titreFilm = tirageAleatoire(ParseurAllocine.recupererFilms(s_genre));
 						prochaineEtape = Etape.CONNAIT_OU_PAS;
-						return ReponseAleatoire.proposeLeFilm()+titreFilm+". "+ReponseAleatoire.connaisQuestion2();
+						return ReponseAleatoire.proposeLeFilm(titreFilm)+" "+ReponseAleatoire.connaisQuestion2();
 					}
 					else 
 					{
@@ -235,7 +234,7 @@ public class ConversationIA
 					s_realisateur = Reconnaissance.acteurRealisateur(messageOrigine);
 					titreFilm = tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur));
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return ReponseAleatoire.proposeLeFilm()+titreFilm+" "+ReponseAleatoire.connaisQuestion2();
+					return ReponseAleatoire.proposeLeFilm(titreFilm)+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==1)
 				{
@@ -247,7 +246,7 @@ public class ConversationIA
 					b_realisateur = true;
 					titreFilm = tirageAleatoire(ParseurAllocine.recupererFilms());
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return ReponseAleatoire.proposeLeFilm()+titreFilm+" "+ReponseAleatoire.connaisQuestion2();
+					return ReponseAleatoire.proposeLeFilm(titreFilm)+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else 
 				{
@@ -267,7 +266,7 @@ public class ConversationIA
 				//Aie aie aie, l'utilisateur connait le film qu'on lui a proposé
 				film = chercherFilmAvecMemeCaracteristiques();
 				titreFilm = film.titre();
-				return "Je te propose le film "+film.titre()+". Tu le connais celui la ?";
+				return ReponseAleatoire.proposeLeFilmMemeCritere(titreFilm)+". Tu le connais celui la ?";
 			}
 			else
 			{
@@ -385,6 +384,7 @@ public class ConversationIA
 		else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvÃ©
 		{
 			film = Reconnaissance.avisFilm(messageCorrige);
+			titreFilm = film.titre();
 			b_film = true;
 			prochaineEtape = Etape.AVIS;
 			return ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
