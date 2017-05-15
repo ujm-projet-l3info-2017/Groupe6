@@ -159,7 +159,7 @@ public class ConversationIA
 				}
 				else 
 				{
-					return "Je n'ai pas compris.";
+					return ReponseAleatoire.incomprehension();
 				}
 			}
 			
