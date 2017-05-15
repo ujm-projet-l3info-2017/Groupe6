@@ -37,7 +37,7 @@ public class Film
 		}
 		catch (AllocineException e)
 		{
-			logger.error("GestionAllocine","Les informations du film n'ont pas été trouvées");
+			logger.error( "Les informations du film n'ont pas été trouvées");
 		}
 	}
 	
@@ -79,7 +79,7 @@ public class Film
 		}
 		catch (Exception e)
 		{
-			logger.error("GestionAllocine","Affiche du film non trouvé");
+			logger.error("Affiche du film non trouvé");
 		}
 		return null;
     }
@@ -95,7 +95,7 @@ public class Film
     	}
     	catch (Exception e)
     	{
-    		logger.error("GestionAllocine","Impossible de trouvé les acteurs de ce film");
+    		logger.error("Impossible de trouvé les acteurs de ce film");
     	}
 		return null;
     }
@@ -128,7 +128,7 @@ public class Film
     	}
     	catch (Exception e)
     	{
-    		logger.error("GestionAllocine","Note de la presse non disponible");
+    		logger.error("Note de la presse non disponible");
     	}
     	return -1;
     }
@@ -144,7 +144,7 @@ public class Film
     	}
     	catch (Exception e)
     	{
-    		logger.error("GestionAllocine","Note de la presse non disponible");
+    		logger.error("Note de la presse non disponible");
     	}
     	return -1;
     }
