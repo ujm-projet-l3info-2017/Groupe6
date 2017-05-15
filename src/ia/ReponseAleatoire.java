@@ -145,7 +145,7 @@ public class ReponseAleatoire
     {
 		String[] choix = {
 				"Tu veux regarder quel genre de film ?",
-				"Tu préfères les films d'action ?, d'aventure ?, romantique ? ...",
+				"Il y a un genre de film en particulier que tu voudrais voir ?",
 				"Quel genre de film préfères-tu ?",
 				"As-tu un genre favori ?",
 				"Quel genre de film ?"};
