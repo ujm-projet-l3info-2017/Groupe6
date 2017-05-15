@@ -50,7 +50,7 @@ form
 	<div class="section">
 		<h1>Connexion Administration</h1>
 	
-		<form action="${pageContext.request.contextPath}/Admin" method="get">
+		<form action="${pageContext.request.contextPath}/Admin" method="post">
 			<label> <b>Code d'accès:</b> <input type="text" name="code" id="code"/></label>
 			<input class="bouton" type="submit" value="Envoyer"/> 
 		</form>
