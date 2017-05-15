@@ -73,7 +73,7 @@ public class ConversationIA
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.bonjour() + " " + nom + "." +ReponseAleatoire.jeConnaisFilm()+" Qu'est ce que tu veux savoir ?";
+				return ReponseAleatoire.bonjour() + " " + nom + "." +ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
@@ -103,7 +103,7 @@ public class ConversationIA
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.jeConnaisFilm()+" Qu'est ce que tu veux savoir ?";
+				return ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
@@ -129,25 +129,25 @@ public class ConversationIA
 				film = Reconnaissance.reconnaitreFilm(messageCorrige);
 				if (film == null)
 				{
-					return "J'ai pas compris de quel film tu me parles";
+					return "J'ai pas compris de quel film tu me parles.";
 				}
 				else 
 				{
 					b_film = true;
-					return "Que veux tu savoir sur ce film ?";
+					return "Que veux-tu savoir sur ce film ?";
 				}
 			}
 			//Il a fixé un film
 			if(b_film)
 			{
 				if (Reconnaissance.realisateur(messageCorrige))
-					return "Ce film a été réalisé par "+film.realisateur();
+					return "Ce film a été réalisé par "+film.realisateur()+".";
 				
 				if (Reconnaissance.affiche(messageCorrige))
 					return "Voici l'affiche de ce film : "+film.affiche();
 				
 				if (Reconnaissance.annee(messageCorrige))
-					return "Ce film est sorti en "+film.affiche();
+					return "Ce film est sorti en "+film.affiche()+".";
 				
 				if (Reconnaissance.acteurs(messageCorrige))
 				{
@@ -162,9 +162,9 @@ public class ConversationIA
 				{
 					String genre = film.genres().get(0);
 					if (genre.charAt(0)=='a' || genre.charAt(0)=='h' || genre.charAt(0)=='é')
-						return "C'est un film d'"+genre;
+						return "C'est un film d'"+genre+".";
 					else 
-						return "C'est un film de "+genre;
+						return "C'est un film de "+genre+".";
 				}
 				
 				if (Reconnaissance.synopsis(messageCorrige))
@@ -198,7 +198,7 @@ public class ConversationIA
 				}
 				else 
 				{
-					return "Je n'ai pas compris";
+					return "Je n'ai pas compris.";
 				}
 			}
 			
@@ -330,7 +330,7 @@ public class ConversationIA
 			}
 			else 
 			{
-				return "Je peux te donner le synopsis, te dire ce que les gens en ont pensé, les acteurs principaux ...";
+				return "Je peux te donner le synopsis, te dire ce que j'en ai pensé, les acteurs principaux ...";
 			}
 			
 			
