@@ -1,5 +1,6 @@
 package ia;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -73,7 +74,7 @@ public class ConversationIA
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return salut.aleatoire() + " " + nom + ". " +ReponseAleatoire.jeConnaisFilm();
+				return salut.aleatoire() + " " + nom + ". " +ReponseAleatoire.jeConnaisFilm()+" Qu'est ce que tu veux savoir ?";
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
@@ -103,7 +104,7 @@ public class ConversationIA
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.jeConnaisFilm();
+				return ReponseAleatoire.jeConnaisFilm()+" Qu'est ce que tu veux savoir ?";
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
@@ -126,12 +127,55 @@ public class ConversationIA
 			//Il veut un avis mais il n'a pas fixé de film
 			if(!b_film)
 			{
-				return ReponseAleatoire.avisSurQuelFilm();
+				film = Reconnaissance.reconnaitreFilm(messageCorrige);
+				if (film == null)
+				{
+					return "J'ai pas compris de quel film tu me parles";
+				}
+				else 
+				{
+					b_film = true;
+					return "Que veux tu savoir sur ce film ?";
+				}
 			}
 			//Il a fixé un film
 			if(b_film)
 			{
+				if (Reconnaissance.realisateur(messageCorrige))
+					return "Ce film a été réalisé par "+film.realisateur();
 				
+				if (Reconnaissance.affiche(messageCorrige))
+					return "Voici l'affiche de ce film : "+film.affiche();
+				
+				if (Reconnaissance.annee(messageCorrige))
+					return "Ce film est sorti en "+film.affiche();
+				
+				if (Reconnaissance.acteurs(messageCorrige))
+				{
+					List<String> acteurs = film.acteursPrincipaux();
+					if (acteurs != null)
+						return "Les acteurs principaux sont "+acteurs.get(0)+ " et "+acteurs.get(1)+".";
+					else 
+						return "Je ne me rappelle plus des acteurs de ce film, désolé ...";
+				}
+				
+				if (Reconnaissance.leGenre(messageCorrige))
+				{
+					String genre = film.genres().get(0);
+					if (genre.charAt(0)=='a' || genre.charAt(0)=='h' || genre.charAt(0)=='é')
+						return "C'est un film d'"+genre;
+					else 
+						return "C'est un film de "+genre;
+				}
+				
+				if (Reconnaissance.synopsis(messageCorrige))
+				{
+					String synopsis = film.synopsis();
+					if (synopsis == null)
+						return "Je ne me souviens plus de l'histoire exacte, je te laisse le regarder.";
+					else 
+						return synopsis;
+				}
 			}
 			
 			//On dit qui est le rÃ©alisateur et on met l'affiche, qui joue dedans etc.
@@ -247,10 +291,28 @@ public class ConversationIA
 			else
 			{
 				film = RechercheAllocine.film(titreFilm); //On crée l'objet Film uniquement si on va en avoir bespon
-				prochaineEtape = Etape.AVIS;
+				prochaineEtape = Etape.VOULOIR_INFOS;
 				return "Est ce que tu veux des informations sur ce film ?";
 			}
 			
+		case VOULOIR_INFOS :
+			
+			if (Reconnaissance.ouiOuNon(messageCorrige) == 1)
+			{
+				//L'utilisateur veut des infos, on passe dans l'état AVIS
+				prochaineEtape = Etape.AVIS;
+				return "Qu'est ce que tu veux savoir ?";
+			}
+			else if (Reconnaissance.ouiOuNon(messageCorrige) == 2)
+			{
+				//L'utilisateur veut pas en sevoir plus
+				prochaineEtape = Etape.DEBUT;
+				return "Si tu as besoin d'autre chose, n'hésite pas...";
+			}
+			else 
+			{
+				return "Je peux te donner le synopsis, te dire ce que les gens en ont pensé, les acteurs principaux ...";
+			}
 			
 			
 			

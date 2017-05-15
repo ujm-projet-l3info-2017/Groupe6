@@ -69,6 +69,10 @@ public class Reconnaissance
 		{
 			return RechercheAllocine.film(phrase.split("entendu parler de ")[1]);
 		}
+		else if (phrase.contains("as vu"))
+		{
+			return RechercheAllocine.film(phrase.split("as vu ")[1]);
+		}
 		else return null;
 	}
 	
