@@ -379,6 +379,7 @@ public class ConversationIA
 	{
 		if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
 		{
+			prochaineEtape = Etape.DEBUT;
 			return ReponseAleatoire.queVeuxTu();
 		} 
 		else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvé
@@ -400,6 +401,7 @@ public class ConversationIA
 		} 
 		else // Si rien n'est reconnu
 		{
+			prochaineEtape = Etape.DEBUT;
 			return ReponseAleatoire.queVeuxTu();
 		}
 	}
