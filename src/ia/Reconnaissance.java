@@ -1,6 +1,7 @@
 package ia;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -141,11 +142,41 @@ public class Reconnaissance
 		return 2;
 	}
 	
+	/**
+	 *  Charge le fichier de dictionnaire des genres, en essayant plusieurs répertoires
+	 * @return
+	 */
+	public static FileReader chargerGenre()
+	{
+		try
+		{
+			FileReader f = new FileReader("./src/ia/dicoGenre.txt");
+			if(f != null)
+			{
+				return f;
+			}
+		}
+		catch(FileNotFoundException e)
+		{
+			try
+			{
+				//Pour le serveur
+				return new FileReader("/var/lib/tomcat8/webapps/razbot/WEB-INF/classes/ia/dicoGenre.txt");
+			}
+			catch (FileNotFoundException e1)
+			{
+				logger.error("Impossible de trouver le dictionnaire des genres");
+				logger.catching(e1);
+			}
+		}
+		return null;
+	}
+	
 	public static String genre(String phrase)
 	{
 		try
 		{
-			FileReader f = new FileReader("./dicoGenre.txt");
+			FileReader f = chargerGenre();
 			BufferedReader br = new BufferedReader(f);
 			String line;
 			while ((line = br.readLine()) != null)
@@ -160,10 +191,9 @@ public class Reconnaissance
 			br.close();
 			f.close();
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
-			logger.error("Erreur lors de l'ouverture du dictionnaire");
-			return null;
+			logger.catching(e);
 		}
 		return null;
 	}
