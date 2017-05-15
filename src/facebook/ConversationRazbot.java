@@ -77,7 +77,7 @@ public class ConversationRazbot
 		}
 		catch (JSONException e)
 		{
-			e.printStackTrace();
+			logger.catching(e);
 		}
 	}
 
