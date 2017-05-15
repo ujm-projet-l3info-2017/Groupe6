@@ -11,10 +11,10 @@ import com.moviejukebox.allocine.AllocineException;
 import facebook4j.FacebookException;
 import facebook4j.internal.org.json.JSONException;
 
-public class Main 
+public class TestAPIAllocine 
 {
 	//Initialisation du log
-	static final Logger logger = LogManager.getLogger(allocine.Main.class.getName());
+	static final Logger logger = LogManager.getLogger(TestAPIAllocine.class.getName());
 
 	/**
 	 * @param args String[]
