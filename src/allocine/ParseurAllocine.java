@@ -77,7 +77,8 @@ public class ParseurAllocine
 			Elements films = film.select(".meta-title-link");
 			for (int i=0; i<films.size();i++)
 			{
-				liste.add(films.get(i).text());
+				if (films.get(i).attr("href").contains("film"))
+					liste.add(films.get(i).text());
 			}
 			return liste;
 		} 
@@ -206,7 +207,9 @@ public class ParseurAllocine
 			param+="23";
 		if (genre.contains("western"))
 			param+="19";
-			
+		if (genre.contains("horreur") || genre.contains("epouvant"))
+			param+="09";
+		
 		return param+"/";
 	}
 
