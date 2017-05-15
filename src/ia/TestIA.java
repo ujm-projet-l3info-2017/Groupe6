@@ -3,16 +3,19 @@ package ia;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Hashtable;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TestIA
 {
+	//Initialisation du log
+	static final Logger logger = LogManager.getLogger(TestIA.class.getName());
 
 	public static void main(String[] args)
 	{
-		Hashtable<String,ConversationIA> conversationsIA = new Hashtable<>();
+		//Initialisation de l'IA de la conversation
 		ConversationIA convIA = new ConversationIA("Jacquie");
-		conversationsIA.put("a", convIA);
 		String message = "Salut";
 		String reponse;
 		
@@ -20,8 +23,10 @@ public class TestIA
 
 	    try
 	    {
+	    	//Initialisation du flux entrant
 	        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 	       
+	        //Boucle de la conversation
 	        for(;;)
 			{
 	        	System.out.print("(Moi) : ");
@@ -32,7 +37,7 @@ public class TestIA
 	    }
 	    catch(IOException e)
 	    {
-	        e.printStackTrace();
+	        logger.catching(e);
 	    }
 		
 	}
