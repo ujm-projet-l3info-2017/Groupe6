@@ -35,7 +35,7 @@ public class ConversationIA
 
 	public ConversationIA(String nom)
 	{
-		this.nom = nom;
+		this.nom = nom.split(" ")[0]; //Le prénom
 		b_realisateur = false;
 		b_recent = false;
 		b_genre = false;
@@ -53,6 +53,7 @@ public class ConversationIA
 		recherche = new RechercherMot();
 		messageCorrige = recherche.analysePhrase(message);
 		messageOrigine = message;
+		System.out.println(messageCorrige);
 		if (Reconnaissance.sortie(messageCorrige))
 		{
 			reset();
@@ -73,10 +74,13 @@ public class ConversationIA
 				
 		case DEBUT:
 			
-			return depart(messageCorrige);
+			if (Reconnaissance.merci(messageCorrige))
+				return "Je t'en prie !";
+			else
+				return depart(messageCorrige);
 				
 		case AVIS:
-			//Il veut un avis mais il n'a pas fixé de film
+
 			if(!b_film)
 			{
 				film = Reconnaissance.reconnaitreFilm(messageOrigine);
@@ -156,6 +160,13 @@ public class ConversationIA
 						return ReponseAleatoire.jaimePas();
 					}
 					return ReponseAleatoire.jeDeteste();
+					
+				}
+				else if (Reconnaissance.merci(messageCorrige))
+				{
+					prochaineEtape = Etape.AUTRE_CHOSE;
+					
+					return "Je t'en prie. Tu as besoin d'autre chose ?"; 
 				}
 				else 
 				{
@@ -265,9 +276,26 @@ public class ConversationIA
 			if (Reconnaissance.ouiOuNon(messageCorrige) == 1)
 			{
 				//Aie aie aie, l'utilisateur connait le film qu'on lui a proposé
-				film = chercherFilmAvecMemeCaracteristiques();
-				titreFilm = film.titre();
-				return ReponseAleatoire.proposeLeFilmMemeCritere(titreFilm)+". Tu le connais celui la ?";
+				if (s_genre != "" || s_recent)
+				{
+					film = chercherFilmAvecMemeCaracteristiques();
+					titreFilm = film.titre();
+					if (s_genre != "")
+						return ReponseAleatoire.proposeLeFilmMemeCritere(titreFilm)+". Tu le connais celui la ?";
+					else return ReponseAleatoire.proposeLeFilmMemeEpoque(titreFilm)+". Tu l'as vu lui ?";
+				}
+				else if (s_realisateur != null) 
+				{
+					titreFilm = tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur));
+					film = RechercheAllocine.film(titreFilm);
+					return ReponseAleatoire.proposeLeFilm(titreFilm)+". Tu le connais celui la ?";
+				}
+				else 
+				{
+					titreFilm = tirageAleatoire(ParseurAllocine.recupererFilms());
+					film = RechercheAllocine.film(titreFilm);
+					return ReponseAleatoire.proposeLeFilm(titreFilm)+". Tu le connais celui la ?";
+				}
 			}
 			else
 			{
@@ -290,18 +318,39 @@ public class ConversationIA
 			{
 				//L'utilisateur veut pas en sevoir plus
 				prochaineEtape = Etape.DEBUT;
+				effacerPreference();
 				return "Si tu as besoin d'autre chose, n'hésite pas...";
 			}
 			else 
 			{
-				return "Je peux te donner le synopsis, te dire ce que j'en ai pensé, les acteurs principaux ...";
+				return "Tu veux des infos sur "+titreFilm+" ?";
 			}
 			
+		case AUTRE_CHOSE :
+			
+			if (Reconnaissance.ouiOuNon(messageCorrige)==1)
+			{
+				prochaineEtape = Etape.DEBUT;
+				effacerPreference();
+				return "Dis moi tout.";
+			}
+			else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
+			{
+				prochaineEtape = Etape.DEBUT;
+				effacerPreference();
+				return "Ok très bien. Je suis là si tu as besoin de moi.";
+			}
 			
 		default:
 			logger.error("Etape non reconnue");
 			return null;
 		}
+	}
+
+	private void effacerPreference()
+	{
+		b_genre=false; b_film=false; b_realisateur=false; b_recent=false;
+		s_genre=""; s_realisateur=""; s_recent=false;
 	}
 
 	public String tirageAleatoire(List<String> films)
@@ -351,26 +400,13 @@ public class ConversationIA
 			}
 			else 
 			{
-				if (s_realisateur != null)
+				Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
+				while (f.code() == leFilmActuel.code())
 				{
-					Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
-					while (f.code() == leFilmActuel.code())
-					{
-						//Tant qu'il est pas différent de celui d'avant
-						f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
-					}
-					return f;
+					//Tant qu'il est pas différent de celui d'avant
+					f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
 				}
-				else
-				{
-					Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
-					while (f.code() == leFilmActuel.code())
-					{
-						//Tant qu'il est pas différent de celui d'avant
-						f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
-					}
-					return f;
-				}
+				return f;
 			}
 		}
 	}
