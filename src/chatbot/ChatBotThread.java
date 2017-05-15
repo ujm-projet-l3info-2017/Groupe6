@@ -46,13 +46,11 @@ public class ChatBotThread extends Thread
 		{
 			if(Token.isWebhookEnable())
 			{
-				logger.info("Mode WebHook");
 				// Méthode par webhook
 				gestionMessagesWebhook();
 			}
 			else
 			{
-				logger.info("Mode vérification ");
 				// Méthode récupération par interval de temps
 				gestionMessagesInterval();
 			}
