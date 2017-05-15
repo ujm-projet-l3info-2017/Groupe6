@@ -176,13 +176,26 @@ public class ConversationIA
 					else 
 						return synopsis;
 				}
+				
+				if (Reconnaissance.bien(messageCorrige))
+				{
+					if (film.note_public() > 4)
+					{
+						return "Oui ce film est vraiment génial !";
+					}
+					if (film.note_presse() < 3)
+					{
+						return "La presse ne lui a pas donné de bonnes notes, moi je l'ai bien aimé, mais ce n'est que mon avis...";
+					}
+					else
+						return "Oui ça va, c'est pas un chef d'oeuvre mais on passe un bon moment";
+				}
+				else 
+				{
+					return "Je n'ai pas compris";
+				}
 			}
 			
-			//On dit qui est le rÃ©alisateur et on met l'affiche, qui joue dedans etc.
-			
-			//Avis en fonction de la note des utilisateurs et de la presse
-			
-			break;
 			
 		case PROPOSITION:
 			
@@ -464,7 +477,6 @@ public class ConversationIA
 			logger.error("IA", "Etape non reconnue");
 			return null;
 		}
-		return null;
 	}
 
 	public String tirageAleatoire(List<String> films)
