@@ -19,20 +19,17 @@ public class ConversationIA_V2
 	private String nom; // Nom de l'utilisateur
 	private Etape prochaineEtape; // Prochaine Ã©tape Ã  lancer
 	private RechercherMot recherche; // Pour rechercher des mots dans le message
-	private ArrayList<String> motTrouves; // Liste des mots clÃ©s du message
 	private String messageCorrige; // Message aprÃ¨s passage par le dictionnaire
 	private String messageOrigine; //Message sans correction
 	
 	//Pour proposition
-	private boolean b_realisateur, b_acteur, b_recent, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
-	private boolean proposition, satisfaction, retour; // Sous-Ã©tapes
+	private boolean b_realisateur, b_recent, b_genre; // Devient false si l'utilisateur ne s'y interesse pas
 	
 	//Est-ce qu'on a fixé un film sur lequel donner son avis?
 	private boolean b_film;
 	
-	private String s_realisateur, s_acteur, s_genre; // Contient les choix de l'utilisateur
+	private String s_realisateur, s_genre, titreFilm; // Contient les choix de l'utilisateur
 	private boolean s_recent;
-	private List<String> liste; // Liste de films trouvÃ©s
 	//private String film; // Film selectionnÃ©
 	private Film film; //le film dont on est en train de parler 
 
@@ -40,15 +37,11 @@ public class ConversationIA_V2
 	{
 		this.nom = nom;
 		b_realisateur = false;
-		b_acteur = false;
 		b_recent = false;
 		b_genre = false;
-		proposition = false;
-		satisfaction = false;
-		retour = false;
 		b_film = false;
 		s_realisateur = "";
-		s_acteur = "";
+		titreFilm = "";
 		s_recent = false;
 		s_genre = "";
 		film = null;
@@ -57,10 +50,8 @@ public class ConversationIA_V2
 
 	public String traitementMessage(String message)
 	{
-		motTrouves = new ArrayList<String>();
 		recherche = new RechercherMot();
 		messageCorrige = recherche.analysePhrase(message);
-		motTrouves = recherche.chercherMotsCles(messageCorrige);
 		messageOrigine = message;
 
 		return executerProchaineEtape();
@@ -97,6 +88,7 @@ public class ConversationIA_V2
 			} 
 			else // Si rien n'est reconnu
 			{
+				prochaineEtape = Etape.DEBUT;
 				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.queVeuxTu();
 			}
 		
@@ -183,12 +175,12 @@ public class ConversationIA_V2
 					s_recent = true;
 					b_recent = true;
 					if (s_genre != "")
-						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre, true)));
+						titreFilm = tirageAleatoire(ParseurAllocine.recupererFilms(s_genre, true));
 					else 
-						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
+						titreFilm = tirageAleatoire(ParseurAllocine.recupererFilms(true));
 					
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return ReponseAleatoire.proposeLeFilm()+film.titre()+" "+ReponseAleatoire.connaisQuestion2();
+					return ReponseAleatoire.proposeLeFilm()+titreFilm+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
 				{
@@ -197,9 +189,9 @@ public class ConversationIA_V2
 					b_recent = true;
 					if (s_genre != "")
 					{
-						film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre)));
+						titreFilm = tirageAleatoire(ParseurAllocine.recupererFilms(s_genre));
 						prochaineEtape = Etape.CONNAIT_OU_PAS;
-						return ReponseAleatoire.proposeLeFilm()+film.titre()+" "+ReponseAleatoire.connaisQuestion2();
+						return ReponseAleatoire.proposeLeFilm()+titreFilm+". "+ReponseAleatoire.connaisQuestion2();
 					}
 					else 
 					{
@@ -213,14 +205,14 @@ public class ConversationIA_V2
 			}
 			if (! b_realisateur)
 			{
-				if (Reconnaissance.acteurRealisateur(messageCorrige)!= null)
+				if (Reconnaissance.acteurRealisateur(messageOrigine)!= null)
 				{
 					//On a trouvé un réalisateur ou un acteur qui existe
 					b_realisateur = true;
-					s_realisateur = Reconnaissance.acteurRealisateur(messageCorrige);
-					film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
+					s_realisateur = Reconnaissance.acteurRealisateur(messageOrigine);
+					titreFilm = tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur));
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return ReponseAleatoire.proposeLeFilm()+film.titre()+" "+ReponseAleatoire.connaisQuestion2();
+					return ReponseAleatoire.proposeLeFilm()+titreFilm+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==1)
 				{
@@ -230,9 +222,9 @@ public class ConversationIA_V2
 				else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
 				{
 					b_realisateur = true;
-					film = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
+					titreFilm = tirageAleatoire(ParseurAllocine.recupererFilms());
 					prochaineEtape = Etape.CONNAIT_OU_PAS;
-					return ReponseAleatoire.proposeLeFilm()+film.titre()+" "+ReponseAleatoire.connaisQuestion2();
+					return ReponseAleatoire.proposeLeFilm()+titreFilm+" "+ReponseAleatoire.connaisQuestion2();
 				}
 				else 
 				{
@@ -247,6 +239,18 @@ public class ConversationIA_V2
 		
 		case CONNAIT_OU_PAS :
 			
+			if (Reconnaissance.ouiOuNon(messageCorrige) == 1)
+			{
+				//Aie aie aie, l'utilisateur connait le film qu'on lui a proposé
+				film = chercherFilmAvecMemeCaracteristiques();
+				return "Je te propose le film "+film.titre()+". Tu le connais celui la ?";
+			}
+			else
+			{
+				film = RechercheAllocine.film(titreFilm); //On crée l'objet Film uniquement si on va en avoir bespon
+				prochaineEtape = Etape.AVIS;
+				return "Est ce que tu veux des informations sur ce film ?";
+			}
 			
 			
 			
@@ -395,7 +399,6 @@ public class ConversationIA_V2
 //				Recommandation recom = new Recommandation();
 //				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÃ©jÃ  vu ?";
 //			}
-			return "Je n'ai pas compris, pouvez-vous reformuler ?";
 		default:
 			logger.error("IA", "Etape non reconnue");
 			return null;
@@ -408,5 +411,69 @@ public class ConversationIA_V2
 		Random rand = new Random();
 		int nbAleatoire = rand.nextInt(films.size());
 		return films.get(nbAleatoire);
+	}
+	
+	private Film chercherFilmAvecMemeCaracteristiques()
+	{
+		Film leFilmActuel = RechercheAllocine.film(titreFilm);
+		if (s_genre != null)
+		{
+			if (s_recent)
+			{
+				Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre, true)));
+				while (f.code() == leFilmActuel.code())
+				{
+					//Tant qu'il est pas différent de celui d'avant
+					f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre, true)));
+				}
+				return f;			
+			}
+			else 
+			{
+				Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre)));
+				while (f.code() == leFilmActuel.code())
+				{
+					//Tant qu'il est pas différent de celui d'avant
+					f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(s_genre)));
+				}
+				return f;
+			}
+		}
+		else 
+		{
+			if (s_recent)
+			{
+				Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
+				while (f.code() == leFilmActuel.code())
+				{
+					//Tant qu'il est pas différent de celui d'avant
+					f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms(true)));
+				}
+				return f;			
+			}
+			else 
+			{
+				if (s_realisateur != null)
+				{
+					Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
+					while (f.code() == leFilmActuel.code())
+					{
+						//Tant qu'il est pas différent de celui d'avant
+						f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.chercherFilmDePersonne(s_realisateur)));
+					}
+					return f;
+				}
+				else
+				{
+					Film f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
+					while (f.code() == leFilmActuel.code())
+					{
+						//Tant qu'il est pas différent de celui d'avant
+						f = RechercheAllocine.film(tirageAleatoire(ParseurAllocine.recupererFilms()));
+					}
+					return f;
+				}
+			}
+		}
 	}
 }

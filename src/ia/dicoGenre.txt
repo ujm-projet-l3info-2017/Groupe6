@@ -20,3 +20,5 @@ science
 fiction
 thriller
 western
+horreur
+epouvante

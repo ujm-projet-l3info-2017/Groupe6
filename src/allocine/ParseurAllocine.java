@@ -77,7 +77,8 @@ public class ParseurAllocine
 			Elements films = film.select(".meta-title-link");
 			for (int i=0; i<films.size();i++)
 			{
-				liste.add(films.get(i).text());
+				if (films.get(i).attr("href").contains("film"))
+					liste.add(films.get(i).text());
 			}
 			return liste;
 		} 
@@ -130,11 +131,13 @@ public class ParseurAllocine
 		try
 		{
 			Document doc = Jsoup.connect(url).get(); //On récupère le code de la page
-			Elements links = doc.select("a"); //On récupère les balises sur lesquels il y a les films
+			Elements doc1 = doc.select(".col-left");
+			Elements links = doc1.select("a"); //On récupère les balises sur lesquels il y a les films
 			Elements liste_films = links.select(".meta-title-link");
 			for (int i=0; i<liste_films.size();i++)
 			{
-				films.add(liste_films.get(i).text());
+				if (liste_films.get(i).attr("href").contains("film"))
+					films.add(liste_films.get(i).text());
 			}
 			return films;
 		} 
@@ -204,7 +207,9 @@ public class ParseurAllocine
 			param+="23";
 		if (genre.contains("western"))
 			param+="19";
-			
+		if (genre.contains("horreur") || genre.contains("epouvant"))
+			param+="09";
+		
 		return param+"/";
 	}
 
