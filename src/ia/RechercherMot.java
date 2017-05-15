@@ -33,24 +33,24 @@ public class RechercherMot
 	 */
 	public RechercherMot()
 	{
-		dicoFrancais = this.chargementDico("./dicoFrancais.txt");
-		dicoMotsCles = this.chargementDico("./dicoMotsCles.txt");
-		dicoGenre = this.chargementDico("./dicoGenre.txt");
-		dicoPrenomFeminin = this.chargementDico("./dicoPrenomFeminin.txt");
-		dicoPrenomMasculin = this.chargementDico("./dicoPrenomMasculin.txt");
+		dicoFrancais = this.chargementDico("./src/ia/","dicoFrancais.txt");
+		dicoMotsCles = this.chargementDico("./src/ia/","dicoMotsCles.txt");
+		dicoGenre = this.chargementDico("./src/ia/","dicoGenre.txt");
+		dicoPrenomFeminin = this.chargementDico("./src/ia/","dicoPrenomFeminin.txt");
+		dicoPrenomMasculin = this.chargementDico("./src/ia/","dicoPrenomMasculin.txt");
 	}
 	
 	/**
 	 * Permet de charger le dictionnaire dans une ArrayList
+	 * @throws IOException 
 	 * 
 	 */
-	private ArrayList<String> chargementDico(String chemin)
+	private ArrayList<String> chargementDico(String chemin, String nom)
 	{
 		ArrayList<String> dico = new ArrayList<String>();
 		try
 		{
-
-			FileReader f = new FileReader(chemin);
+			FileReader f = new FileReader(chemin+nom);
 			BufferedReader br = new BufferedReader(f);
 			String line;
 			dico = new ArrayList<>();
@@ -60,9 +60,15 @@ public class RechercherMot
 			}
 			br.close();
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
-			logger.error("Erreur lors de l'ouverture du dictionnaire");
+			//On essaye avec un autre chemin
+			if(chemin.compareTo("./WEB-INF/classes/ia/")!=0)
+			{
+				chargementDico("./WEB-INF/classes/ia/", nom);
+			}
+			else
+				logger.catching(e);
 		}
 		return dico;
 	}
@@ -222,6 +228,7 @@ public class RechercherMot
 		p = p.replace('â', 'a');
 		p = p.replace('û', 'u');
 		p = p.replace('ô', 'o');
+		p = p.replace('ç', 'c');
 		
 		return p;
 	}
