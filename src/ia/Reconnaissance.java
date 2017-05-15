@@ -325,7 +325,7 @@ public class Reconnaissance
 	public static boolean bien(String phrase)
 	{
 		
-		if (question(phrase) && (phrase.contains("bien") || phrase.contains("aimé")))
+		if (question(phrase) && (phrase.contains("bien") || phrase.contains("aime")))
 			return true;
 		else return false;
 	}
