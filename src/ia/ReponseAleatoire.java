@@ -248,7 +248,7 @@ public class ReponseAleatoire
 	{
 		String[] choix = {
 				"Il y a un réalisateur, un acteur que tu aimes bien ?",
-				"Tu préfére une réalisateur ou un acteur particulier ?",
+				"Tu préfére un réalisateur ou un acteur particulier ?",
 				"Des préférences sur un réalisateur ou un acteur ?"};
 
     	return aleatoireTableau(choix);
