@@ -60,71 +60,21 @@ public class ConversationIA
 		return executerProchaineEtape();
 	}
 
+
+	
+	
 	public String executerProchaineEtape()
 	{
 		switch (prochaineEtape)
 		{
 		case SALUTATION:  //Première étape. Lors du premier message de l'utilisateur, on dit bonjour
 			
-			if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
-			{
-				prochaineEtape = Etape.DEBUT;
-				return ReponseAleatoire.bonjour() + " " + nom + ".";
-			} 
-			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvé
-			{
-				film = Reconnaissance.avisFilm(messageCorrige);
-				b_film = true;
-				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.bonjour() + " " + nom + ". " +ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
-			} 
-			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
-			{
-				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.bonjour() + " " + nom + ". " + ReponseAleatoire.avisSurQuelFilm();
-			} 
-			else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
-			{
-				prochaineEtape = Etape.PROPOSITION;
-				return ReponseAleatoire.bonjour() + " " + nom + ". " + ReponseAleatoire.questionGenre();
-			} 
-			else // Si rien n'est reconnu
-			{
-				prochaineEtape = Etape.DEBUT;
-				return ReponseAleatoire.bonjour() + " " + nom + ". " + ReponseAleatoire.queVeuxTu();
-			}
-		
-			
+			return ReponseAleatoire.bonjour() + " " + nom + ". " + depart(messageCorrige);
+				
 		case DEBUT:
 			
-			if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
-			{
-				return ReponseAleatoire.queVeuxTu();
-			} 
-			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvé
-			{
-				film = Reconnaissance.avisFilm(messageCorrige);
-				b_film = true;
-				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
-			} 
-			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
-			{
-				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.avisSurQuelFilm();
-			} 
-			else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
-			{
-				prochaineEtape = Etape.PROPOSITION;
-				return ReponseAleatoire.questionGenre();
-			} 
-			else // Si rien n'est reconnu
-			{
-				return ReponseAleatoire.queVeuxTu();
-			}
-			
-			
-			
+			return depart(messageCorrige);
+				
 		case AVIS:
 			//Il veut un avis mais il n'a pas fix� de film
 			if(!b_film)
@@ -164,7 +114,7 @@ public class ConversationIA
 				if (Reconnaissance.leGenre(messageCorrige))
 				{
 					String genre = film.genres().get(0);
-					if (genre.charAt(0)=='a' || genre.charAt(0)=='h' || genre.charAt(0)=='�')
+					if (genre.charAt(0)=='a' || genre.charAt(0)=='h' || genre.charAt(0)=='e')
 						return "C'est un film d'"+genre+".";
 					else 
 						return "C'est un film de "+genre+".";
@@ -412,6 +362,35 @@ public class ConversationIA
 					return f;
 				}
 			}
+		}
+	}
+	
+	public String depart(String messageCorrige)
+	{
+		if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
+		{
+			return ReponseAleatoire.queVeuxTu();
+		} 
+		else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvé
+		{
+			film = Reconnaissance.avisFilm(messageCorrige);
+			b_film = true;
+			prochaineEtape = Etape.AVIS;
+			return ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
+		} 
+		else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
+		{
+			prochaineEtape = Etape.AVIS;
+			return ReponseAleatoire.avisSurQuelFilm();
+		} 
+		else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
+		{
+			prochaineEtape = Etape.PROPOSITION;
+			return ReponseAleatoire.questionGenre();
+		} 
+		else // Si rien n'est reconnu
+		{
+			return ReponseAleatoire.queVeuxTu();
 		}
 	}
 }

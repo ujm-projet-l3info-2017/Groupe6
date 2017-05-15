@@ -44,7 +44,7 @@ public class Reconnaissance
 	public static boolean recherche(String phrase)
 	{
 		//Le mot film précédé d'un article INDEFINI signifie qu'il cherche un film qu'il ne connait pas
-		if (phrase.contains("un film") || phrase.contains("des film") || phrase.contains("cherche") || (phrase.contains("veu") && phrase.contains("regarde")) || phrase.contains("conseil"))
+		if (phrase.contains("un film") || phrase.contains("des film") || phrase.contains("cherche") || (phrase.contains("veu") && phrase.contains("regarde")) || phrase.contains("conseil") || phrase.contains("propose"))
 			return true;
 		return false;
 	}
