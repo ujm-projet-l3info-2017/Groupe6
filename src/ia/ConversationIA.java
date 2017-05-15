@@ -63,33 +63,32 @@ public class ConversationIA
 		{
 		case SALUTATION:  //Première étape. Lors du premier message de l'utilisateur, on dit bonjour
 			
-			Salutations salut = new Salutations(); //On dit bonjour
 			if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
 			{
 				prochaineEtape = Etape.DEBUT;
-				return salut.aleatoire() + " " + nom + ".";
+				return ReponseAleatoire.bonjour() + " " + nom + ".";
 			} 
 			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvé
 			{
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return salut.aleatoire() + " " + nom + ". " +ReponseAleatoire.jeConnaisFilm()+" Qu'est ce que tu veux savoir ?";
+				return ReponseAleatoire.bonjour() + " " + nom + "." +ReponseAleatoire.jeConnaisFilm()+" Qu'est ce que tu veux savoir ?";
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
 				prochaineEtape = Etape.AVIS;
-				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.avisSurQuelFilm();
+				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.avisSurQuelFilm();
 			} 
 			else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
 			{
 				prochaineEtape = Etape.PROPOSITION;
-				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.questionGenre();
+				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.questionGenre();
 			} 
 			else // Si rien n'est reconnu
 			{
 				prochaineEtape = Etape.DEBUT;
-				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.queVeuxTu();
+				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.queVeuxTu();
 			}
 		
 			
