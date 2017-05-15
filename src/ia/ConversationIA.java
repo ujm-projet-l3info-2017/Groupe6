@@ -179,16 +179,23 @@ public class ConversationIA
 				
 				if (Reconnaissance.bien(messageCorrige))
 				{
+					if (film.note_presse() < 3 && film.note_public() > 3.5)
+					{
+						return ReponseAleatoire.jaimeMaisPasPresse();
+					}
 					if (film.note_public() > 4)
 					{
-						return "Oui ce film est vraiment gÈnial !";
+						return ReponseAleatoire.jadore();
 					}
-					if (film.note_presse() < 3)
+					if (film.note_public() > 3)
 					{
-						return "La presse ne lui a pas donnÈ de bonnes notes, moi je l'ai bien aimÈ, mais ce n'est que mon avis...";
+						return ReponseAleatoire.jaime();
 					}
-					else
-						return "Oui Áa va, c'est pas un chef d'oeuvre mais on passe un bon moment";
+					if (film.note_public() > 2)
+					{
+						return ReponseAleatoire.jaimePas();
+					}
+					return ReponseAleatoire.jeDeteste();
 				}
 				else 
 				{
@@ -474,7 +481,7 @@ public class ConversationIA
 //				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous d√©j√† vu ?";
 //			}
 		default:
-			logger.error("IA", "Etape non reconnue");
+			logger.error("Etape non reconnue");
 			return null;
 		}
 	}
