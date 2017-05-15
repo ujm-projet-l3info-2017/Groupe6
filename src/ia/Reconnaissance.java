@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -137,7 +138,7 @@ public class Reconnaissance
 	{
 		if (phrase.contains("oui") || phrase.contains("evidemment") || phrase.contains("ouais") || phrase.contains("yes") || phrase.contains("bien sur"))
 			return 1;
-		if (phrase.contains("non") || phrase.contains("pas du tout") || phrase.contains("est egal") || phrase.contains("peu importe") || phrase.contains("pas particulierement") || phrase.contains("pas trop") || phrase.contains("pas vraiment") || phrase.contains("absolument pas") || phrase.contains("pas du tout"))
+		if (phrase.contains("non") || phrase.contains("pas du tout") || phrase.contains("est egal") || phrase.contains("peu importe") || phrase.contains("pas particulierement") || phrase.contains("pas specialement") || phrase.contains("pas trop") || phrase.contains("pas vraiment") || phrase.contains("absolument pas") || phrase.contains("pas du tout"))
 			return 0;
 		return 2;
 	}
@@ -212,7 +213,8 @@ public class Reconnaissance
 					if (lesMots[i+1].charAt(0)>='A' && lesMots[i+1].charAt(0)<='Z')
 					{
 						String acteur = ParseurAllocine.chercherPersonne(lesMots[i]+" "+lesMots[i+1]);
-						if (acteur != null)
+						List<String> films = ParseurAllocine.chercherFilmDePersonne(lesMots[i]+" "+lesMots[i+1]);
+						if (films!=null)
 						{
 							return lesMots[i]+" "+lesMots[i+1];
 						}
@@ -220,7 +222,8 @@ public class Reconnaissance
 					else 
 					{
 						String acteur = ParseurAllocine.chercherPersonne(lesMots[i]);
-						if (acteur != null)
+						List<String> films = ParseurAllocine.chercherFilmDePersonne(lesMots[i]);
+						if (films!=null)
 						{
 							return lesMots[i];
 						}
@@ -229,7 +232,8 @@ public class Reconnaissance
 				else
 				{
 					String acteur = ParseurAllocine.chercherPersonne(lesMots[i]);
-					if (acteur != null)
+					List<String> films = ParseurAllocine.chercherFilmDePersonne(lesMots[i]);
+					if (films!=null)
 					{
 						return lesMots[i];
 					}

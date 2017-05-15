@@ -90,8 +90,8 @@ public class ParseurAllocine
 	}
 	
 	/**
-	 * @param url String
-	 * @return List<String>
+	 * @param nom String
+	 * @return url de la fiche de la persone
 	 */
 	public static String chercherPersonne(String nom)
 	{
@@ -105,6 +105,7 @@ public class ParseurAllocine
 				String ref = link.get(i).attr("abs:href");
 				if (ref.contains("personne"))
 				{
+					System.out.println("Je renvoie : " + ref);
 					return ref;
 				}
 			}
@@ -139,7 +140,9 @@ public class ParseurAllocine
 				if (liste_films.get(i).attr("href").contains("film"))
 					films.add(liste_films.get(i).text());
 			}
-			return films;
+			if (films.isEmpty())
+				return null;
+			else return films;
 		} 
 		catch (IOException e)
 		{
@@ -155,8 +158,7 @@ public class ParseurAllocine
 	 */
 	private static String recupererCodePersonne(String nom)
 	{
-		String url = chercherPersonne(nom); //On récupère l'url de la fiche de la personne sur Allociné
-		//L'url est de type : http://www.allocine.fr/personne/fichepersonne_gen_cpersonne=2990.html
+		String url = chercherPersonne(nom);
 		String apresLeEgal = url.split("=")[1]; //On récupère ce qu'il y a après le égal
 		String code = apresLeEgal.split("\\.")[0]; //Et ce qu'il y a avant le point
 		return code;
