@@ -189,9 +189,8 @@ public class ReponseAleatoire
     {
 		String[] choix = {	
 				"Pourquoi as-tu besoin de moi ?",
-				"Besoin d'un conseil ?",
 				"Que puis-je faire pour toi ?",
-				"Dis moi ce que je peux faire pour t'aider ... ",
+				"Dis moi ce que je peux faire pour t'aider.",
 				"Si tu as besoin d'un conseil sur un film, dis moi. ",
 				"Souhaites-tu que je te donne mon avis sur un film ou que je t'en en propose un ?"};
 
