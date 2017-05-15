@@ -78,7 +78,7 @@ public class ConversationIA
 			//Il veut un avis mais il n'a pas fix� de film
 			if(!b_film)
 			{
-				film = Reconnaissance.reconnaitreFilm(messageCorrige);
+				film = Reconnaissance.reconnaitreFilm(messageOrigine);
 				if (film == null)
 				{
 					return "J'ai pas compris de quel film tu me parles.";
@@ -136,7 +136,7 @@ public class ConversationIA
 						return synopsis;
 				}
 				
-				if (Reconnaissance.bien(messageCorrige))
+				if (Reconnaissance.avisPerso(messageCorrige))
 				{
 					if (film.note_presse() < 3 && film.note_public() > 3.5)
 					{
@@ -376,14 +376,9 @@ public class ConversationIA
 	
 	public String depart(String messageCorrige)
 	{
-		if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
+		if (Reconnaissance.avisFilm(messageOrigine) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvé
 		{
-			prochaineEtape = Etape.DEBUT;
-			return ReponseAleatoire.queVeuxTu();
-		} 
-		else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvé
-		{
-			film = Reconnaissance.avisFilm(messageCorrige);
+			film = Reconnaissance.avisFilm(messageOrigine);
 			titreFilm = film.titre();
 			b_film = true;
 			prochaineEtape = Etape.AVIS;
