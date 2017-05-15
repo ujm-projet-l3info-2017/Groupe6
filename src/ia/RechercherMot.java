@@ -239,17 +239,18 @@ public class RechercherMot
 	 */
 	private String suppressionAccents(String p)
 	{
-		p = p.replace('ï¿½', 'e');
-		p = p.replace('ï¿½', 'e');
-		p = p.replace('ï¿½', 'e');
-		p = p.replace('ï¿½', 'e');
-		p = p.replace('ï¿½', 'a');
-		p = p.replace('ï¿½', 'i');
-		p = p.replace('ï¿½', 'i');
-		p = p.replace('ï¿½', 'a');
-		p = p.replace('ï¿½', 'u');
-		p = p.replace('ï¿½', 'o');
-		p = p.replace('ï¿½', 'c');
+		p = p.replace('é', 'e');
+		p = p.replace('è', 'e');
+		p = p.replace('ê', 'e');
+		p = p.replace('ë', 'e');
+		p = p.replace('â', 'a');
+		p = p.replace('î', 'i');
+		p = p.replace('ï', 'i');
+		p = p.replace('à', 'a');
+		p = p.replace('û', 'u');
+		p = p.replace('ô', 'o');
+		p = p.replace('ç', 'c');
+		p = p.replace('\'', ' ');
 		
 		return p;
 	}
