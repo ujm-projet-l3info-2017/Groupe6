@@ -57,6 +57,7 @@ public class ReponseAleatoire
 
     	return aleatoireTableau(choix);
     }
+   
     public static String jeConnaisPas()
     {
 		String[] choix = {
@@ -117,7 +118,7 @@ public class ReponseAleatoire
 				"Je n'ai pas compris ta réponse. ",
 				"Ce n'est pas clair ... ",
 				"Tu peux reformuler ? ",
-				"Je ne comprends pas ce que tu dis.."};
+				"Je ne comprends pas ce que tu dis ..."};
 
     	return aleatoireTableau(choix);	    
     }
@@ -202,24 +203,33 @@ public class ReponseAleatoire
     			"Bonjour",
     			"Salut",
     			"Hey",
-    			"Comment ça va",
     			"Content de te parler"};
     	
     	return aleatoireTableau(choix);
     }
     public static String aurevoir()
     {
-		String[] choix = {"A bientôt", "Au revoir", "Salut", "J'espère te reparler"};
+		String[] choix = {"A bientôt", "Au revoir", "Salut"};
 
     	return aleatoireTableau(choix);    	    
     }
-	public static String proposeLeFilm()
+	public static String proposeLeFilm(String titre)
 	{
 		String[] choix = {
-				"Je te propose le film ",
-				"J'ai ce film à te proposer : ",
-				"Je te conseille ce film : ",
-				"Je peux te proposer le film "};
+				"Je te propose le film "+titre+".",
+				"Le film "+titre+" est vraiment bien.",
+				titre+" est un film que j'ai beaucoup aimé.",
+				"Je peux te proposer le film "+titre};
+
+    	return aleatoireTableau(choix);
+	}
+	
+	public static String proposeLeFilmMemeCritere(String titre)
+	{
+		String[] choix = {
+				"Dans le même genre il y a le film "+titre+".",
+				"Le film "+titre+" est plus ou moins dans le même genre.",
+				titre+" est un peu dans le même genre."};
 
     	return aleatoireTableau(choix);
 	}
@@ -227,8 +237,9 @@ public class ReponseAleatoire
 	public static String jeConnaisFilm()
 	{
 		String[] choix = {
-				"Je connais ce film !",
-				"Oui, je connais ce film là.",
+				"Je connais ce film.",
+				"Je me souviens de ce film.",
+				"J'ai vu ce film.",
 				"Je vois de quel film tu parles."};
 
     	return aleatoireTableau(choix);
