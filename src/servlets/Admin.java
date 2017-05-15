@@ -1,8 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.rmi.ServerException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import chatbot.ChatBotThread;
-import ia.ConversationIA;
 
 /**
  * Servlet implementation class Admin
@@ -82,7 +79,7 @@ public class Admin extends HttpServlet
 
 	private void gestionCommandeRecu(HttpServletRequest request, HttpServletResponse response)
 	{
-		logger.info("Servlet ADMIN","Recu POST commande serveur");
+		logger.info("Recu POST commande serveur");
 		//Commande de lancement du serveur
 		if (request.getParameter("selection").compareTo("start") == 0)
 		{
@@ -195,13 +192,13 @@ public class Admin extends HttpServlet
 	{
 		if(chatbot!=null)
 		{
-			logger.info("Servlet ADMIN","Reçu POST de Facebook");
+			logger.info("Reçu POST de Facebook");
 			synchronized(chatbot)
 			{
 				if(chatbot.getState()==Thread.State.WAITING)
 					chatbot.notify();
 				else
-					logger.info("Servlet ADMIN","Impossible de notify le thread car il n'est pas en wait");
+					logger.info("Impossible de notify le thread car il n'est pas en wait");
 			}
 		}
 		try
@@ -270,7 +267,7 @@ public class Admin extends HttpServlet
 				chatbot.start();	//On le relance
 			}
 			else
-				logger.warn("Servlet ADMIN","Impossible de lancer le chatbot, le thread est déjà lancé");
+				logger.warn("Impossible de lancer le chatbot, le thread est déjà lancé");
 		}
 		else	//N'a jamais été lancé
 		{
