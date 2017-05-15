@@ -31,7 +31,8 @@ public class RechercherMot
 	/**
 	 * Initialisation de la recherche
 	 */
-	public RechercherMot(){
+	public RechercherMot()
+	{
 		dicoFrancais = this.chargementDico("./src/ia/dicoFrancais.txt");
 		dicoMotsCles = this.chargementDico("./src/ia/dicoMotsCles.txt");
 		dicoGenre = this.chargementDico("./src/ia/dicoGenre.txt");
@@ -221,7 +222,7 @@ public class RechercherMot
 		p = p.replace('î', 'i');
 		p = p.replace('â', 'a');
 		p = p.replace('û', 'u');
-		p = p.replace('o', 'ô');
+		p = p.replace('ô', 'o');
 		
 		return p;
 	}
