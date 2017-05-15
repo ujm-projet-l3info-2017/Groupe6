@@ -55,7 +55,8 @@ public class ConversationIA
 		messageOrigine = message;
 		if (Reconnaissance.sortie(messageCorrige))
 		{
-			//FERMER LA DISCUSSION
+			reset();
+			return ReponseAleatoire.aurevoir();
 		}
 		return executerProchaineEtape();
 	}
@@ -399,5 +400,22 @@ public class ConversationIA
 			prochaineEtape = Etape.DEBUT;
 			return ReponseAleatoire.queVeuxTu();
 		}
+	}
+	
+	public void reset()
+	{
+		b_realisateur = false;
+		b_recent = false;
+		b_genre = false;
+		b_film = false;
+		s_realisateur = "";
+		titreFilm = "";
+		s_recent = false;
+		s_genre = "";
+		film = null;
+		prochaineEtape = Etape.SALUTATION;
+		recherche = null;
+		messageCorrige = "";
+		messageOrigine = "";
 	}
 }

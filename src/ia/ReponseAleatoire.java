@@ -18,6 +18,7 @@ public class ReponseAleatoire
     			"J'aime beaucoup ce film.",
     			"J'ai adoré ce film.",
     			"Ce film est génial !",
+    			"Ce film est un indispensable.",
     			"Oui ce film est vraiment génial !"};
     	
     	return aleatoireTableau(choix);
@@ -53,6 +54,7 @@ public class ReponseAleatoire
 				"Ce film est ennuyeux.",
 				"Quel mauvais film !",
 				"Je l'ai détesté.",
+				"Je te déconseille ce film.",
 				"Un des films les plus nuls que j'ai vu..."};	
 
     	return aleatoireTableau(choix);
@@ -70,6 +72,7 @@ public class ReponseAleatoire
     public static String questionFermee()
     {
 		String[] choix = {
+				"Comment l'as-tu trouvé ?",
 				"Tu l'as bien aimé ?",
 				"Tu l'as trouvé bien ?"};
 
