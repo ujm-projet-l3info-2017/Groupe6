@@ -94,13 +94,21 @@ public class ConversationIA
 			if(b_film)
 			{
 				if (Reconnaissance.realisateur(messageCorrige))
-					return "Ce film a été réalisé par "+film.realisateur()+".";
+					if (film.realisateur() == null)
+						return "Je ne me rappelle plus qui a réalisé ce film";
+					else 
+						return "Ce film a été réalisé par "+film.realisateur()+".";
 				
 				if (Reconnaissance.affiche(messageCorrige))
-					return "Voici l'affiche de ce film : "+film.affiche();
+					if (film.affiche() == null)
+						return "Je n'ai pas trouvé l'affiche";
+					else 
+						return "Voici l'affiche de ce film : "+film.affiche();
 				
 				if (Reconnaissance.annee(messageCorrige))
-					return "Ce film est sorti en "+film.dateSortie()+".";
+					if (film.dateSortie() == 0)
+						return "Je ne sais plus exactement quand ce film est sorti.";
+					else return "Ce film est sorti en "+film.dateSortie()+".";
 				
 				if (Reconnaissance.acteurs(messageCorrige))
 				{
@@ -258,6 +266,7 @@ public class ConversationIA
 			{
 				//Aie aie aie, l'utilisateur connait le film qu'on lui a proposé
 				film = chercherFilmAvecMemeCaracteristiques();
+				titreFilm = film.titre();
 				return "Je te propose le film "+film.titre()+". Tu le connais celui la ?";
 			}
 			else
