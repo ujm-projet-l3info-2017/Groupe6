@@ -84,7 +84,7 @@ public class ParseurAllocine
 		} 
 		catch (IOException e) 
 		{
-			logger.error("GestionAllocine","La recherche avec cet URL n'a rien trouvé");
+			logger.error("La recherche avec cet URL n'a rien trouvé");
 		}
 		return null;
 	}
@@ -108,12 +108,12 @@ public class ParseurAllocine
 					return ref;
 				}
 			}
-			logger.error("GestionAllocine","Aucune personne trouvée avec ce nom");
+			logger.error("Aucune personne trouvée avec ce nom");
 			return null;
 		} 
 		catch (IOException e) 
 		{
-			logger.error("GestionAllocine","Aucune personne trouvée avec ce nom");
+			logger.error("Aucune personne trouvée avec ce nom");
 			return null;
 		}
 	}
@@ -145,7 +145,7 @@ public class ParseurAllocine
 		} 
 		catch (IOException e)
 		{
-			logger.error("GestionAllocine","Impossible de trouver les films de cette personne");
+			logger.error("Impossible de trouver les films de cette personne");
 			return null;
 		}
 	}
