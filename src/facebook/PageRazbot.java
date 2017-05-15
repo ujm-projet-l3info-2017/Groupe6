@@ -3,6 +3,9 @@ package facebook;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import facebook4j.Conversation;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
@@ -13,6 +16,9 @@ import facebook4j.internal.org.json.JSONObject;
 
 public class PageRazbot
 {
+	/** Initialisation du log */
+	static final Logger logger = LogManager.getLogger(PageRazbot.class.getName());
+	  
 	/** L'API Facebook */
 	private Facebook facebook;
 	/** La liste des conversations*/
@@ -59,7 +65,7 @@ public class PageRazbot
 		}
 		catch (FacebookException e) 
 		{
-			e.printStackTrace();  
+			logger.catching(e);  
 		}
 	}
 	
@@ -94,7 +100,7 @@ public class PageRazbot
 		}
 		catch (FacebookException e)
 		{
-			e.printStackTrace();
+			logger.catching(e);
 		}
 	}
 
@@ -122,7 +128,7 @@ public class PageRazbot
 			}
 			catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				logger.catching(e);
 			}
 		}
 	}
@@ -178,7 +184,7 @@ public class PageRazbot
 		}
 		catch (FacebookException e)
 		{
-			e.printStackTrace();
+			logger.catching(e);
 		}
 		return null;
 	}
