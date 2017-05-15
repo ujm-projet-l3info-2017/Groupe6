@@ -15,8 +15,10 @@ public class ReponseAleatoire
     {
     	String[] choix = {
     			"C'est l'un de mes films préférés ! Je l'ai vu au moins 5 fois.",
-    			"J'aime beaucoup ce film.", "J'ai adoré ce film.",
-    			"Ce film est génial !"};
+    			"J'aime beaucoup ce film.",
+    			"J'ai adoré ce film.",
+    			"Ce film est génial !",
+    			"Oui ce film est vraiment génial !"};
     	
     	return aleatoireTableau(choix);
     }
@@ -25,7 +27,9 @@ public class ReponseAleatoire
     	String[] choix = {
     			"J'ai bien aimé ce film.",
     			"Je l'ai trouvé pas mal.",
-    			"J'avais passé un bon moment.",
+    			"J'ai passé un bon moment.",
+    			"J'ai aimé.",
+    			"Je le reverrai sans soucis.",
     			"J'ai vu mieux mais c'était pas mal."};
     	
     	return aleatoireTableau(choix);
@@ -34,8 +38,10 @@ public class ReponseAleatoire
     {
 		String[] choix = {
 				"Je n'ai pas trop aimé.",
-				"Ce film est pas top.",
-				"A vrai dire j'ai vu mieux."};
+				"A mon avis, ce film n'est pas top.",
+				"A vrai dire j'ai vu mieux.",
+				"Je ne l'aime pas.",
+				"C'est un film plutôt inintéréssant."};
 
     	return aleatoireTableau(choix);
     }
@@ -44,6 +50,9 @@ public class ReponseAleatoire
 		String[] choix = {
 				"Je n'ai pas du tout aimé.",
 				"Je me suis ennuyé à mourir.",
+				"Ce film est ennuyeux.",
+				"Quel mauvais film !",
+				"Je l'ai détesté.",
 				"Un des films les plus nuls que j'ai vu..."};	
 
     	return aleatoireTableau(choix);
@@ -78,6 +87,7 @@ public class ReponseAleatoire
     {
 		String[] choix = {
 				"Sinon je te propose le film ",
+				"Je peux aussi te proposer le film ",
 				"Dans le meme genre, il y a aussi le film "};
 
     	return aleatoireTableau(choix);  	    
@@ -85,7 +95,7 @@ public class ReponseAleatoire
     public static String connaisQuestion()
     {
 		String[] choix = {
-				"Tu connais toi ?",
+				"Tu le connais toi ?",
 				"Tu l'as déjà vu toi ?",
 				"Et toi tu l'as vu ?"};
 
@@ -114,7 +124,9 @@ public class ReponseAleatoire
     public static String jeConseille()
     {
 		String[] choix = {
-				"Je te conseille ce film",
+				"Je te conseille ce film.",
+				"Je suis sûr que tu va aimer.",
+				"Je le regarderais à ta place."
 				"Regarde le, tu ne le regrettera pas !"};
 
     	return aleatoireTableau(choix);  
@@ -123,6 +135,7 @@ public class ReponseAleatoire
     {
 		String[] choix = {
 				"Je ne te le conseille pas ...",
+				"Je ne le regarderais pas à ta place."
 				"Tu risques de perdre ton temps si tu le regardes."};
 
     	return aleatoireTableau(choix); 
@@ -143,7 +156,7 @@ public class ReponseAleatoire
 		String[] choix = {
 				"Ca te dérange si le film est vieux ?",
 				"Ca te dérange si le film n'est pas très récent ?",
-				"Preferez-vous un film récent ?"};
+				"Prefères-tu un film récent ?"};
 
     	return aleatoireTableau(choix);  	    
     }
@@ -167,7 +180,7 @@ public class ReponseAleatoire
     }
     public static String questionDureeUnique()
     {
-		String[] choix = {"Est-ce qu'il est court ? Des fois j'ai pas trop le temps de regarder des films trop long ..."};
+		String[] choix = {"Est-ce qu'il est court ? Des fois je n'ai pas vraiment le temps de regarder des films trop long ..."};
 
     	return aleatoireTableau(choix);     	    
     }
@@ -179,13 +192,24 @@ public class ReponseAleatoire
 				"Que puis-je faire pour toi ?",
 				"Dis moi ce que je peux faire pour t'aider ... ",
 				"Si tu as besoin d'un conseil sur un film, dis moi. ",
-				"Souhaites-tu que je te donne mon avis sur un film ou que je vous en propose un ?"};
+				"Souhaites-tu que je te donne mon avis sur un film ou que je t'en en propose un ?"};
 
     	return aleatoireTableau(choix);	    
     }
+    public static String bonjour()
+    {
+    	String[] choix = {
+    			"Bonjour",
+    			"Salut",
+    			"Hey",
+    			"Comment ça va",
+    			"Content de te parler"};
+    	
+    	return aleatoireTableau(choix);
+    }
     public static String aurevoir()
     {
-		String[] choix = {"A bientôt", "Au revoir", "Salut"};
+		String[] choix = {"A bientôt", "Au revoir", "Salut", "J'espère te reparler"};
 
     	return aleatoireTableau(choix);    	    
     }
@@ -194,7 +218,7 @@ public class ReponseAleatoire
 		String[] choix = {
 				"Je te propose le film ",
 				"J'ai ce film à te proposer :",
-				"Je te conseil ce film :",
+				"Je te conseille ce film :",
 				"Je peux te proposer le film "};
 
     	return aleatoireTableau(choix);
@@ -205,7 +229,7 @@ public class ReponseAleatoire
 		String[] choix = {
 				"Je connais ce film !",
 				"Oui, je connais ce film là.",
-				};
+				"Je vois de quel film tu parles."};
 
     	return aleatoireTableau(choix);
 	}
@@ -224,6 +248,7 @@ public class ReponseAleatoire
 	{
 		String[] choix = {
 				"Il y a un réalisateur, un acteur que tu aimes bien ?",
+				"Tu préfére une réalisateur ou un acteur particulier ?",
 				"Des préférences sur un réalisateur ou un acteur ?"};
 
     	return aleatoireTableau(choix);
@@ -233,7 +258,18 @@ public class ReponseAleatoire
 	{
 		String[] choix = {
 				"Qui donc ?",
+				"De qui parles-tu ?",
 				"Qui ?"};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String jaimeMaisPasPresse()
+	{
+		String[] choix = {
+				"La presse ne lui a pas donné de bonnes notes, moi je l'ai bien aimé, mais ce n'est que mon avis...",
+				"La presse n'en a pas fait une bonne critique mais je l'ai quand même aimé.",
+				"Je pense que c'est un bon film, même si la presse n'est pas d'accord."};
 
     	return aleatoireTableau(choix);
 	}

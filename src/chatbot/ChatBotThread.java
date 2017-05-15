@@ -138,7 +138,6 @@ public class ChatBotThread extends Thread
 		//Si la l'IA de cette conversation existe déjà
 		if(conversationsIA.containsKey(conversationId))
 		{
-			logger.info("Utilisation d'un objet de gestion d'IA existant pour cette conversation");
 			return conversationsIA.get(conversationId);
 		}
 		else //Sinon on la crée

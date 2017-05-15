@@ -63,33 +63,32 @@ public class ConversationIA
 		{
 		case SALUTATION:  //PremiÃ¨re Ã©tape. Lors du premier message de l'utilisateur, on dit bonjour
 			
-			Salutations salut = new Salutations(); //On dit bonjour
 			if (Reconnaissance.salutation(messageCorrige)) // Si le message contient une salutation
 			{
 				prochaineEtape = Etape.DEBUT;
-				return salut.aleatoire() + " " + nom + ".";
+				return ReponseAleatoire.bonjour() + " " + nom + ".";
 			} 
 			else if (Reconnaissance.avisFilm(messageCorrige) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvÃ©
 			{
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return salut.aleatoire() + " " + nom + ". " +ReponseAleatoire.jeConnaisFilm()+" Qu'est ce que tu veux savoir ?";
+				return ReponseAleatoire.bonjour() + " " + nom + "." +ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
 				prochaineEtape = Etape.AVIS;
-				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.avisSurQuelFilm();
+				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.avisSurQuelFilm();
 			} 
 			else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
 			{
 				prochaineEtape = Etape.PROPOSITION;
-				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.questionGenre();
+				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.questionGenre();
 			} 
 			else // Si rien n'est reconnu
 			{
 				prochaineEtape = Etape.DEBUT;
-				return salut.aleatoire() + " " + nom + ". " + ReponseAleatoire.queVeuxTu();
+				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.queVeuxTu();
 			}
 		
 			
@@ -104,7 +103,7 @@ public class ConversationIA
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.jeConnaisFilm()+" Qu'est ce que tu veux savoir ?";
+				return ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
@@ -130,25 +129,25 @@ public class ConversationIA
 				film = Reconnaissance.reconnaitreFilm(messageCorrige);
 				if (film == null)
 				{
-					return "J'ai pas compris de quel film tu me parles";
+					return "J'ai pas compris de quel film tu me parles.";
 				}
 				else 
 				{
 					b_film = true;
-					return "Que veux tu savoir sur ce film ?";
+					return "Que veux-tu savoir sur ce film ?";
 				}
 			}
 			//Il a fixé un film
 			if(b_film)
 			{
 				if (Reconnaissance.realisateur(messageCorrige))
-					return "Ce film a été réalisé par "+film.realisateur();
+					return "Ce film a été réalisé par "+film.realisateur()+".";
 				
 				if (Reconnaissance.affiche(messageCorrige))
 					return "Voici l'affiche de ce film : "+film.affiche();
 				
 				if (Reconnaissance.annee(messageCorrige))
-					return "Ce film est sorti en "+film.affiche();
+					return "Ce film est sorti en "+film.affiche()+".";
 				
 				if (Reconnaissance.acteurs(messageCorrige))
 				{
@@ -163,9 +162,9 @@ public class ConversationIA
 				{
 					String genre = film.genres().get(0);
 					if (genre.charAt(0)=='a' || genre.charAt(0)=='h' || genre.charAt(0)=='é')
-						return "C'est un film d'"+genre;
+						return "C'est un film d'"+genre+".";
 					else 
-						return "C'est un film de "+genre;
+						return "C'est un film de "+genre+".";
 				}
 				
 				if (Reconnaissance.synopsis(messageCorrige))
@@ -179,20 +178,27 @@ public class ConversationIA
 				
 				if (Reconnaissance.bien(messageCorrige))
 				{
+					if (film.note_presse() < 3 && film.note_public() > 3.5)
+					{
+						return ReponseAleatoire.jaimeMaisPasPresse();
+					}
 					if (film.note_public() > 4)
 					{
-						return "Oui ce film est vraiment génial !";
+						return ReponseAleatoire.jadore();
 					}
-					if (film.note_presse() < 3)
+					if (film.note_public() > 3)
 					{
-						return "La presse ne lui a pas donné de bonnes notes, moi je l'ai bien aimé, mais ce n'est que mon avis...";
+						return ReponseAleatoire.jaime();
 					}
-					else
-						return "Oui ça va, c'est pas un chef d'oeuvre mais on passe un bon moment";
+					if (film.note_public() > 2)
+					{
+						return ReponseAleatoire.jaimePas();
+					}
+					return ReponseAleatoire.jeDeteste();
 				}
 				else 
 				{
-					return "Je n'ai pas compris";
+					return "Je n'ai pas compris.";
 				}
 			}
 			
@@ -325,7 +331,7 @@ public class ConversationIA
 			}
 			else 
 			{
-				return "Je peux te donner le synopsis, te dire ce que les gens en ont pensé, les acteurs principaux ...";
+				return "Je peux te donner le synopsis, te dire ce que j'en ai pensé, les acteurs principaux ...";
 			}
 			
 			
@@ -475,7 +481,7 @@ public class ConversationIA
 //				return recom.aleatoire() + " " + film.titre() + ". L'avez-vous dÃ©jÃ  vu ?";
 //			}
 		default:
-			logger.error("IA", "Etape non reconnue");
+			logger.error("Etape non reconnue");
 			return null;
 		}
 	}
