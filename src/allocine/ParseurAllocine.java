@@ -105,7 +105,6 @@ public class ParseurAllocine
 				String ref = link.get(i).attr("abs:href");
 				if (ref.contains("personne"))
 				{
-					System.out.println("Je renvoie : " + ref);
 					return ref;
 				}
 			}
