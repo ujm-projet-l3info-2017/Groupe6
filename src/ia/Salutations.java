@@ -31,7 +31,7 @@ public class Salutations implements Vocabulaire
 		expressions.add("Salut");
 		expressions.add("Hey");
 		expressions.add("Salutations");
-		expressions.add("Content de vous parler");
+		expressions.add("Content de te parler");
 	}
 	
 	/* (non-Javadoc)
