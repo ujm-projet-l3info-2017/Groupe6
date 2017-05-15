@@ -323,7 +323,7 @@ public class ConversationIA
 				film = RechercheAllocine.film(titreFilm);
 				return "Qu'est ce que tu veux savoir ?";
 			}
-			else if (Reconnaissance.ouiOuNon(messageCorrige) == 2)
+			else if (Reconnaissance.ouiOuNon(messageCorrige) == 0)
 			{
 				//L'utilisateur veut pas en sevoir plus
 				prochaineEtape = Etape.DEBUT;
