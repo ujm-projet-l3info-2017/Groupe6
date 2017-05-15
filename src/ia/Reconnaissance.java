@@ -264,7 +264,7 @@ public class Reconnaissance
 	 */
 	public static boolean synopsis(String phrase)
 	{
-		if (phrase.contains("resume") || phrase.contains("synops"))
+		if (phrase.contains("resume") || phrase.contains("synops") || phrase.contains("histoire"))
 			return true;
 		else return false;
 	}
