@@ -17,7 +17,8 @@ public class ReponseAleatoire
     			"C'est l'un de mes films préférés ! Je l'ai vu au moins 5 fois.",
     			"J'aime beaucoup ce film.",
     			"J'ai adoré ce film.",
-    			"Ce film est génial !"};
+    			"Ce film est génial !",
+    			"Oui ce film est vraiment génial !"};
     	
     	return aleatoireTableau(choix);
     }
@@ -35,8 +36,9 @@ public class ReponseAleatoire
     {
 		String[] choix = {
 				"Je n'ai pas trop aimé.",
-				"Ce film est pas top.",
-				"A vrai dire j'ai vu mieux."};
+				"Ce film n'est pas top.",
+				"A vrai dire j'ai vu mieux.",
+				"C'est un film plutôt inintéréssant."};
 
     	return aleatoireTableau(choix);
     }
@@ -45,6 +47,8 @@ public class ReponseAleatoire
 		String[] choix = {
 				"Je n'ai pas du tout aimé.",
 				"Je me suis ennuyé à mourir.",
+				"Ce film est ennuyeux.",
+				"Quel mauvais film !",
 				"Un des films les plus nuls que j'ai vu..."};	
 
     	return aleatoireTableau(choix);
@@ -235,6 +239,15 @@ public class ReponseAleatoire
 		String[] choix = {
 				"Qui donc ?",
 				"Qui ?"};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String jaimeMaisPasPresse()
+	{
+		String[] choix = {
+				"La presse ne lui a pas donné de bonnes notes, moi je l'ai bien aimé, mais ce n'est que mon avis...",
+				"C'est un bon film, même si la presse n'est pas d'accord"};
 
     	return aleatoireTableau(choix);
 	}
