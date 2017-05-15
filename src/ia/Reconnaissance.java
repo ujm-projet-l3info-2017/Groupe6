@@ -31,9 +31,7 @@ public class Reconnaissance
 	public static boolean question(String phrase)
 	{
 		//Si la phrase contient un ? alors c'est une question
-		if (phrase.contains("?"))
-			return true;
-		return false;
+		return (phrase.contains("?"));
 	}
 	
 	/**
@@ -44,9 +42,7 @@ public class Reconnaissance
 	public static boolean recherche(String phrase)
 	{
 		//Le mot film précédé d'un article INDEFINI signifie qu'il cherche un film qu'il ne connait pas
-		if (phrase.contains("un film") || phrase.contains("des film") || phrase.contains("cherche") || (phrase.contains("veu") && phrase.contains("regarde")) || phrase.contains("conseil") || phrase.contains("propose"))
-			return true;
-		return false;
+		return (phrase.contains("un film") || phrase.contains("des film") || phrase.contains("cherche") || (phrase.contains("veu") && phrase.contains("regarde")) || phrase.contains("conseil") || phrase.contains("propose"));
 	}
 	
 	/**
@@ -100,9 +96,7 @@ public class Reconnaissance
 	public static boolean avis(String phrase)
 	{
 		//Article DEFINI => L'utilisateur parle d'un film qu'il connait et veut des avis / infos
-		if (phrase.contains("avis"))
-			return true;
-		return false;
+		return (phrase.contains("avis"));
 	}
 	
 	/**
@@ -112,9 +106,7 @@ public class Reconnaissance
 	 */
 	public static boolean salutation(String phrase)
 	{
-		if (phrase.contains("bonjour") || phrase.contains("bonsoir") || phrase.contains("salut") || phrase.contains("hey") || phrase.contains("coucou") || phrase.contains("wesh") || phrase.contains("hi") || phrase.contains("hello"))
-			return true;
-		return false;
+		return (phrase.contains("bonjour") || phrase.contains("bonsoir") || phrase.contains("salut") || phrase.contains("hey") || phrase.contains("coucou") || phrase.contains("wesh") || phrase.contains("hi") || phrase.contains("hello"));
 	}
 	
 	/**
@@ -124,9 +116,7 @@ public class Reconnaissance
 	 */
 	public static boolean sortie(String phrase)
 	{
-		if (phrase.contains("au revoir") || phrase.contains("ciao") || phrase.contains("a bientot") || phrase.contains("salut"))
-			return true;
-		return false;
+		return (phrase.contains("au revoir") || phrase.contains("ciao") || phrase.contains("a bientot") || phrase.contains("salut"));
 	}
 	
 	/**
@@ -212,7 +202,6 @@ public class Reconnaissance
 				{
 					if (lesMots[i+1].charAt(0)>='A' && lesMots[i+1].charAt(0)<='Z')
 					{
-						String acteur = ParseurAllocine.chercherPersonne(lesMots[i]+" "+lesMots[i+1]);
 						List<String> films = ParseurAllocine.chercherFilmDePersonne(lesMots[i]+" "+lesMots[i+1]);
 						if (films!=null)
 						{
@@ -221,7 +210,6 @@ public class Reconnaissance
 					}
 					else 
 					{
-						String acteur = ParseurAllocine.chercherPersonne(lesMots[i]);
 						List<String> films = ParseurAllocine.chercherFilmDePersonne(lesMots[i]);
 						if (films!=null)
 						{
@@ -231,7 +219,6 @@ public class Reconnaissance
 				}
 				else
 				{
-					String acteur = ParseurAllocine.chercherPersonne(lesMots[i]);
 					List<String> films = ParseurAllocine.chercherFilmDePersonne(lesMots[i]);
 					if (films!=null)
 					{
@@ -252,9 +239,7 @@ public class Reconnaissance
 	 */
 	public static boolean realisateur(String phrase)
 	{
-		if (phrase.contains("realis"))
-			return true;
-		else return false;
+		return (phrase.contains("realis"));
 	}
 	
 	/**
@@ -264,9 +249,7 @@ public class Reconnaissance
 	 */
 	public static boolean synopsis(String phrase)
 	{
-		if (phrase.contains("resume") || phrase.contains("synops") || phrase.contains("histoire"))
-			return true;
-		else return false;
+		return (phrase.contains("resume") || phrase.contains("synops") || phrase.contains("histoire"));
 	}
 	
 	/**
@@ -276,9 +259,8 @@ public class Reconnaissance
 	 */
 	public static boolean acteurs(String phrase)
 	{
-		if (phrase.contains("acteur") || phrase.contains("actrice") || phrase.contains("joue"))
-			return true;
-		else return false;
+		return (phrase.contains("acteur") || phrase.contains("actrice") || phrase.contains("joue"));
+
 	}
 	
 	/**
@@ -288,9 +270,8 @@ public class Reconnaissance
 	 */
 	public static boolean affiche(String phrase)
 	{
-		if (phrase.contains("affiche"))
-			return true;
-		else return false;
+		return (phrase.contains("affiche"));
+
 	}
 	
 	/**
@@ -300,9 +281,7 @@ public class Reconnaissance
 	 */
 	public static boolean leGenre(String phrase)
 	{
-		if (phrase.contains("genre") || phrase.contains("type"))
-			return true;
-		else return false;
+		return (phrase.contains("genre") || phrase.contains("type"));
 	}
 	
 	/**
@@ -312,9 +291,7 @@ public class Reconnaissance
 	 */
 	public static boolean annee(String phrase)
 	{
-		if (phrase.contains("annee") || phrase.contains("date"))
-			return true;
-		else return false;
+		return (phrase.contains("annee") || phrase.contains("date"));
 	}
 	
 	/**
@@ -322,11 +299,13 @@ public class Reconnaissance
 	 * @param phrase
 	 * @return
 	 */
-	public static boolean bien(String phrase)
+	public static boolean avisPerso(String phrase)
 	{
-		
-		if (question(phrase) && (phrase.contains("bien") || phrase.contains("aime")))
-			return true;
-		else return false;
+		return ((question(phrase) && (phrase.contains("bien") || phrase.contains("aime"))) || phrase.contains("avis") || phrase.contains("impression") || phrase.contains("sentiment"));
+	}
+	
+	public static boolean merci(String phrase)
+	{
+		return phrase.contains("merci");
 	}
 }
