@@ -51,7 +51,7 @@ form
 		<h1>Connexion Administration</h1>
 	
 		<form action="${pageContext.request.contextPath}/Admin" method="post">
-			<label> <b>Code d'accès:</b> <input type="text" name="code" id="code"/></label>
+			<label> <b>Code d'accès:</b> <input type="password" name="code" id="code"/></label>
 			<input class="bouton" type="submit" value="Envoyer"/> 
 		</form>
 	</div>
