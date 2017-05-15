@@ -235,6 +235,16 @@ public class ReponseAleatoire
 
     	return aleatoireTableau(choix);
 	}
+	
+
+	public static String proposeLeFilmMemeEpoque(String titre)
+	{
+		String[] choix = {
+				"Le film "+titre+" est sorti il y a pas longtemps, il devrait te plaire.",
+				"Il y a aussi "+titre+" qui est sorti récemment."};
+
+    	return aleatoireTableau(choix);
+	}
 
 	public static String jeConnaisFilm()
 	{
@@ -286,4 +296,5 @@ public class ReponseAleatoire
 
     	return aleatoireTableau(choix);
 	}
+
 }
