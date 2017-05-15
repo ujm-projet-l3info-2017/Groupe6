@@ -73,6 +73,20 @@ public class Reconnaissance
 		else return null;
 	}
 	
+	
+	/**
+	 * Analyse s'il y a potentiellement quelque chose avant le nom du film, ou cherche le film qui correspond à la phrase sinon
+	 * @param phrase
+	 * @return le film trouvé ou null
+	 */
+	public static Film reconnaitreFilm(String phrase)
+	{
+		if (avisFilm(phrase) != null)
+			return avisFilm(phrase);
+		else 
+			return RechercheAllocine.film(phrase);
+	}
+	
 	/**
 	 * renvoie true si le gars veut un avis, false sinon
 	 * @param phrase
@@ -194,5 +208,75 @@ public class Reconnaissance
 	}
 	
 	
+	/**
+	 * Renvoie true si l'utilisateur demande le réalisateur
+	 * @param phrase
+	 * @return
+	 */
+	public static boolean realisateur(String phrase)
+	{
+		if (phrase.contains("realis"))
+			return true;
+		else return false;
+	}
 	
+	/**
+	 * Renvoie true si l'utilisateur demande le synopsis
+	 * @param phrase
+	 * @return
+	 */
+	public static boolean synopsis(String phrase)
+	{
+		if (phrase.contains("resume") || phrase.contains("synops"))
+			return true;
+		else return false;
+	}
+	
+	/**
+	 * Renvoie true si l'utilisateur demande les acteurs
+	 * @param phrase
+	 * @return
+	 */
+	public static boolean acteurs(String phrase)
+	{
+		if (phrase.contains("acteur") || phrase.contains("actrice"))
+			return true;
+		else return false;
+	}
+	
+	/**
+	 * Renvoie true si l'utilisateur demande l'affiche
+	 * @param phrase
+	 * @return
+	 */
+	public static boolean affiche(String phrase)
+	{
+		if (phrase.contains("affiche"))
+			return true;
+		else return false;
+	}
+	
+	/**
+	 * Renvoie true si l'utilisateur demande le genre du film
+	 * @param phrase
+	 * @return
+	 */
+	public static boolean leGenre(String phrase)
+	{
+		if (phrase.contains("genre") || phrase.contains("type"))
+			return true;
+		else return false;
+	}
+	
+	/**
+	 * Renvoie true si l'utilisateur demande l'année du film
+	 * @param phrase
+	 * @return
+	 */
+	public static boolean annee(String phrase)
+	{
+		if (phrase.contains("annee") || phrase.contains("date"))
+			return true;
+		else return false;
+	}
 }
