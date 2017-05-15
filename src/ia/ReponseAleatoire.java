@@ -15,7 +15,8 @@ public class ReponseAleatoire
     {
     	String[] choix = {
     			"C'est l'un de mes films préférés ! Je l'ai vu au moins 5 fois.",
-    			"J'aime beaucoup ce film.", "J'ai adoré ce film.",
+    			"J'aime beaucoup ce film.",
+    			"J'ai adoré ce film.",
     			"Ce film est génial !"};
     	
     	return aleatoireTableau(choix);
@@ -143,7 +144,7 @@ public class ReponseAleatoire
 		String[] choix = {
 				"Ca te dérange si le film est vieux ?",
 				"Ca te dérange si le film n'est pas très récent ?",
-				"Preferez-vous un film récent ?"};
+				"Prefères-tu un film récent ?"};
 
     	return aleatoireTableau(choix);  	    
     }
@@ -179,7 +180,7 @@ public class ReponseAleatoire
 				"Que puis-je faire pour toi ?",
 				"Dis moi ce que je peux faire pour t'aider ... ",
 				"Si tu as besoin d'un conseil sur un film, dis moi. ",
-				"Souhaites-tu que je te donne mon avis sur un film ou que je vous en propose un ?"};
+				"Souhaites-tu que je te donne mon avis sur un film ou que je t'en en propose un ?"};
 
     	return aleatoireTableau(choix);	    
     }
