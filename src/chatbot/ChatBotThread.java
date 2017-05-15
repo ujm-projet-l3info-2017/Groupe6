@@ -1,7 +1,6 @@
 package chatbot;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
 
 import org.apache.logging.log4j.LogManager;
@@ -42,23 +41,23 @@ public class ChatBotThread extends Thread
 		
 //		try{System.in.read();}catch (IOException e){e.printStackTrace();} //GETCHAR
 		
-		logger.info("ThreadProgramme","Démarrage du programme");
+		logger.info("Démarrage du programme");
 		while(continuer && !Thread.currentThread().isInterrupted())
 		{
 			if(Token.isWebhookEnable())
 			{
-				logger.info("ThreadProgramme","Mode WebHook");
+				logger.info("Mode WebHook");
 				// Méthode par webhook
 				gestionMessagesWebhook();
 			}
 			else
 			{
-				logger.info("ThreadProgramme","Mode vérification ");
+				logger.info("Mode vérification ");
 				// Méthode récupération par interval de temps
 				gestionMessagesInterval();
 			}
 		}
-		logger.info("ThreadProgramme","Le programme a bien été arrêté");
+		logger.info("Le programme a bien été arrêté");
 	}
 
 	/**
@@ -116,15 +115,15 @@ public class ChatBotThread extends Thread
 					//razbot.envoyerMessage(conv.getConversationId(), testApiAllocine(conv.getMessages().get(0).getMessage())); //Test Allocine
 				}
 				
-				logger.info("ThreadProgramme","Programme en attente de webhook");
+				logger.info("Programme en attente de webhook");
 				wait();
-				logger.info("ThreadProgramme","Webhook de nouveau message reçu");
+				logger.info("Webhook de nouveau message reçu");
 			}
 		}
 		catch (InterruptedException e)
 		{
-			logger.error("ThreadProgramme","Interruption de la boucle");
-			e.printStackTrace();
+			logger.error("Interruption de la boucle");
+			logger.catching(e);
 		}
 	}
 
@@ -139,12 +138,12 @@ public class ChatBotThread extends Thread
 		//Si la l'IA de cette conversation existe déjà
 		if(conversationsIA.containsKey(conversationId))
 		{
-			logger.info("ThreadProgramme","Utilisation d'un objet de gestion d'IA existant pour cette conversation");
+			logger.info("Utilisation d'un objet de gestion d'IA existant pour cette conversation");
 			return conversationsIA.get(conversationId);
 		}
 		else //Sinon on la crée
 		{
-			logger.info("ThreadProgramme","Création d'un objet de gestion d'IA pour cette conversation");
+			logger.info("Création d'un objet de gestion d'IA pour cette conversation");
 			conversationsIA.put(conversationId, new ConversationIA(username));
 			return conversationsIA.get(conversationId);
 		}
