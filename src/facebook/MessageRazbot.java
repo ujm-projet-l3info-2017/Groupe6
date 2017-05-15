@@ -19,7 +19,7 @@ public class MessageRazbot
 	public MessageRazbot(String message, String date, String auteur, String auteurID)
 	{
 		this.message = message;
-		dateMessage = Utilitaires.parserDateFacebook(date);	//Transforme la date de format Facebook à un type Date
+		dateMessage = ConversationRazbot.parserDateFacebook(date);	//Transforme la date de format Facebook à un type Date
 		this.auteur = auteur;
 		this.auteurID = auteurID;
 	}
@@ -60,16 +60,10 @@ public class MessageRazbot
 		return auteurID;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString()
 	{
-		return "\nMessage:"
-			 + "\n\tAuteur: "+auteur
-			 + "\n\tDate: "+dateMessage
-			 + "\n\tTexte:\""+message+"\" \n\n";
+		return "MessageRazbot [message=" + message + ", dateMessage=" + dateMessage + ", auteur=" + auteur
+				+ ", auteurID=" + auteurID + "]";
 	}
-
 }
