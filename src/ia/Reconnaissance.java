@@ -116,7 +116,7 @@ public class Reconnaissance
 	 */
 	public static boolean sortie(String phrase)
 	{
-		return (phrase.contains("au revoir") || phrase.contains("ciao") || phrase.contains("a bientot") || phrase.contains("salut"));
+		return (phrase.contains("au revoir") || phrase.contains("ciao") || phrase.contains("a bientot"));
 	}
 	
 	/**
