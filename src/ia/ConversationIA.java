@@ -1,6 +1,5 @@
 package ia;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -334,7 +333,7 @@ public class ConversationIA
 				effacerPreference();
 				return "Dis moi tout.";
 			}
-			else if (Reconnaissance.ouiOuNon(messageCorrige)==0)
+			else
 			{
 				prochaineEtape = Etape.DEBUT;
 				effacerPreference();
@@ -343,7 +342,9 @@ public class ConversationIA
 			
 		default:
 			logger.error("Etape non reconnue");
-			return null;
+			prochaineEtape = Etape.DEBUT;
+			effacerPreference();
+			return "Que veux tu ?";
 		}
 	}
 
