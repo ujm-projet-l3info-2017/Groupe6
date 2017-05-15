@@ -217,7 +217,7 @@ public class ReponseAleatoire
 	{
 		String[] choix = {
 				"Je te propose le film ",
-				"J'ai ce film à te proposer :",
+				"J'ai ce film à te proposer : ",
 				"Je te conseille ce film : ",
 				"Je peux te proposer le film "};
 
