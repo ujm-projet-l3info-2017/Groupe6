@@ -73,22 +73,22 @@ public class ConversationIA
 				film = Reconnaissance.avisFilm(messageCorrige);
 				b_film = true;
 				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.bonjour() + " " + nom + "." +ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
+				return ReponseAleatoire.bonjour() + " " + nom + ". " +ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
 			} 
 			else if (Reconnaissance.avis(messageCorrige)) // Si il ne contient qu'une demande d'avis sur un film mais qu'il ne nous dit pas le film
 			{
 				prochaineEtape = Etape.AVIS;
-				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.avisSurQuelFilm();
+				return ReponseAleatoire.bonjour() + " " + nom + ". " + ReponseAleatoire.avisSurQuelFilm();
 			} 
 			else if (Reconnaissance.recherche(messageCorrige)) // Si l'utilisateur recherche un film inconnu
 			{
 				prochaineEtape = Etape.PROPOSITION;
-				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.questionGenre();
+				return ReponseAleatoire.bonjour() + " " + nom + ". " + ReponseAleatoire.questionGenre();
 			} 
 			else // Si rien n'est reconnu
 			{
 				prochaineEtape = Etape.DEBUT;
-				return ReponseAleatoire.bonjour() + " " + nom + "." + ReponseAleatoire.queVeuxTu();
+				return ReponseAleatoire.bonjour() + " " + nom + ". " + ReponseAleatoire.queVeuxTu();
 			}
 		
 			
