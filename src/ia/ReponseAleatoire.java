@@ -126,7 +126,7 @@ public class ReponseAleatoire
 		String[] choix = {
 				"Je te conseille ce film.",
 				"Je suis sûr que tu va aimer.",
-				"Je le regarderais à ta place."
+				"Je le regarderais à ta place.",
 				"Regarde le, tu ne le regrettera pas !"};
 
     	return aleatoireTableau(choix);  
@@ -135,7 +135,7 @@ public class ReponseAleatoire
     {
 		String[] choix = {
 				"Je ne te le conseille pas ...",
-				"Je ne le regarderais pas à ta place."
+				"Je ne le regarderais pas à ta place.",
 				"Tu risques de perdre ton temps si tu le regardes."};
 
     	return aleatoireTableau(choix); 
