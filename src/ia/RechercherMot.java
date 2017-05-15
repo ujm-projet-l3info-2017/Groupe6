@@ -33,17 +33,16 @@ public class RechercherMot
 	 */
 	public RechercherMot()
 	{
-		dicoFrancais = this.chargementDico("./src/ia/dicoFrancais.txt");
-		dicoMotsCles = this.chargementDico("./src/ia/dicoMotsCles.txt");
-		dicoGenre = this.chargementDico("./src/ia/dicoGenre.txt");
-		dicoPrenomFeminin = this.chargementDico("./src/ia/dicoPrenomFeminin.txt");
-		dicoPrenomMasculin = this.chargementDico("./src/ia/dicoPrenomMasculin.txt");
+		dicoFrancais = this.chargementDico("./dicoFrancais.txt");
+		dicoMotsCles = this.chargementDico("./dicoMotsCles.txt");
+		dicoGenre = this.chargementDico("./dicoGenre.txt");
+		dicoPrenomFeminin = this.chargementDico("./dicoPrenomFeminin.txt");
+		dicoPrenomMasculin = this.chargementDico("./dicoPrenomMasculin.txt");
 	}
 	
 	/**
 	 * Permet de charger le dictionnaire dans une ArrayList
 	 * 
-	 * @throws IOException
 	 */
 	private ArrayList<String> chargementDico(String chemin)
 	{
@@ -63,7 +62,7 @@ public class RechercherMot
 		}
 		catch (IOException e)
 		{
-			logger.error("chargementDico","Erreur lors de l'ouverture du dictionnaire");
+			logger.error("Erreur lors de l'ouverture du dictionnaire");
 		}
 		return dico;
 	}

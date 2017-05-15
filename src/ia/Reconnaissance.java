@@ -127,7 +127,7 @@ public class Reconnaissance
 	{
 		try
 		{
-			FileReader f = new FileReader("./src/ia/dicoGenre.txt");
+			FileReader f = new FileReader("./dicoGenre.txt");
 			BufferedReader br = new BufferedReader(f);
 			String line;
 			while ((line = br.readLine()) != null)
@@ -144,7 +144,7 @@ public class Reconnaissance
 		}
 		catch (IOException e)
 		{
-			logger.error("chargementDico","Erreur lors de l'ouverture du dictionnaire");
+			logger.error("Erreur lors de l'ouverture du dictionnaire");
 			return null;
 		}
 		return null;

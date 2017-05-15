@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import facebook.ConversationRazbot;
 import facebook.PageRazbot;
 import facebook.Token;
-import ia.ConversationIA_Old;
+import ia.ConversationIA;
 
 public class ChatBotThread extends Thread
 {
@@ -19,7 +19,7 @@ public class ChatBotThread extends Thread
 	/** L'objet qui gère les conversations */
 	public PageRazbot razbot;
 	/** Les IA associées à chaque conversation */
-	private Hashtable<String,ConversationIA_Old> conversationsIA;
+	private Hashtable<String,ConversationIA> conversationsIA;
 	/** Sert à stopper le thread proprement */
 	boolean continuer = true;
 	
@@ -76,7 +76,7 @@ public class ChatBotThread extends Thread
 				logger.info(conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
 				
 				//On charge la conversation correspondante (ou on la crée)
-				ConversationIA_Old convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
+				ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
 				//On fait traiter le message
 				String reponse = convIA.traitementMessage(conv.getMessages().get(0).getMessage());
 				//On renvoit la réponse
@@ -106,7 +106,7 @@ public class ChatBotThread extends Thread
 					logger.info(conv.getNonLu()+" nouveau(x) message(s) dans la conversation avec: "+conv.getUserName());
 					
 					//On charge la conversation correspondante (ou on la crée)
-					ConversationIA_Old convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
+					ConversationIA convIA = correspondanceConversation(conv.getConversationId(), conv.getUserName());
 					//On fait traiter le message
 					String reponse = convIA.traitementMessage(conv.getMessages().get(0).getMessage());
 					//On renvoit la réponse
@@ -133,7 +133,7 @@ public class ChatBotThread extends Thread
 	 * @param username Nom de l'utilisateur avec qui on parle String
 	 * @return ConversationIA l'objet contenant l'IA de cette conversation
 	 */
-	private ConversationIA_Old correspondanceConversation(String conversationId, String username)
+	private ConversationIA correspondanceConversation(String conversationId, String username)
 	{
 		//Si la l'IA de cette conversation existe déjà
 		if(conversationsIA.containsKey(conversationId))
@@ -144,7 +144,7 @@ public class ChatBotThread extends Thread
 		else //Sinon on la crée
 		{
 			logger.info("Création d'un objet de gestion d'IA pour cette conversation");
-			conversationsIA.put(conversationId, new ConversationIA_Old(username));
+			conversationsIA.put(conversationId, new ConversationIA(username));
 			return conversationsIA.get(conversationId);
 		}
 	}
