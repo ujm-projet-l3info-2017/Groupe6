@@ -10,8 +10,8 @@ public class TestIA
 
 	public static void main(String[] args)
 	{
-		Hashtable<String,ConversationIA> conversationsIA = new Hashtable<>();
-		ConversationIA convIA = new ConversationIA("Jacquie");
+		Hashtable<String,ConversationIA_Old> conversationsIA = new Hashtable<>();
+		ConversationIA_Old convIA = new ConversationIA_Old("Jacquie");
 		conversationsIA.put("a", convIA);
 		String message = "Salut";
 		String reponse;

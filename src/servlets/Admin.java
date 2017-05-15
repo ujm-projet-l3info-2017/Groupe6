@@ -16,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import chatbot.ChatBotThread;
-import ia.ConversationIA_V2;
+import ia.ConversationIA;
 
 /**
  * Servlet implementation class Admin
