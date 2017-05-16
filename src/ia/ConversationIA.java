@@ -362,10 +362,6 @@ public class ConversationIA
 		{
 			return "Qu'est-ce que t'as pas compris?";
 		}
-		if(messageCorrige.contains("dimitri"))
-		{
-			return "Dimitri c'est le plus fort";
-		}
 		if(messageCorrige.contains("un cine"))
 		{
 			return "Je ne saurais pas te conseiller de cinéma, je ne suis pas conçu pour, par contre je peux te conseiller un film si tu veux";
