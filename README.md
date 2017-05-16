@@ -20,3 +20,6 @@ Il y a deux modes de fonctionnements (à configurer dans settings.ini):
   * genre
   * avis (en fonction des notes du public et de la presse sur allocine.fr)
   * synopsis
+
+### Schéma de la conversation
+![Structure de la conversation](/AutomateStructure.png)
