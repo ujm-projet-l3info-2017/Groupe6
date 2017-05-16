@@ -413,6 +413,14 @@ public class ConversationIA
 	
 	public String depart(String messageCorrige)
 	{
+		if (Reconnaissance.genre(messageCorrige) != null)
+		{
+			//L'utilisateur cherche directement un film avec un genre précis
+			prochaineEtape = Etape.PROPOSITION;
+			b_genre = true;
+			s_genre = Reconnaissance.genre(messageCorrige);
+			return ReponseAleatoire.questionAnnee();
+		}
 		if (Reconnaissance.avisFilm(messageOrigine) != null) // Si il ne contient qu'une demande d'avis sur un film qu'on a trouvÃ©
 		{
 			film = Reconnaissance.avisFilm(messageOrigine);
@@ -431,6 +439,24 @@ public class ConversationIA
 			prochaineEtape = Etape.PROPOSITION;
 			return ReponseAleatoire.questionGenre();
 		} 
+		else if (RechercheAllocine.film(messageOrigine) != null)
+		{
+			film = RechercheAllocine.film(messageOrigine);
+			if (messageOrigine.toLowerCase().compareTo(film.titre().toLowerCase())==0)
+			{
+				//L'utilisateur a rentré le titre exacte d'un film
+				titreFilm = film.titre();
+				b_film = true;
+				prochaineEtape = Etape.AVIS;
+				return ReponseAleatoire.jeConnaisFilm()+" Que veux tu savoir ?";
+			}
+			else
+			{
+				film = null;
+				prochaineEtape = Etape.DEBUT;
+				return ReponseAleatoire.queVeuxTu();
+			}
+		}
 		else // Si rien n'est reconnu
 		{
 			prochaineEtape = Etape.DEBUT;
