@@ -52,7 +52,6 @@ public class ConversationIA
 		recherche = new RechercherMot();
 		messageCorrige = recherche.analysePhrase(message);
 		messageOrigine = message;
-		System.out.println(messageCorrige);
 		if (Reconnaissance.sortie(messageCorrige))
 		{
 			reset();
