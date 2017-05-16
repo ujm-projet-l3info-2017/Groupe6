@@ -465,7 +465,7 @@ public class ConversationIA
 			prochaineEtape = Etape.PROPOSITION;
 			return ReponseAleatoire.questionGenre();
 		} 
-		else if (RechercheAllocine.film(messageOrigine) != null)
+		else if (messageCorrige.compareTo("bonjour")!=0 && RechercheAllocine.film(messageOrigine) != null)
 		{
 			film = RechercheAllocine.film(messageOrigine);
 			if (messageOrigine.toLowerCase().compareTo(film.titre().toLowerCase())==0)
