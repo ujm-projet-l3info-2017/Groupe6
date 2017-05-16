@@ -1,8 +1,5 @@
 package allocine;
 
-
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,9 +20,9 @@ public class TestAPIAllocine
 	 * @throws AllocineException
 	 */
 	public static void main(String[] args)
-	{		
-		List<String> films = ParseurAllocine.chercherFilmDePersonne("Jean Dujardin");
-		Film lefilm = RechercheAllocine.film("Inglorious Bitches");
+	{	
+		Film lefilm = RechercheAllocine.film("Intouchables");
+			
 		System.out.println(lefilm.titre());
 		System.out.println(lefilm.realisateur());
 		System.out.println(lefilm.affiche());
