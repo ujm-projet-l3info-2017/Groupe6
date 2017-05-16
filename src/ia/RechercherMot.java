@@ -24,9 +24,6 @@ public class RechercherMot
 	 */
 	ArrayList<String> dicoFrancais;
 	ArrayList<String> dicoMotsCles;
-	ArrayList<String> dicoGenre;
-	ArrayList<String> dicoPrenomFeminin;
-	ArrayList<String> dicoPrenomMasculin;
 
 	/**
 	 * Initialisation de la recherche
@@ -35,9 +32,6 @@ public class RechercherMot
 	{
 		dicoFrancais = this.chargementDico("./src/ia/","dicoFrancais.txt");
 		dicoMotsCles = this.chargementDico("./src/ia/","dicoMotsCles.txt");
-		dicoGenre = this.chargementDico("./src/ia/","dicoGenre.txt");
-		dicoPrenomFeminin = this.chargementDico("./src/ia/","dicoPrenomFeminin.txt");
-		dicoPrenomMasculin = this.chargementDico("./src/ia/","dicoPrenomMasculin.txt");
 	}
 	
 	/**
@@ -76,80 +70,10 @@ public class RechercherMot
 		return dico;
 	}
 
-	/**
-	 * Permet de lancer une recherche de mots cles
-	 * 
-	 * @param phraseBrut
-	 *            String
-	 * @return ArrayList<String>
-	 */
-	protected ArrayList<String> chercherMotsCles(String phraseBrut)
-	{
-		String phrase[] = phraseBrut.split(" ");
-		// Liste de mots cles trouves
-		ArrayList<String> motCle = new ArrayList<String>();
-		String[] motsCles;
-		//Parcourt du dictionnaire des mots cles pour traiter le cas des mots cles composes
-		for (int i = 0; i < dicoMotsCles.size(); i++)
-		{
-			motsCles = dicoMotsCles.get(i).split(" ");
-			// Si le mot clé est composé d'au moins deux termes
-			if (motsCles.length > 1)
-			{
-				// On parcourt la phrase
-				for (int j = 0; j < phrase.length; j++)
-				{
-					boolean similaire = false;
-					// Premier terme du mot cle est trouve
-					if (phrase[j].compareTo(motsCles[0]) == 0)
-					{
-						//Booleen permettant de suivre le matching entre la phrase et les termes d'un meme mot cle
-						similaire = true;
-						// Pour les termes suivants du mot cle
-						for (int k = 1; k < motsCles.length; k++)
-						{
-							//Si la phrase contient moins de mots que le mot cles courant 
-							if(phrase.length-1 < j+k){
-								similaire = false;
-								break;
-							}
-							//Si le terme courant de la phrase et du mot cle sont egaux
-							if ((phrase[j + k].compareTo(motsCles[k]) == 0) && (similaire == true))
-							{
-								similaire = true;
-							} else
-							{
-								break;
-							}
-						}
-					}
-					//Si le mot cle a ete trouve
-					if (similaire == true)
-					{
-						motCle.add(dicoMotsCles.get(i));
-					}
-				}
-			}
-		}
-
-		//Parcourt des mots de la phrase pour trouver les mots cles constitue d'un seul terme
-		for (int l = 0; l < phrase.length; l++)
-		{
-			String motCourant = phrase[l];
-			//Si le mot de la phrase est un mot cle
-			if (dicoMotsCles.contains(motCourant))
-			{
-				motCle.add(motCourant);
-			}
-		}
-		return motCle;
-	}
 
 	/**
 	 * Permet de lancer les differentes phases d'une recherche
-	 * 
 	 * @param phrase
-	 *            String
 	 * @return String
 	 */
 	protected String analysePhrase(String message)
@@ -267,7 +191,6 @@ public class RechercherMot
 	{
 		String debut, fin, motTrouve;
 		char lettre;
-		boolean b;
 		
 		//On parcourt caractere par caractere
 		for (int l = 0; l < motCourant.length(); l++)
@@ -304,7 +227,6 @@ public class RechercherMot
 	private String motMoinsUneLettre(String motCourant, ArrayList<String> dictionnaireMots)
 	{
 		String debut, fin, motTrouve;
-		boolean b;
 		
 		//On parcourt caractere par caractere
 		for (int l = 0; l < motCourant.length(); l++)
@@ -335,7 +257,6 @@ public class RechercherMot
 	{
 		String debut, fin, motTrouve;
 		char lettre;
-		boolean b;
 		
 		//On parcourt caractere par caractere
 		for (int l = 0; l < motCourant.length(); l++)
@@ -366,93 +287,4 @@ public class RechercherMot
 		return "";
 	}
 	
-	/**
-	 * Permet de trouver la date present dans la phrase
-	 * 
-	 * @return String : La date
-	 * @param message
-	 *            String
-	 */
-	public String trouverDate(String message){
-		String date="";
-		String phrase[] = message.split(" ");
-		
-		//On parcourt les mots de la phrase
-		for (int i=0; i<phrase.length; i++){
-			int tailleMot = phrase[i].length();
-			
-			//On cherche un mot 4 caracteres
-			if(tailleMot == 4){
-				char premierCaractere;
-				char deuxiemeCaractere;
-				char troisiemeCaractere;
-				char quatriemeCaractere;
-				premierCaractere = phrase[i].charAt(0);
-				deuxiemeCaractere = phrase[i].charAt(1);
-				troisiemeCaractere = phrase[i].charAt(2);
-				quatriemeCaractere = phrase[i].charAt(3);
-				
-				//On regarde si ce sont tous des chiiffres
-				if (Character.isDigit(premierCaractere) && Character.isDigit(deuxiemeCaractere) && Character.isDigit(troisiemeCaractere) && Character.isDigit(quatriemeCaractere)){
-				   return date = String.valueOf(premierCaractere)+String.valueOf(deuxiemeCaractere)+String.valueOf(troisiemeCaractere)+String.valueOf(quatriemeCaractere);
-			    }
-			}
-		}
-		return date;
-	}
-	
-	/**
-	 * Permet de trouver le genre present dans la phrase
-	 * 
-	 * @return String : Le genre
-	 * @param message String
-	 */
-	public String trouverGenre(String message){
-		String phrase[] = message.split(" ");
-		
-		//On parcourt les mots de la phrase
-		for (int i=0; i<phrase.length; i++){
-			String motCourant = phrase[i];
-			
-			//On parcourt le dictionnaire des genres
-			for(int j=0; j<dicoGenre.size(); j++){
-				int tailleGenre = dicoGenre.get(j).length();
-				int tailleMotCourant = motCourant.length();
-				
-				//Si le genre correspond au debut du mot courant
-				if((tailleMotCourant >= tailleGenre) && (dicoGenre.get(j).compareTo(motCourant.substring(0, tailleGenre)) == 0)){
-					return dicoGenre.get(j);
-				}
-			}
-		}
-		return "";
-	}
-	
-	/**
-	 * Permet de trouver le realisateur ou l'acteur present dans la phrase
-	 * 
-	 * @return String : Le nom et le prenom de la personne
-	 * @param message String
-	 */
-	public String trouverPersonne(String message){
-		String nom = "";
-		String phrase[] = message.split(" ");
-		
-		//On parcourt les mots de la phrase
-		for (int i=0; i<phrase.length; i++){
-			String motCourant = phrase[i];
-			
-			//Premier caractere en majuscule
-			char[] char_table = motCourant.toCharArray();
-			char_table[0]=Character.toUpperCase(char_table[0]);
-			motCourant = new String(char_table);
-			
-			//Si le mot courant existe dans le dictionnaire des prenoms
-			if((dicoPrenomFeminin.contains(motCourant) || dicoPrenomMasculin.contains(motCourant)) && ((i+1)< phrase.length)){
-				nom = phrase[i]+" "+phrase[i+1];
-				return nom;
-			}
-		}
-		return nom;
-	}
 }
