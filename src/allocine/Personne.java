@@ -3,7 +3,6 @@ package allocine;
 import java.util.List;
 
 import com.moviejukebox.allocine.AllocineException;
-import com.moviejukebox.allocine.model.CodeName;
 import com.moviejukebox.allocine.model.FilmographyInfos;
 import com.moviejukebox.allocine.model.Participance;
 import com.moviejukebox.allocine.model.PersonInfos;

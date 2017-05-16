@@ -313,6 +313,6 @@ public class Reconnaissance
 	
 	public static boolean ok(String phrase)
 	{
-		return (phrase.contains("ok") || phrase.contains("d accord"));
+		return (phrase.contains("ok") || phrase.contains("d accord") || phrase.contains("cool"));
 	}
 }

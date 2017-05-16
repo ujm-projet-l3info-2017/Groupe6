@@ -212,7 +212,7 @@ public class ReponseAleatoire
     }
     public static String aurevoir()
     {
-		String[] choix = {"A bientôt", "Au revoir", "Salut"};
+		String[] choix = {"A bientôt :)", "Au revoir :)", "Salut :)", "A la prochaine :)"};
 
     	return aleatoireTableau(choix);    	    
     }
@@ -236,7 +236,6 @@ public class ReponseAleatoire
 
     	return aleatoireTableau(choix);
 	}
-	
 
 	public static String proposeLeFilmMemeEpoque(String titre)
 	{
@@ -250,9 +249,9 @@ public class ReponseAleatoire
 	public static String jeConnaisFilm()
 	{
 		String[] choix = {
-				"Je connais ce film.",
+				"Je connais ce film. :)",
 				"Je me souviens de ce film.",
-				"J'ai vu ce film.",
+				"J'ai vu ce film. :)",
 				"Je vois de quel film tu parles."};
 
     	return aleatoireTableau(choix);
@@ -292,8 +291,62 @@ public class ReponseAleatoire
 	{
 		String[] choix = {
 				"La presse ne lui a pas donné de bonnes notes, moi je l'ai bien aimé, mais ce n'est que mon avis...",
-				"La presse n'en a pas fait une bonne critique mais je l'ai quand même aimé.",
+				"La presse n'en a pas fait une bonne critique mais je l'ai quand même bien aimé :)",
 				"Je pense que c'est un bon film, même si la presse n'est pas d'accord."};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String smileyContent()
+	{
+		String[] choix = {
+				":)",
+				";)",};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String deRien()
+	{
+		String[] choix = {
+				"Je t'en prie !",
+				"De rien !"};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String saitPlusQuiFaitFilm()
+	{
+		String[] choix = {
+				"Je ne me rappelle plus qui a réalisé ce film :/",
+				"Je ne sais plus qui a réalisé ce film."};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String saitPlusQuandFilmSorti()
+	{
+		String[] choix = {
+				"Je ne sais plus exactement quand ce film est sorti. :/",
+				"Je ne me rappelle plus de la date de sortie de ce film, désolé."};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String saitPlusActeur()
+	{
+		String[] choix = {
+				"Je ne me rappelle plus des acteurs de ce film, désolé :(",
+				"Je ne me souviens plus des acteurs de ce film."};
+
+    	return aleatoireTableau(choix);
+	}
+
+	public static String saitPlusHistoire()
+	{
+		String[] choix = {
+				"Je te laisse la surprise de découvrir l'histoire de ce film ;)",
+				"Je ne me souviens plus de l'histoire exacte, je te laisse le regarder."};
 
     	return aleatoireTableau(choix);
 	}
