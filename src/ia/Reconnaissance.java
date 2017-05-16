@@ -25,7 +25,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si c'est une question, false sinon
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return si c'est une question ou pas
 	 */
 	public static boolean question(String phrase)
@@ -36,7 +36,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'user semble rechercher un film, false sinon
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return si c'est une recherche ou pas
 	 */
 	public static boolean recherche(String phrase)
@@ -47,7 +47,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie le film si on a trouvé un film dans la phrase et que l'utilisateur semble chercher des infos dessus, null sinon
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return le film si on l'a trouvé, null sinon
 	 */
 	public static Film avisFilm(String phrase)
@@ -77,7 +77,7 @@ public class Reconnaissance
 	
 	/**
 	 * Analyse s'il y a potentiellement quelque chose avant le nom du film, ou cherche le film qui correspond à la phrase sinon
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return le film trouvé ou null
 	 */
 	public static Film reconnaitreFilm(String phrase)
@@ -89,9 +89,9 @@ public class Reconnaissance
 	}
 	
 	/**
-	 * renvoie true si le gars veut un avis, false sinon
-	 * @param phrase
-	 * @return boolean
+	 * renvoie true si l'utilisateur veut un avis, false sinon
+	 * @param phrase Phrase à analyser
+	 * @return true si l'utilisateur veut un avis, false sinon
 	 */
 	public static boolean avis(String phrase)
 	{
@@ -101,7 +101,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si la phrase contient un message de salutation
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return boolean : true ou false
 	 */
 	public static boolean salutation(String phrase)
@@ -111,7 +111,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'utilisateur veut mettre fin à la conversation
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return boolean true ou false
 	 */
 	public static boolean sortie(String phrase)
@@ -121,7 +121,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie un entier qui correspond à ce qu'on a compris
-	 * @param phrase
+	 * @param phrase  Phrase à analyser
 	 * return int 1 : la réponse est oui, 0 la réponse est non, 2 on n'a pas compris
 	 */
 	public static int ouiOuNon(String phrase)
@@ -165,7 +165,7 @@ public class Reconnaissance
 	
 	/**
 	 *  Rnvoi le genre ou null
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return String ou null
 	 */
 	public static String genre(String phrase)
@@ -194,6 +194,7 @@ public class Reconnaissance
 		return null;
 	}
 	
+
 	public static String acteurRealisateur(String phrase)
 	{
 		String[] lesMots = phrase.split(" ");
@@ -239,7 +240,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'utilisateur demande le réalisateur
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return true si l'utilisateur demande le réalisateur
 	 */
 	public static boolean realisateur(String phrase)
@@ -249,7 +250,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'utilisateur demande le synopsis
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return true si l'utilisateur demande le synopsis
 	 */
 	public static boolean synopsis(String phrase)
@@ -259,7 +260,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'utilisateur demande les acteurs
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return true si l'utilisateur demande les acteurs
 	 */
 	public static boolean acteurs(String phrase)
@@ -270,7 +271,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'utilisateur demande l'affiche
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return true si l'utilisateur demande l'affiche
 	 */
 	public static boolean affiche(String phrase)
@@ -281,7 +282,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'utilisateur demande le genre du film
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return true si l'utilisateur demande le genre du film
 	 */
 	public static boolean leGenre(String phrase)
@@ -291,7 +292,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'utilisateur demande l'année du film
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return true si l'utilisateur demande l'année du film
 	 */
 	public static boolean annee(String phrase)
@@ -301,7 +302,7 @@ public class Reconnaissance
 	
 	/**
 	 * Renvoie true si l'utilisateur demande si le film est bien
-	 * @param phrase
+	 * @param phrase Phrase à analyser
 	 * @return true si l'utilisateur demande si le film est bien
 	 */
 	public static boolean avisPerso(String phrase)
@@ -313,7 +314,7 @@ public class Reconnaissance
 	
 	/**
 	 *  Renvoie true si l'utilisateur dit merci
-	 * @param phrase
+	 * @param phrase  Phrase à analyser
 	 * @return true si l'utilisateur dit merci
 	 */
 	public static boolean merci(String phrase)
@@ -323,7 +324,7 @@ public class Reconnaissance
 	
 	/**
 	 *  Renvoie true si l'utilisateur dit ok
-	 * @param phrase
+	 * @param phrase  Phrase à analyser
 	 * @return true si l'utilisateur dit ok
 	 */
 	public static boolean ok(String phrase)

@@ -38,6 +38,10 @@ public class Admin extends HttpServlet
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 *  @param request Requete
+	 *  @param response Reponse
+	 *  @throws IOException Erreur d'entrée sortie
+	 *  @throws ServletException Erreur servlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -55,6 +59,10 @@ public class Admin extends HttpServlet
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 *  @param request Requete
+	 *  @param response Reponse
+	 *  @throws IOException Erreur d'entrée sortie
+	 *  @throws ServletException Erreur servlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -77,6 +85,11 @@ public class Admin extends HttpServlet
 		}
 	}
 
+	/**
+	 *  Gestion de commandes reçu
+	 *  @param request Requete
+	 *  @param response Reponse
+	 */
 	private void gestionCommandeRecu(HttpServletRequest request, HttpServletResponse response)
 	{
 		logger.info("Recu POST commande serveur");
@@ -115,8 +128,8 @@ public class Admin extends HttpServlet
 
 	/**
 	 *  Vérification de la connexion dans la session
-	 * @param request
-	 * @param response
+	 *  @param request Requete
+	 *  @param response Reponse
 	 */
 	private void verificationConnexion(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -161,9 +174,9 @@ public class Admin extends HttpServlet
 
 	/**
 	 *  Vérification du webhook par facebook: Vérification de certains paramètres de la requete et renvoit de hub.challenge
-	 *  @param request HttpServletRequest
-	 *  @param response HttpServletResponse
-	 *  @throws IOException
+	 *  @param request Requete
+	 *  @param response Reponse
+	 *  @throws IOException Erreur d'entrée sortie
 	 */
 	private void verificationWebhook(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
@@ -185,8 +198,8 @@ public class Admin extends HttpServlet
 
 	/**
 	 *  Gère les alertes de nouveaux messages provenant de facebook
-	 * @param request
-	 * @param response
+	 *  @param request Requete
+	 *  @param response Reponse
 	 */
 	private void traitementAlerteNouveauMessage(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -213,8 +226,8 @@ public class Admin extends HttpServlet
 
 	/**
 	 *  Etabli dans la session la connexion, provenant du formulaire de connexion_admin.jsp
-	 * @param request
-	 * @param response
+	 *  @param request Requete
+	 *  @param response Reponse
 	 */
 	private void connexion(HttpServletRequest request, HttpServletResponse response)
 	{

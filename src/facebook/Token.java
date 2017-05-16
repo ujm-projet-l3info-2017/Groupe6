@@ -7,7 +7,6 @@ import java.util.Properties;
 
 /**
  * 	Classe permettant le chargement des paramètres contenu dans le fichier settings.ini, étant les identifiants pour se connecter à l'api facebook
- * @author chris
  *
  */
 public final class Token 
@@ -19,8 +18,8 @@ public final class Token
 	 * 	Fonction pour charger les propriétés du fichier settings.ini
 	 * @return Properties Propriétés de settings.ini
 	 * @param fichier String
-	 * @throws IOException
-	 * @throws FileNotFoundException
+	 * @throws IOException Erreur d'entrée/sortie
+	 * @throws FileNotFoundException Fichier non trouvé
 	 */
 	private static Properties chargement(String fichier) throws IOException, FileNotFoundException
 	{
@@ -68,7 +67,7 @@ public final class Token
 		return "";	//Jamais atteint
 	}
 
-	/**
+	/** Essaye plusieurs localisation pour le Token
 	 * @return String
 	 */
 	private static String trouverLocalisationSettings()

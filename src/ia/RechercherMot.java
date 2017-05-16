@@ -10,8 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Classe de la recherche d'un mot dans un dictionnaire
- * 
- * @author RÃ©mi SIRACUSA
  *
  */
 public class RechercherMot
@@ -36,8 +34,8 @@ public class RechercherMot
 	
 	/**
 	 * Permet de charger le dictionnaire dans une ArrayList
-	 * @return ArrayList<String>
-	 * @throws IOException 
+	 * @return ArrayList<String> Liste des mots
+	 * @throws IOException Erreur d'entrée sortie
 	 * 
 	 */
 	private ArrayList<String> chargementDico(String chemin, String nom)
@@ -73,8 +71,8 @@ public class RechercherMot
 
 	/**
 	 * Permet de lancer les differentes phases d'une recherche
-	 * @param phrase
-	 * @return String
+	 * @param phrase La phrase
+	 * @return String Phrase analysé
 	 */
 	protected String analysePhrase(String message)
 	{
@@ -157,9 +155,9 @@ public class RechercherMot
 	}
 
 	/**
-	 *  Supprime les accents du String en paramï¿½tre et renvoit la phrase
-	 * @param p
-	 * @return p sans accents
+	 *  Supprime les accents du String en paramètre et renvoit la phrase
+	 * @param p Phrase
+	 * @return p La phrase sans accents
 	 */
 	private String suppressionAccents(String p)
 	{
@@ -184,8 +182,8 @@ public class RechercherMot
 	 * une lettre au mot courant
 	 * 
 	 * @return String : Le mot trouve
-	 * @param motCourant
-	 *            String
+	 * @param motCourant Le mot courant
+	 * @param dictionnaireMots Le dictionnaire des mots
 	 */
 	private String motPlusUneLettre(String motCourant, ArrayList<String> dictionnaireMots)
 	{
@@ -221,8 +219,8 @@ public class RechercherMot
 	 * une lettre au mot courant
 	 * 
 	 * @return String : Le mot trouve
-	 * @param motCourant
-	 *            String
+	 * @param motCourant Le mot courant
+	 * @param dictionnaireMots Le dictionnaire des mots
 	 */
 	private String motMoinsUneLettre(String motCourant, ArrayList<String> dictionnaireMots)
 	{
@@ -248,10 +246,9 @@ public class RechercherMot
 	/**
 	 * Permet de trouver le mot present dans le dictionnaire lorsqu'on remplace
 	 * une lettre dans le mot courant
-	 * 
+	 * @param motCourant Le mot courant
+	 * @param dictionnaireMots Le dictionnaire des mots
 	 * @return String : Le mot trouve
-	 * @param motCourant
-	 *            String
 	 */
 	private String motSubUneLettre(String motCourant, ArrayList<String> dictionnaireMots)
 	{

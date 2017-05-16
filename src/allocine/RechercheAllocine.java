@@ -109,7 +109,7 @@ public class RechercheAllocine
     	}
     	catch (Exception e)
     	{
-    		logger.error("Aucun film trouvé avec ce titre");
+    		//logger.info("Aucun film trouvé avec ce titre");
     		return null;
     	}
     }
