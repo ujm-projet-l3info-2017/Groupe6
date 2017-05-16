@@ -60,11 +60,11 @@ public class ConversationIA
 		}
 		return executerProchaineEtape();
 	}
-
-
 	
 	public String executerProchaineEtape()
 	{
+		if(null != casSpeciaux())
+			return casSpeciaux();
 		switch (prochaineEtape)
 		{
 		case SALUTATION:  //PremiÃ¨re Ã©tape. Lors du premier message de l'utilisateur, on dit bonjour
@@ -74,9 +74,9 @@ public class ConversationIA
 		case DEBUT:
 			
 			if (Reconnaissance.merci(messageCorrige))
-				return "Je t'en prie !";
+				return ReponseAleatoire.deRien();
 			else if (Reconnaissance.ok(messageCorrige))
-				return ":)";
+				return ReponseAleatoire.smileyContent();
 			else
 				return depart(messageCorrige);
 				
@@ -100,7 +100,7 @@ public class ConversationIA
 			{
 				if (Reconnaissance.realisateur(messageCorrige))
 					if (film.realisateur() == null)
-						return "Je ne me rappelle plus qui a réalisé ce film";
+						return ReponseAleatoire.saitPlusQuiFaitFilm();
 					else 
 						return "Ce film a été réalisé par "+film.realisateur()+".";
 				
@@ -112,7 +112,7 @@ public class ConversationIA
 				
 				if (Reconnaissance.annee(messageCorrige))
 					if (film.dateSortie() == 0)
-						return "Je ne sais plus exactement quand ce film est sorti.";
+						return ReponseAleatoire.saitPlusQuandFilmSorti();
 					else return "Ce film est sorti en "+film.dateSortie()+".";
 				
 				if (Reconnaissance.acteurs(messageCorrige))
@@ -121,7 +121,7 @@ public class ConversationIA
 					if (acteurs != null)
 						return "Les acteurs principaux sont "+acteurs.get(0)+ " et "+acteurs.get(1)+".";
 					else 
-						return "Je ne me rappelle plus des acteurs de ce film, désolé ...";
+						return ReponseAleatoire.saitPlusActeur();
 				}
 				
 				if (Reconnaissance.leGenre(messageCorrige))
@@ -137,7 +137,7 @@ public class ConversationIA
 				{
 					String synopsis = film.synopsis();
 					if (synopsis == null)
-						return "Je ne me souviens plus de l'histoire exacte, je te laisse le regarder.";
+						return ReponseAleatoire.saitPlusHistoire();
 					else 
 						return synopsis;
 				}
@@ -352,12 +352,38 @@ public class ConversationIA
 		}
 	}
 
+	/**
+	 *  Cas spéciaux, hors des étapes
+	 * @return null si aucun cas ne correspond, la réponse sinon
+	 */
+	private String casSpeciaux()
+	{
+		if(messageCorrige.contains("c est pas faux"))
+		{
+			return "Qu'est-ce que t'as pas compris?";
+		}
+		if(messageCorrige.contains("dimitri"))
+		{
+			return "Dimitri c'est le plus fort";
+		}
+		if(messageCorrige.contains("un cine"))
+		{
+			return "Je ne saurais pas te conseiller de cinéma, je ne suis pas conçu pour, par contre je peux te conseiller un film si tu veux";
+		}
+		return null;
+	}
+
 	private void effacerPreference()
 	{
 		b_genre=false; b_film=false; b_realisateur=false; b_recent=false;
 		s_genre=""; s_realisateur=""; s_recent=false;
 	}
 
+	/**
+	 *  Donner un film au hasard dans une liste de film
+	 * @param films
+	 * @return
+	 */
 	public String tirageAleatoire(List<String> films)
 	{
 		Random rand = new Random();
