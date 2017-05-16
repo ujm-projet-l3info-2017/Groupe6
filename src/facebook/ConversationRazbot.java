@@ -150,7 +150,7 @@ public class ConversationRazbot
 
 	/**
 	 * Accesseur Messages
-	 * @return ArrayList<MessageRazbot>
+	 * @return Une liste de message
 	 */
 	public ArrayList<MessageRazbot> getMessages()
 	{
@@ -213,7 +213,7 @@ public class ConversationRazbot
 
 	/**
 	 * Setter Messages
-	 * @param messages ArrayList<MessageRazbot>
+	 * @param messages Une miste de message
 	 */
 	public void setMessages(ArrayList<MessageRazbot> messages)
 	{

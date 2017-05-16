@@ -135,7 +135,7 @@ public class PageRazbot
 	
 	/**
 	 * Renvoi les conversations avec des nouveaux messages
-	 * @return ArrayList<ConversationRazbot> La liste des conversations
+	 * @return  La liste des conversations
 	 */
 	public ArrayList<ConversationRazbot> getConversationsNouveauxMessages()
 	{
