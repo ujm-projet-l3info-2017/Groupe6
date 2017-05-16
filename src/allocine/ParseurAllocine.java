@@ -126,6 +126,8 @@ public class ParseurAllocine
 	{
 		List<String> films = new ArrayList<>();
 		String code = recupererCodePersonne(nom);
+		if (code == null)
+			return null;
 		String url = "http://www.allocine.fr/personne/fichepersonne-"+code+"/filmographie/top/";
 		try
 		{
@@ -157,9 +159,13 @@ public class ParseurAllocine
 	private static String recupererCodePersonne(String nom)
 	{
 		String url = chercherPersonne(nom);
-		String apresLeEgal = url.split("=")[1]; //On récupère ce qu'il y a après le égal
-		String code = apresLeEgal.split("\\.")[0]; //Et ce qu'il y a avant le point
-		return code;
+		if (url != null)
+		{
+			String apresLeEgal = url.split("=")[1]; //On récupère ce qu'il y a après le égal
+			String code = apresLeEgal.split("\\.")[0]; //Et ce qu'il y a avant le point
+			return code;
+		}
+		return null;
 	}
 	
 	/**
