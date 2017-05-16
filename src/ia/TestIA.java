@@ -15,7 +15,7 @@ public class TestIA
 	public static void main(String[] args)
 	{
 		//Initialisation de l'IA de la conversation
-		ConversationIA convIA = new ConversationIA("Jacquie");
+		ConversationIA convIA = new ConversationIA("Dimitri");
 		String message = "Salut";
 		String reponse;
 		

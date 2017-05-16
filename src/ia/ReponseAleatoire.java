@@ -69,6 +69,7 @@ public class ReponseAleatoire
 
     	return aleatoireTableau(choix);	
     }
+    
     public static String questionFermee()
     {
 		String[] choix = {
