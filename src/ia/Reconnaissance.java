@@ -301,6 +301,8 @@ public class Reconnaissance
 	 */
 	public static boolean avisPerso(String phrase)
 	{
+		if(!question(phrase) && phrase.contains("est bien"))
+			return true;
 		return ((question(phrase) && (phrase.contains("bien") || phrase.contains("aime"))) || phrase.contains("avis") || phrase.contains("impression") || phrase.contains("sentiment"));
 	}
 	
