@@ -3,14 +3,12 @@ package allocine;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.moviejukebox.allocine.AllocineException;
 import com.moviejukebox.allocine.model.Artwork;
-import com.moviejukebox.allocine.model.CodeName;
 import com.moviejukebox.allocine.model.Movie;
 import com.moviejukebox.allocine.model.MovieInfos;
 
