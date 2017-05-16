@@ -310,4 +310,9 @@ public class Reconnaissance
 	{
 		return phrase.contains("merci");
 	}
+	
+	public static boolean ok(String phrase)
+	{
+		return (phrase.contains("ok") || phrase.contains("d accord"));
+	}
 }

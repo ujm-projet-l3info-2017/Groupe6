@@ -52,6 +52,7 @@ public class ConversationIA
 		recherche = new RechercherMot();
 		messageCorrige = recherche.analysePhrase(message);
 		messageOrigine = message;
+		System.out.println(messageCorrige);
 		if (Reconnaissance.sortie(messageCorrige))
 		{
 			reset();
@@ -74,6 +75,8 @@ public class ConversationIA
 			
 			if (Reconnaissance.merci(messageCorrige))
 				return "Je t'en prie !";
+			else if (Reconnaissance.ok(messageCorrige))
+				return ":)";
 			else
 				return depart(messageCorrige);
 				
@@ -160,11 +163,13 @@ public class ConversationIA
 					return ReponseAleatoire.jeDeteste();
 					
 				}
-				else if (Reconnaissance.merci(messageCorrige))
+				else if (Reconnaissance.merci(messageCorrige) || Reconnaissance.ok(messageCorrige))
 				{
 					prochaineEtape = Etape.AUTRE_CHOSE;
-					
-					return "Je t'en prie. Tu as besoin d'autre chose ?"; 
+					if (Reconnaissance.merci(messageCorrige))
+						return "Je t'en prie. Tu as besoin d'autre chose ?"; 
+					else
+						return "Tu as besoin d'autre chose ?";
 				}
 				else 
 				{
