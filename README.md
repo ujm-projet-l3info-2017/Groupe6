@@ -1,9 +1,22 @@
-#Projet tutorÈ
-## RazBot - ChatBot CinÈma
+# Projet tutor√©
+## RazBot - ChatBot Cin√©ma
 
-Le programme nÈcÈssite un fichier settings.ini qui contient les ID confidentiels d'accËs ‡ la page Facebook (non prÈsent sur GitHub)
-Le chemin est ‡ configurer dans `/src/facebook/Token.java`
+Le programme n√©c√©ssite un fichier settings.ini qui contient les ID confidentiels d'acc√®s √† la page Facebook (non pr√©sent sur GitHub)
+Le chemin est √† configurer dans `/src/facebook/Token.java`
 
-Il y a deux modes de fonctionnements (‡ configurer dans settings.ini):
-* Un mode ‡ vÈrification de nouveaux messages par intervalles rÈguliers (Intervalles ‡ configurer dans settings.ini)
-* Un mode ‡ Webhook qui recoit des requÍtes POST de Facebook (Ne fonctionne que sur le serveur derriËre https://razbot.jeamme.fr/)
+Il y a deux modes de fonctionnements (√† configurer dans settings.ini):
+* Un mode √† v√©rification de nouveaux messages par intervalles r√©guliers (Intervalles √† configurer dans settings.ini)
+* Un mode √† Webhook qui recoit des requ√™tes POST de Facebook (Ne fonctionne que sur le serveur derri√®re https://razbot.jeamme.fr/)
+
+### Fonctionnalit√©s 
+
+* Recherche d'un film par crit√®res
+  * genre et/ou r√©cent
+  * acteur/r√©alisateur
+* Informations sur un film
+  * r√©alisateur
+  * acteurs principaux
+  * affiche
+  * genre
+  * avis (en fonction des notes du public et de la presse sur allocine.fr)
+  * synopsis
